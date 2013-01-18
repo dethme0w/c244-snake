@@ -1,5 +1,13 @@
-/libs
+libs/
 *.class
-/gen
-/bin
+
+gen
+/
+bin/
+
 /.settings
+
+/.classpath
+/.project
+*.apk
+*.ap_
