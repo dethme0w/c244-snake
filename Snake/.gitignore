@@ -1,12 +1,8 @@
 libs/
 *.class
-
-gen
-/
+gen/
 bin/
-
 /.settings
-
 /.classpath
 /.project
 *.apk
