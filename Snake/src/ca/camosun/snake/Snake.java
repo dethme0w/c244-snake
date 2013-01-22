@@ -3,6 +3,18 @@ package ca.camosun.snake;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Describes the snake. 
+ * 
+ * Fundamentally, the snake is a list of grid coordinates. As the snake
+ * moves, the tail moves to the head, and the new head's grid location is updated.
+ * We maintain head and tail list indices for this; the first and last items on the list
+ * are not necessarily the head and tail of the snake.
+ * When the snake eats a fruit, a new segment is added to the head at the location of the fruit.
+ * This mechanism is open for discussion.
+ * 
+ */
+
 public class Snake {
 	private List<SnakeSegment> segments;
 	private int head;
