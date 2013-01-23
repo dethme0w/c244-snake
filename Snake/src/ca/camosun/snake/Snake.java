@@ -4,13 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Describes the snake. 
+ * Describes the snake.
  * 
- * Fundamentally, the snake is a list of grid coordinates. As the snake
- * moves, the tail moves to the head, and the new head's grid location is updated.
- * We maintain head and tail list indices for this; the first and last items on the list
- * are not necessarily the head and tail of the snake.
- * When the snake eats a fruit, a new segment is added to the head at the location of the fruit.
+ * Fundamentally, the snake is a list of grid coordinates. As the snake moves,
+ * the tail moves to the head, and the new head's grid location is updated.
+ * 
+ * We maintain head and tail list indices for this; the first and last items on
+ * the list are not necessarily the head and tail of the snake.
+ * 
+ * When the snake eats a fruit, a new segment is added to the tail at the last
+ * tail location. This happens after the snake has already moved, so the last
+ * tail location is no longer known unless we track it in lastTail - which is
+ * updated with the tail location by the SnakeBoard.moveSnake method before the
+ * list is updated.
+ * 
  * This mechanism is open for discussion.
  * 
  */
@@ -19,6 +26,7 @@ public class Snake {
 	private List<SnakeSegment> segments;
 	private int head;
 	private int tail;
+	private SnakeSegment lastTail;
 	private Direction currentDirection;
 	private Direction nextDirection;
 
@@ -30,6 +38,7 @@ public class Snake {
 		segments = new ArrayList<SnakeSegment>();
 		head = 0;
 		tail = 0;
+		lastTail = new SnakeSegment(0, 0);
 		currentDirection = Direction.NORTH;
 		nextDirection = Direction.NORTH;
 	}
