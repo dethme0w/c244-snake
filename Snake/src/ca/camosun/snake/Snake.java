@@ -6,20 +6,6 @@ import java.util.List;
 /**
  * Describes the snake.
  * 
- * Fundamentally, the snake is a list of grid coordinates. As the snake moves,
- * the tail moves to the head, and the new head's grid location is updated.
- * 
- * We maintain head and tail list indices for this; the first and last items on
- * the list are not necessarily the head and tail of the snake.
- * 
- * When the snake eats a fruit, a new segment is added to the tail at the last
- * tail location. This happens after the snake has already moved, so the last
- * tail location is no longer known unless we track it in lastTail - which is
- * updated with the tail location by the SnakeBoard.moveSnake method before the
- * list is updated.
- * 
- * This mechanism is open for discussion.
- * 
  */
 
 public class Snake {
@@ -31,6 +17,10 @@ public class Snake {
 	public static enum Direction {
 		NORTH, EAST, SOUTH, WEST
 	}
+	
+	public static enum MoveOutcome {
+	    CONTINUE, COLLIDED_SELF, COLLIDED_WALL
+	}
 
 	public Snake() {
 		segments = new ArrayList<SnakeSegment>();
@@ -39,6 +29,8 @@ public class Snake {
 		nextDirection = Direction.NORTH;
 	}
 
+	public 
+	
 	public void changeDirection(Direction aDirection) {
 		switch (aDirection) {
 
