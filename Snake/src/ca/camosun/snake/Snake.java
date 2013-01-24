@@ -23,9 +23,7 @@ import java.util.List;
  */
 
 public class Snake {
-	private List<SnakeSegment> segments;
-	private int head;
-	private int tail;
+	private List<SnakeSegment> segments;	
 	private SnakeSegment lastTail;
 	private Direction currentDirection;
 	private Direction nextDirection;
@@ -36,8 +34,6 @@ public class Snake {
 
 	public Snake() {
 		segments = new ArrayList<SnakeSegment>();
-		head = 0;
-		tail = 0;
 		lastTail = new SnakeSegment(0, 0);
 		currentDirection = Direction.NORTH;
 		nextDirection = Direction.NORTH;
@@ -100,22 +96,6 @@ public class Snake {
 
 	public void setSegments(List<SnakeSegment> segments) {
 		this.segments = segments;
-	}
-
-	public int getHead() {
-		return head;
-	}
-
-	public void setHead(int head) {
-		this.head = head;
-	}
-
-	public int getTail() {
-		return tail;
-	}
-
-	public void setTail(int tail) {
-		this.tail = tail;
 	}
 
 }
