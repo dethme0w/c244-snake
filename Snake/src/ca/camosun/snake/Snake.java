@@ -29,8 +29,7 @@ public class Snake {
 		nextDirection = Direction.NORTH;
 	}
 
-	public 
-	
+		
 	public void changeDirection(Direction aDirection) {
 		switch (aDirection) {
 
