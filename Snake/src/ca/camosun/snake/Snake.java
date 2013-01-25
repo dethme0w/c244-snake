@@ -16,10 +16,6 @@ public class Snake {
 	public static enum Direction {
 		NORTH, SOUTH, EAST, WEST
 	}
-	
-	public static enum MoveOutcome {
-	    CONTINUE, COLLIDED_SELF, COLLIDED_WALL
-	}
 
 	public Snake() {
 		snake = new ArrayList<SnakeSegment>();
