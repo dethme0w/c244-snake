@@ -36,8 +36,18 @@ public class Snake {
 	}
 
 	public Snake() {
+		this(Direction.NORTH);
+	}
+	
+	public Snake(Direction startDir) {
+		this(startDir, 50, 50);
+	}
+	
+	public Snake(Direction startDir, int startX, int startY) {
 		snake = new ArrayList<SnakeSegment>();
-		currentDirection = Direction.NORTH;
+		snake.add(new SnakeSegment(startX, startY));
+		
+		currentDirection = startDir;
 	}
 	
 	public void changeDirection(Direction newDirection) {
