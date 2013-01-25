@@ -9,13 +9,12 @@ import java.util.List;
  */
 
 public class Snake {
-	private List<SnakeSegment> segments;	
-	private SnakeSegment lastTail;
+	private List<SnakeSegment> snake;	
 	private Direction currentDirection;
-	private Direction nextDirection;
-
+	private int distanceToMove;
+	
 	public static enum Direction {
-		NORTH, EAST, SOUTH, WEST
+		NORTH, SOUTH, EAST, WEST
 	}
 	
 	public static enum MoveOutcome {
@@ -23,48 +22,74 @@ public class Snake {
 	}
 
 	public Snake() {
-		segments = new ArrayList<SnakeSegment>();
-		lastTail = new SnakeSegment(0, 0);
+		snake = new ArrayList<SnakeSegment>();
 		currentDirection = Direction.NORTH;
-		nextDirection = Direction.NORTH;
+		distanceToMove = 1;
 	}
 
 		
-	public void changeDirection(Direction aDirection) {
-		switch (aDirection) {
+	public void changeDirection(Direction newDirection) {
+		switch (newDirection) {
 
 		case NORTH:
 			if (currentDirection == Direction.SOUTH) {
 				break;
 			}
-			nextDirection = aDirection;
+			currentDirection = newDirection;
 			break;
 		case EAST:
 			if (currentDirection == Direction.WEST) {
 				break;
 			}
-			nextDirection = aDirection;
+			currentDirection = newDirection;
 			break;
 		case SOUTH:
 			if (currentDirection == Direction.NORTH) {
 				break;
 			}
-			nextDirection = aDirection;
+			currentDirection = newDirection;
 			break;
 		case WEST:
 			if (currentDirection == Direction.EAST) {
 				break;
 			}
-			nextDirection = aDirection;
+			currentDirection = newDirection;
 			break;
-
 		}
-
 	}
 
-	public void feedFruit() {
-		// TODO: The snake ate a fruit. Grow it.
-
+	public void moveSnake() {
+		SnakeSegment head = snake.get(0);
+		int YPosition = head.getPositionY();
+		int XPosition = head.getPositionX();
+		
+		switch (currentDirection) {
+		
+		case NORTH:
+			head.setPositionX(XPosition + distanceToMove);
+			break;
+		case EAST:
+			head.setPositionY(YPosition + distanceToMove);
+			break;
+		case SOUTH:
+			head.setPositionX(XPosition - distanceToMove);
+			break;
+		case WEST:
+			head.setPositionY(YPosition - distanceToMove);
+			break;
+		}
+		
+		SnakeSegment tail = snake.get(snake.size()-1);
+		if (gotFruit() == false) {
+			snake.remove(tail);
+		}
+			
+		snake.add(0, head);
+	}
+	
+	private boolean gotFruit() {
+		// TODO Check to see if you got some fruit
+		return false;
 	}
 
 	public boolean collidedSelf() {
@@ -82,11 +107,11 @@ public class Snake {
 	}
 
 	public List<SnakeSegment> getSegments() {
-		return segments;
+		return snake;
 	}
 
 	public void setSegments(List<SnakeSegment> segments) {
-		this.segments = segments;
+		this.snake = segments;
 	}
 
 }
