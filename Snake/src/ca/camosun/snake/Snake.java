@@ -56,7 +56,7 @@ public class Snake {
 		}
 	}
 
-	public void moveSnake() {
+	public void moveSnake(List<Fruit> inFruits) {
 		SnakeSegment newHead = snake.get(0);
 		int YPosition = newHead.getPositionY();
 		int XPosition = newHead.getPositionX();
@@ -78,7 +78,9 @@ public class Snake {
 		}
 		
 		SnakeSegment tail = snake.get(snake.size()-1);
-		snake.remove(tail);
+		if (gotFruit(inFruits) == false) {
+			snake.remove(tail);
+		}
 		snake.add(0, newHead);
 	}
 	
@@ -94,10 +96,20 @@ public class Snake {
 		return snake;
 	}
 
-	public void grow() {
-		// TODO Fuction that grows the snake after it ate some fruit
-		// Note: This is only needed if board is controlling snake
+	private boolean gotFruit(List<Fruit> inFruits) {
+		SnakeSegment head = snake.get(0);
+		int headX = head.getPositionX();
+		int headY = head.getPositionY();
 		
+		for(Fruit current:inFruits) {
+			int fruitX = current.getPositionX();
+			int fruitY = current.getPositionY();
+			
+			if (headX == fruitX && headY == fruitY) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
