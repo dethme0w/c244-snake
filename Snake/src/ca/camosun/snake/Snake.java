@@ -13,7 +13,37 @@ public class Snake {
 	private Direction currentDirection;
 	
 	public static enum Direction {
-		NORTH, SOUTH, EAST, WEST
+		NORTH, SOUTH, EAST, WEST;
+		
+		public boolean isOpposite(Direction other) {
+			switch (this) {
+			case NORTH:
+				if (other == Direction.SOUTH) {
+					return true;
+				}
+				break;
+			
+			case EAST:
+				if (other == Direction.WEST) {
+					return true;
+				}
+				break;
+			
+			case SOUTH:
+				if (other == Direction.NORTH) {
+					return true;
+				}
+				break;
+			
+			case WEST:
+				if (other == Direction.EAST) {
+					return true;
+				}
+				break;
+			}
+			
+			return false;
+		}
 	}
 
 	public Snake() {
@@ -22,31 +52,8 @@ public class Snake {
 	}
 	
 	public void changeDirection(Direction newDirection) {
-		
-		switch (newDirection) {
-		case NORTH:
-			if (currentDirection == Direction.SOUTH) {
-				return;
-			}
-			break;
-		
-		case EAST:
-			if (currentDirection == Direction.WEST) {
-				return;
-			}
-			break;
-		
-		case SOUTH:
-			if (currentDirection == Direction.NORTH) {
-				return;
-			}
-			break;
-		
-		case WEST:
-			if (currentDirection == Direction.EAST) {
-				return;
-			}
-			break;
+		if (newDirection.isOpposite(currentDirection)) {
+			return;
 		}
 		
 		currentDirection = newDirection;
