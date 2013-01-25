@@ -51,6 +51,10 @@ public class Snake {
 		
 		currentDirection = newDirection;
 	}
+	
+	public Direction getCurrentDirection() {
+		return currentDirection;
+	}
 
 	public void moveSnake(List<Fruit> inFruits) {
 		SnakeSegment newHead = snake.get(0);
