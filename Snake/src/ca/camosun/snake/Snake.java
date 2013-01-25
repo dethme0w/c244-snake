@@ -22,29 +22,31 @@ public class Snake {
 		currentDirection = Direction.NORTH;
 		distanceToMove = 1;
 	}
-
-		
+	
 	public void changeDirection(Direction newDirection) {
+		
 		switch (newDirection) {
-
 		case NORTH:
 			if (currentDirection == Direction.SOUTH) {
 				break;
 			}
 			currentDirection = Direction.NORTH;
 			break;
+		
 		case EAST:
 			if (currentDirection == Direction.WEST) {
 				break;
 			}
 			currentDirection = Direction.EAST;
 			break;
+		
 		case SOUTH:
 			if (currentDirection == Direction.NORTH) {
 				break;
 			}
 			currentDirection = Direction.SOUTH;
 			break;
+		
 		case WEST:
 			if (currentDirection == Direction.EAST) {
 				break;
@@ -55,32 +57,29 @@ public class Snake {
 	}
 
 	public void moveSnake() {
-		SnakeSegment head = snake.get(0);
-		int YPosition = head.getPositionY();
-		int XPosition = head.getPositionX();
+		SnakeSegment newHead = snake.get(0);
+		int YPosition = newHead.getPositionY();
+		int XPosition = newHead.getPositionX();
 		
 		switch (currentDirection) {
 		
 		case NORTH:
-			head.setPositionX(XPosition + distanceToMove);
+			newHead.setPositionX(XPosition + distanceToMove);
 			break;
 		case EAST:
-			head.setPositionY(YPosition + distanceToMove);
+			newHead.setPositionY(YPosition + distanceToMove);
 			break;
 		case SOUTH:
-			head.setPositionX(XPosition - distanceToMove);
+			newHead.setPositionX(XPosition - distanceToMove);
 			break;
 		case WEST:
-			head.setPositionY(YPosition - distanceToMove);
+			newHead.setPositionY(YPosition - distanceToMove);
 			break;
 		}
 		
 		SnakeSegment tail = snake.get(snake.size()-1);
-		if (gotFruit() == false) {
-			snake.remove(tail);
-		}
-			
-		snake.add(0, head);
+		snake.remove(tail);
+		snake.add(0, newHead);
 	}
 	
 	private boolean gotFruit() {
@@ -102,12 +101,12 @@ public class Snake {
 
 	}
 
-	public List<SnakeSegment> getSegments() {
+	public List<SnakeSegment> getSnake() {
 		return snake;
 	}
 
-	public void setSegments(List<SnakeSegment> segments) {
-		this.snake = segments;
+	public void setSnake(List<SnakeSegment> inSnake) {
+		this.snake = inSnake;
 	}
 
 }
