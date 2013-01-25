@@ -26,32 +26,30 @@ public class Snake {
 		switch (newDirection) {
 		case NORTH:
 			if (currentDirection == Direction.SOUTH) {
-				break;
+				return;
 			}
-			currentDirection = Direction.NORTH;
 			break;
 		
 		case EAST:
 			if (currentDirection == Direction.WEST) {
-				break;
+				return;
 			}
-			currentDirection = Direction.EAST;
 			break;
 		
 		case SOUTH:
 			if (currentDirection == Direction.NORTH) {
-				break;
+				return;
 			}
-			currentDirection = Direction.SOUTH;
 			break;
 		
 		case WEST:
 			if (currentDirection == Direction.EAST) {
-				break;
+				return;
 			}
-			currentDirection = Direction.WEST;
 			break;
 		}
+		
+		currentDirection = newDirection;
 	}
 
 	public void moveSnake(List<Fruit> inFruits) {
