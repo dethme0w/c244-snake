@@ -82,11 +82,6 @@ public class Snake {
 		snake.add(0, newHead);
 	}
 	
-	private boolean gotFruit() {
-		// TODO Check to see if you got some fruit
-		return false;
-	}
-
 	public boolean collidedSelf() {
 		// TODO: Compare the head segment with all others.
 		// If there is a match, the snake has collided with itself and the game
@@ -95,18 +90,14 @@ public class Snake {
 		return false;
 	}
 
-	public void defaultSnake(int startX, int startY) {
-		// TODO: Clear the snake segments, create a new snake
-		// with one segment located at startX,startY on the board
-
-	}
-
 	public List<SnakeSegment> getSnake() {
 		return snake;
 	}
 
-	public void setSnake(List<SnakeSegment> inSnake) {
-		this.snake = inSnake;
+	public void grow() {
+		// TODO Fuction that grows the snake after it ate some fruit
+		// Note: This is only needed if board is controlling snake
+		
 	}
 
 }
