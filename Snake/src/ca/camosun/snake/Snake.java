@@ -35,25 +35,25 @@ public class Snake {
 			if (currentDirection == Direction.SOUTH) {
 				break;
 			}
-			currentDirection = newDirection;
+			currentDirection = Direction.NORTH;
 			break;
 		case EAST:
 			if (currentDirection == Direction.WEST) {
 				break;
 			}
-			currentDirection = newDirection;
+			currentDirection = Direction.EAST;
 			break;
 		case SOUTH:
 			if (currentDirection == Direction.NORTH) {
 				break;
 			}
-			currentDirection = newDirection;
+			currentDirection = Direction.SOUTH;
 			break;
 		case WEST:
 			if (currentDirection == Direction.EAST) {
 				break;
 			}
-			currentDirection = newDirection;
+			currentDirection = Direction.WEST;
 			break;
 		}
 	}
