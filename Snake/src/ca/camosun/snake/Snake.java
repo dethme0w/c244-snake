@@ -15,34 +15,23 @@ public class Snake {
 	public static enum Direction {
 		NORTH, SOUTH, EAST, WEST;
 		
-		public boolean isOpposite(Direction other) {
+		public Direction opposite() {
 			switch (this) {
 			case NORTH:
-				if (other == Direction.SOUTH) {
-					return true;
-				}
-				break;
-			
+				return SOUTH;
 			case EAST:
-				if (other == Direction.WEST) {
-					return true;
-				}
-				break;
-			
+				return WEST;
 			case SOUTH:
-				if (other == Direction.NORTH) {
-					return true;
-				}
-				break;
-			
+				return NORTH;
 			case WEST:
-				if (other == Direction.EAST) {
-					return true;
-				}
-				break;
+				return EAST;
+			default:
+				throw new IllegalStateException("Direction not implemented");
 			}
-			
-			return false;
+		}
+		
+		public boolean isOpposite(Direction other) {
+			return opposite() == other;
 		}
 	}
 
