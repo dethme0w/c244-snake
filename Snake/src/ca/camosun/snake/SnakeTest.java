@@ -39,6 +39,17 @@ public class SnakeTest {
 	}
 	
 	@Test
+	public void testChangedDirectionTwiddlingOverridesLast() {
+		Snake snake = new Snake(NORTH);
+		
+		snake.changeDirection(EAST);
+		snake.changeDirection(NORTH);
+		
+		snake.moveSnake(noFruit);
+		assertEquals(NORTH, snake.getCurrentDirection());
+	}
+	
+	@Test
 	public void testChangeDirectionTwiddlingDirectionsDoesntCircumventNotOpposite() {
 		/* consider snake moving north.  
 		 * user presses right then down before snake moves.  
