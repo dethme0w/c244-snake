@@ -11,7 +11,6 @@ import java.util.List;
 public class Snake {
 	private List<SnakeSegment> snake;	
 	private Direction currentDirection;
-	private int distanceToMove;
 	
 	public static enum Direction {
 		NORTH, SOUTH, EAST, WEST
@@ -20,7 +19,6 @@ public class Snake {
 	public Snake() {
 		snake = new ArrayList<SnakeSegment>();
 		currentDirection = Direction.NORTH;
-		distanceToMove = 1;
 	}
 	
 	public void changeDirection(Direction newDirection) {
@@ -64,16 +62,16 @@ public class Snake {
 		switch (currentDirection) {
 		
 		case NORTH:
-			newHead.setPositionX(XPosition + distanceToMove);
+			newHead.setPositionX(XPosition + 1);
 			break;
 		case EAST:
-			newHead.setPositionY(YPosition + distanceToMove);
+			newHead.setPositionY(YPosition + 1);
 			break;
 		case SOUTH:
-			newHead.setPositionX(XPosition - distanceToMove);
+			newHead.setPositionX(XPosition - 1);
 			break;
 		case WEST:
-			newHead.setPositionY(YPosition - distanceToMove);
+			newHead.setPositionY(YPosition - 1);
 			break;
 		}
 		
