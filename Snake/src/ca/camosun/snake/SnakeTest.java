@@ -74,4 +74,25 @@ public class SnakeTest {
 		snake.moveSnake(noFruit);
 		assertEquals(EAST, snake.getCurrentDirection());
 	}
+	
+	@Test public void testSnakeSegmentEquals() {
+		SnakeSegment aSegment = new SnakeSegment(0,0);
+		SnakeSegment bSegment = new SnakeSegment(0,1);
+		SnakeSegment cSegment = new SnakeSegment(1,0);
+		SnakeSegment dSegment = new SnakeSegment(1,1);
+		SnakeSegment eSegment = new SnakeSegment(0,0);
+		
+		// Test unequal segments
+		assertFalse(aSegment.equals(bSegment));
+		assertFalse(aSegment.equals(cSegment));
+		assertFalse(aSegment.equals(dSegment));
+		
+		// Test equal but different segments
+		assertTrue(aSegment.equals(eSegment));
+		
+		// Test same segment 
+		assertFalse(aSegment.equals(aSegment));
+		
+	}
+	
 }
