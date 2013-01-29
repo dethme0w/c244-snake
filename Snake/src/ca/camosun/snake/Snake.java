@@ -70,16 +70,16 @@ public class Snake {
 		switch (currentDirection) {
 		
 		case NORTH:
-			newHead.setPositionX(XPosition + 1);
-			break;
-		case EAST:
 			newHead.setPositionY(YPosition + 1);
 			break;
+		case EAST:
+			newHead.setPositionX(XPosition + 1);
+			break;
 		case SOUTH:
-			newHead.setPositionX(XPosition - 1);
+			newHead.setPositionY(YPosition - 1);
 			break;
 		case WEST:
-			newHead.setPositionY(YPosition - 1);
+			newHead.setPositionX(XPosition - 1);
 			break;
 		}
 		
