@@ -18,7 +18,7 @@ public class SnakeTest {
 	}
 
 	@Test
-	public void testChangeDirectionOnlyAfterMove() {
+	public void changeDirectionOnlyAfterMove() {
 		Snake snake = new Snake(NORTH);
 
 		snake.changeDirection(EAST);
@@ -29,7 +29,7 @@ public class SnakeTest {
 	}
 
 	@Test
-	public void testChangeDirectionNotOpposite() {
+	public void changeDirectionNotOpposite() {
 		Snake snake = new Snake(NORTH);
 
 		snake.changeDirection(SOUTH);
@@ -39,7 +39,7 @@ public class SnakeTest {
 	}
 
 	@Test
-	public void testChangedDirectionTwiddlingOverridesLast() {
+	public void changedDirectionTwiddlingOverridesLast() {
 		Snake snake = new Snake(NORTH);
 
 		snake.changeDirection(EAST);
@@ -50,7 +50,7 @@ public class SnakeTest {
 	}
 
 	@Test
-	public void testChangedDirectionOppositeCheckingAppliesToLastMovedDirectionNotNextDirection() {
+	public void changedDirectionOppositeCheckingAppliesToLastMovedDirectionNotNextDirection() {
 		Snake snake = new Snake(NORTH);
 
 		snake.changeDirection(EAST);
@@ -62,7 +62,7 @@ public class SnakeTest {
 	}
 
 	@Test
-	public void testChangeDirectionTwiddlingDirectionsDoesntCircumventNotOpposite() {
+	public void changeDirectionTwiddlingDirectionsDoesntCircumventNotOpposite() {
 		/*
 		 * consider snake moving north. user presses right then down before
 		 * snake moves. on next move, snake shouldn't move down through itself.
@@ -78,7 +78,7 @@ public class SnakeTest {
 	}
 
 	@Test
-	public void testSnakeSegmentEquals() {
+	public void snakeSegmentEquals() {
 		SnakeSegment aSegment = new SnakeSegment(0, 0);
 		SnakeSegment bSegment = new SnakeSegment(0, 1);
 		SnakeSegment cSegment = new SnakeSegment(1, 0);
@@ -99,7 +99,7 @@ public class SnakeTest {
 	}
 
 	@Test
-	public void testCollided() {
+	public void collided() {
 		Snake snake = new Snake(NORTH);
 		assertFalse(snake.collidedSelf()); // Should not be in collision when brand new
 		
