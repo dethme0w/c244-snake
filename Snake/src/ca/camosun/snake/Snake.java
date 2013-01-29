@@ -99,9 +99,14 @@ public class Snake {
 
 		SnakeSegment head = snake.get(0);
 
-		if (snake.indexOf(head) == -1)
+		if (snake.size()<2) 
 			return false;
-
+		
+		for(int i=1; i<snake.size();i++){
+			if (snake.get(i).equals(head))
+				return true;
+		}
+		
 		return true;
 	}
 

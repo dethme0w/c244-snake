@@ -94,7 +94,7 @@ public class SnakeTest {
 		assertTrue(aSegment.equals(eSegment));
 
 		// Test same segment
-		assertFalse(aSegment.equals(aSegment));
+		assertTrue(aSegment.equals(aSegment));
 
 	}
 
