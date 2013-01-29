@@ -25,4 +25,22 @@ public class SnakeSegment {
 		this.positionY = positionY;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+
+		// We want a segment that is *not* this one
+		// This simplifies iterating the snake body
+		if (this == other)
+			return false;
+
+		SnakeSegment that = (SnakeSegment) other;
+
+		if (positionX != that.positionX)
+			return false;
+
+		if (positionY != that.positionY)
+			return false;
+
+		return true;
+	}
 }
