@@ -7,3 +7,4 @@ bin/
 /.project
 *.apk
 *.ap_
+*.log
