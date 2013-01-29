@@ -11,6 +11,7 @@ import java.util.List;
 public class Snake {
 	private List<SnakeSegment> snake;
 	private Direction currentDirection;
+	private Direction nextDirection; // This will become currentDirection only when we actually move
 
 	public static enum Direction {
 		NORTH, SOUTH, EAST, WEST;
@@ -48,14 +49,16 @@ public class Snake {
 		snake.add(new SnakeSegment(startX, startY));
 
 		currentDirection = startDir;
+		nextDirection = startDir;
 	}
 
 	public void changeDirection(Direction newDirection) {
 		if (newDirection.isOpposite(currentDirection)) {
 			return;
 		}
-
-		currentDirection = newDirection;
+		
+        // OK, direction change is allowed - queue it up
+		nextDirection = newDirection;
 	}
 
 	public Direction getCurrentDirection() {
@@ -82,7 +85,9 @@ public class Snake {
 			newHead.setPositionX(XPosition - 1);
 			break;
 		}
-
+        
+		currentDirection = nextDirection;
+		
 		SnakeSegment tail = snake.get(snake.size() - 1);
 		if (gotFruit(inFruits) == false) {
 			snake.remove(tail);

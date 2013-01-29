@@ -58,6 +58,7 @@ public class SnakeTest {
 
 		snake.moveSnake(noFruit);
 		assertEquals(WEST, snake.getCurrentDirection());
+		
 	}
 
 	@Test
