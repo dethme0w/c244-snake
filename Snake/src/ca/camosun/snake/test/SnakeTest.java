@@ -1,4 +1,4 @@
-package ca.camosun.snake;
+package ca.camosun.snake.test;
 
 import static org.junit.Assert.*;
 import static ca.camosun.snake.Snake.Direction.*;
@@ -8,6 +8,10 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import ca.camosun.snake.Fruit;
+import ca.camosun.snake.Snake;
+import ca.camosun.snake.SnakeSegment;
 
 public class SnakeTest {
 	List<Fruit> noFruit;
@@ -24,7 +28,7 @@ public class SnakeTest {
 		snake.changeDirection(EAST);
 		assertEquals(NORTH, snake.getCurrentDirection());
 
-		snake.moveSnake(noFruit);
+		snake.moveSnake();
 		assertEquals(EAST, snake.getCurrentDirection());
 	}
 
@@ -34,7 +38,7 @@ public class SnakeTest {
 
 		snake.changeDirection(SOUTH);
 
-		snake.moveSnake(noFruit);
+		snake.moveSnake();
 		assertEquals(NORTH, snake.getCurrentDirection());
 	}
 
@@ -45,7 +49,7 @@ public class SnakeTest {
 		snake.changeDirection(EAST);
 		snake.changeDirection(NORTH);
 
-		snake.moveSnake(noFruit);
+		snake.moveSnake();
 		assertEquals(NORTH, snake.getCurrentDirection());
 	}
 
@@ -56,7 +60,7 @@ public class SnakeTest {
 		snake.changeDirection(EAST);
 		snake.changeDirection(WEST);
 
-		snake.moveSnake(noFruit);
+		snake.moveSnake();
 		assertEquals(WEST, snake.getCurrentDirection());
 		
 	}
@@ -73,7 +77,7 @@ public class SnakeTest {
 		snake.changeDirection(EAST);
 		snake.changeDirection(SOUTH);
 
-		snake.moveSnake(noFruit);
+		snake.moveSnake();
 		assertEquals(EAST, snake.getCurrentDirection());
 	}
 
