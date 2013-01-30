@@ -30,7 +30,7 @@ public class SnakeTest {
 		snake.changeDirection(EAST);
 		assertEquals(NORTH, snake.getCurrentDirection());
 
-		snake.moveSnake();
+		snake.moveSnake(EAST);
 		assertEquals(EAST, snake.getCurrentDirection());
 		
 		snakeHead = snake.getSnake().get(0);
@@ -43,7 +43,7 @@ public class SnakeTest {
 
 		snake.changeDirection(SOUTH);
 
-		snake.moveSnake();
+		snake.moveSnake(NORTH);
 		assertEquals(NORTH, snake.getCurrentDirection());
 		
 		snakeHead = snake.getSnake().get(0);
@@ -57,7 +57,7 @@ public class SnakeTest {
 		snake.changeDirection(EAST);
 		snake.changeDirection(NORTH);
 
-		snake.moveSnake();
+		snake.moveSnake(NORTH);
 		assertEquals(NORTH, snake.getCurrentDirection());
 		
 		snakeHead = snake.getSnake().get(0);
@@ -71,7 +71,7 @@ public class SnakeTest {
 		snake.changeDirection(EAST);
 		snake.changeDirection(WEST);
 
-		snake.moveSnake();
+		snake.moveSnake(WEST);
 		assertEquals(WEST, snake.getCurrentDirection());
 		
 		snakeHead = snake.getSnake().get(0);
@@ -90,7 +90,7 @@ public class SnakeTest {
 		snake.changeDirection(EAST);
 		snake.changeDirection(SOUTH);
 
-		snake.moveSnake();
+		snake.moveSnake(EAST);
 		assertEquals(EAST, snake.getCurrentDirection());
 		
 		snakeHead = snake.getSnake().get(0);
