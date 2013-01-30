@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+
 import ca.camosun.snake.Snake;
 import ca.camosun.snake.SnakeBoard;
 import ca.camosun.snake.SnakeSegment;
