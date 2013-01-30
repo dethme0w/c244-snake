@@ -19,15 +19,6 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		snakeBoard = new SnakeBoard(this);
-		setContentView(snakeBoard);
-		snakeBoard.requestFocus();
-		
-		//startGame = (Button)findViewById(R.id.startGame);	
-		//startGame.setOnClickListener(runGame); 
-		
-
-	
 	}
 	
 	/* 
