@@ -65,7 +65,7 @@ public class Snake {
 		return currentDirection;
 	}
 
-	public void moveSnake(List<Fruit> inFruits) {
+	public void moveSnake() {
 		SnakeSegment newHead = snake.get(0);
 		int YPosition = newHead.getPositionY();
 		int XPosition = newHead.getPositionX();
@@ -89,9 +89,9 @@ public class Snake {
 		currentDirection = nextDirection;
 		
 		SnakeSegment tail = snake.get(snake.size() - 1);
-		if (gotFruit(inFruits) == false) {
+		/*if (gotFruit(inFruits) == false) {
 			snake.remove(tail);
-		}
+		}*/
 		snake.add(0, newHead);
 	}
 
