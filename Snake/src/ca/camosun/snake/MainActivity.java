@@ -24,7 +24,6 @@ public class MainActivity extends Activity {
 	/* 
 	 private OnClickListener runGame = new OnClickListener() {
 			public void onClick(View v) {
-				
 			//TODO: Code for the Start Game button needs to be linked to the SnakeBoard View
 			// instead of starting when you open the app
 	                     	
