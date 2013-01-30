@@ -1,6 +1,5 @@
 package ca.camosun.snake.test;
 
-import static ca.camosun.snake.Snake.Direction.NORTH;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
