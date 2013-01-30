@@ -1,5 +1,7 @@
 package ca.camosun.snake;
 
+import static ca.camosun.snake.Snake.Direction.NORTH;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,7 @@ public class SnakeBoard {
 	
 	public SnakeBoard() {
 		
-		snake = new Snake();
+		snake = new Snake(NORTH, 0, 0);
 		fruits = new ArrayList<Fruit>();
 		score = 0;
 		

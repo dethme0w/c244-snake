@@ -15,53 +15,68 @@ import ca.camosun.snake.SnakeSegment;
 
 public class SnakeTest {
 	List<Fruit> noFruit;
+	Snake snake;
+	SnakeSegment snakeHead;
 
 	@Before
 	public void setUp() throws Exception {
 		noFruit = Collections.emptyList();
+		snake = new Snake(NORTH, 0, 0);
 	}
 
 	@Test
 	public void changeDirectionOnlyAfterMove() {
-		Snake snake = new Snake(NORTH);
 
 		snake.changeDirection(EAST);
 		assertEquals(NORTH, snake.getCurrentDirection());
 
 		snake.moveSnake();
 		assertEquals(EAST, snake.getCurrentDirection());
+		
+		snakeHead = snake.getSnake().get(0);
+		assertTrue(snakeHead.getPositionX() == 1);
+		assertTrue(snakeHead.getPositionY() == 0);
 	}
 
 	@Test
 	public void changeDirectionNotOpposite() {
-		Snake snake = new Snake(NORTH);
 
 		snake.changeDirection(SOUTH);
 
 		snake.moveSnake();
 		assertEquals(NORTH, snake.getCurrentDirection());
+		
+		snakeHead = snake.getSnake().get(0);
+		assertTrue(snakeHead.getPositionX() == 0);
+		assertTrue(snakeHead.getPositionY() == 1);
 	}
 
 	@Test
 	public void changedDirectionTwiddlingOverridesLast() {
-		Snake snake = new Snake(NORTH);
 
 		snake.changeDirection(EAST);
 		snake.changeDirection(NORTH);
 
 		snake.moveSnake();
 		assertEquals(NORTH, snake.getCurrentDirection());
+		
+		snakeHead = snake.getSnake().get(0);
+		assertTrue(snakeHead.getPositionX() == 0);
+		assertTrue(snakeHead.getPositionY() == 1);
 	}
 
 	@Test
 	public void changedDirectionOppositeCheckingAppliesToLastMovedDirectionNotNextDirection() {
-		Snake snake = new Snake(NORTH);
 
 		snake.changeDirection(EAST);
 		snake.changeDirection(WEST);
 
 		snake.moveSnake();
 		assertEquals(WEST, snake.getCurrentDirection());
+		
+		snakeHead = snake.getSnake().get(0);
+		assertTrue(snakeHead.getPositionX() == -1);
+		assertTrue(snakeHead.getPositionY() == 0);
 		
 	}
 
@@ -72,13 +87,15 @@ public class SnakeTest {
 		 * snake moves. on next move, snake shouldn't move down through itself.
 		 */
 
-		Snake snake = new Snake(NORTH);
-
 		snake.changeDirection(EAST);
 		snake.changeDirection(SOUTH);
 
 		snake.moveSnake();
 		assertEquals(EAST, snake.getCurrentDirection());
+		
+		snakeHead = snake.getSnake().get(0);
+		assertTrue(snakeHead.getPositionX() == 1);
+		assertTrue(snakeHead.getPositionY() == 0);
 	}
 
 	@Test
@@ -104,7 +121,6 @@ public class SnakeTest {
 
 	@Test
 	public void collided() {
-		Snake snake = new Snake(NORTH);
 		assertFalse(snake.collidedSelf()); // Should not be in collision when brand new
 		
 		// TODO: Add segments to the snake

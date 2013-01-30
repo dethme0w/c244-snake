@@ -36,14 +36,6 @@ public class Snake {
 		}
 	}
 
-	public Snake() {
-		this(Direction.NORTH);
-	}
-
-	public Snake(Direction startDir) {
-		this(startDir, 50, 50);
-	}
-
 	public Snake(Direction startDir, int startX, int startY) {
 		snake = new ArrayList<SnakeSegment>();
 		snake.add(new SnakeSegment(startX, startY));
@@ -70,7 +62,7 @@ public class Snake {
 		int YPosition = newHead.getPositionY();
 		int XPosition = newHead.getPositionX();
 
-		switch (currentDirection) {
+		switch (nextDirection) {
 
 		case NORTH:
 			newHead.setPositionY(YPosition + 1);
