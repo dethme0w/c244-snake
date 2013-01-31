@@ -13,7 +13,21 @@ public class Snake {
 	private Direction currentDirection;
 
 	public static enum Direction {
-		NORTH, SOUTH, EAST, WEST;
+		NORTH("1"), 
+		SOUTH("-1"), 
+		EAST("1"), 
+		WEST("-1");
+
+		private final String visible;
+
+		Direction(String humanVisible) {
+			visible = humanVisible;
+		}
+		
+		@Override
+        public String toString() {
+                return visible;
+        }
 
 		public Direction opposite() {
 			switch (this) {
@@ -46,8 +60,8 @@ public class Snake {
 		if (newDirection.isOpposite(currentDirection)) {
 			return;
 		}
-		
-        // OK, direction change is allowed - queue it up
+
+		// OK, direction change is allowed - queue it up
 	}
 
 	public Direction getCurrentDirection() {
@@ -74,13 +88,13 @@ public class Snake {
 			newHead.setPositionX(XPosition - 1);
 			break;
 		}
-        
+
 		currentDirection = nextDirection;
-		
+
 		SnakeSegment tail = snake.get(snake.size() - 1);
-		/*if (gotFruit(inFruits) == false) {
-			snake.remove(tail);
-		}*/
+		/*
+		 * if (gotFruit(inFruits) == false) { snake.remove(tail); }
+		 */
 		snake.add(0, newHead);
 	}
 
@@ -88,14 +102,14 @@ public class Snake {
 
 		SnakeSegment head = snake.get(0);
 
-		if (snake.size()<2) 
+		if (snake.size() < 2)
 			return false;
-		
-		for(int i=1; i<snake.size();i++){
+
+		for (int i = 1; i < snake.size(); i++) {
 			if (snake.get(i).equals(head))
 				return true;
 		}
-		
+
 		return true;
 	}
 
