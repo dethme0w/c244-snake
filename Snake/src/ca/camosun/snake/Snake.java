@@ -13,21 +13,16 @@ public class Snake {
 	private Direction currentDirection;
 
 	public static enum Direction {
-		NORTH("1"), 
-		SOUTH("-1"), 
-		EAST("1"), 
-		WEST("-1");
+		NORTH(1), 
+		SOUTH(-1), 
+		EAST(1), 
+		WEST(-1);
 
-		private final String visible;
+		private final int distance;
 
-		Direction(String humanVisible) {
-			visible = humanVisible;
+		Direction(int moveDistance) {
+			distance = moveDistance;
 		}
-		
-		@Override
-        public String toString() {
-                return visible;
-        }
 
 		public Direction opposite() {
 			switch (this) {
@@ -76,16 +71,16 @@ public class Snake {
 		switch (nextDirection) {
 
 		case NORTH:
-			newHead.setPositionY(YPosition + 1);
+			newHead.setPositionY(YPosition + nextDirection.distance);
 			break;
 		case EAST:
-			newHead.setPositionX(XPosition + 1);
+			newHead.setPositionX(XPosition + nextDirection.distance);
 			break;
 		case SOUTH:
-			newHead.setPositionY(YPosition - 1);
+			newHead.setPositionY(YPosition - nextDirection.distance);
 			break;
 		case WEST:
-			newHead.setPositionX(XPosition - 1);
+			newHead.setPositionX(XPosition - nextDirection.distance);
 			break;
 		}
 
