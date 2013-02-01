@@ -4,12 +4,15 @@ import static org.junit.Assert.*;
 import static ca.camosun.snake.Snake.Direction.*;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import ca.camosun.snake.Fruit;
+import ca.camosun.snake.HighScores;
+import ca.camosun.snake.Score;
 import ca.camosun.snake.Snake;
 import ca.camosun.snake.SnakeSegment;
 
@@ -128,6 +131,52 @@ public class SnakeTest {
 		//       Add segment that equals head
 		//       Test for collision
 		
+		
+	}
+	
+	@Test
+	public void highScoreTest(){
+		
+		HighScores scores;
+		
+		Score [] scoreData = {
+			new Score("i", 1000),
+			new Score("f", 3000),
+			new Score("h", 2000),
+			new Score("e", 4800),
+			new Score("d", 4900),
+			new Score("c", 6000),
+			new Score("b", 7000),
+			new Score("a", 9000),
+			new Score("g", 2600),
+			new Score("j", 900),
+		};
+		
+		scores = new HighScores();
+		
+		for(int i = 0; i < scoreData.length; i++){
+			scores.addScore(scoreData[i].getName(), scoreData[i].getScore());
+			
+		}
+		
+		Iterator<Score> iterator = scores.iterator();
+		
+		assertTrue(iterator.hasNext() == true);
+		assertTrue(iterator.next().equals(new Score("a", 9000)));
+		assertTrue(iterator.next().equals(new Score("b", 7000)));
+		assertTrue(iterator.next().equals(new Score("c", 6000)));
+		assertTrue(iterator.next().equals(new Score("d", 4900)));
+		assertTrue(iterator.next().equals(new Score("e", 4800)));
+		assertTrue(iterator.next().equals(new Score("f", 3000)));
+		assertTrue(iterator.next().equals(new Score("g", 2600)));
+		assertTrue(iterator.next().equals(new Score("h", 2000)));
+		assertTrue(iterator.next().equals(new Score("i", 1000)));
+		assertTrue(iterator.next().equals(new Score("j", 900)));
+		
+		
+	}	
+		
+		
+		
 	}
 
-}
