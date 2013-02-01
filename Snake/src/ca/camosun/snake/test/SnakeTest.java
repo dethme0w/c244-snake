@@ -31,10 +31,10 @@ public class SnakeTest {
 	public void changeDirectionOnlyAfterMove() {
 
 		snake.changeDirection(EAST);
-		assertEquals(NORTH, snake.getCurrentDirection());
+		assertTrue(snake.getCurrentDirection() == NORTH);
 
 		snake.moveSnake(EAST);
-		assertEquals(EAST, snake.getCurrentDirection());
+		assertTrue(snake.getCurrentDirection() == EAST);
 		
 		snakeHead = snake.getSnake().get(0);
 		assertTrue(snakeHead.getPositionX() == 1);
@@ -47,7 +47,7 @@ public class SnakeTest {
 		snake.changeDirection(SOUTH);
 
 		snake.moveSnake(NORTH);
-		assertEquals(NORTH, snake.getCurrentDirection());
+		assertTrue(snake.getCurrentDirection() == NORTH);
 		
 		snakeHead = snake.getSnake().get(0);
 		assertTrue(snakeHead.getPositionX() == 0);
@@ -61,7 +61,7 @@ public class SnakeTest {
 		snake.changeDirection(NORTH);
 
 		snake.moveSnake(NORTH);
-		assertEquals(NORTH, snake.getCurrentDirection());
+		assertTrue(snake.getCurrentDirection() == NORTH);
 		
 		snakeHead = snake.getSnake().get(0);
 		assertTrue(snakeHead.getPositionX() == 0);
@@ -75,7 +75,7 @@ public class SnakeTest {
 		snake.changeDirection(WEST);
 
 		snake.moveSnake(WEST);
-		assertEquals(WEST, snake.getCurrentDirection());
+		assertTrue(snake.getCurrentDirection() == WEST);
 		
 		snakeHead = snake.getSnake().get(0);
 		assertTrue(snakeHead.getPositionX() == -1);
@@ -94,7 +94,7 @@ public class SnakeTest {
 		snake.changeDirection(SOUTH);
 
 		snake.moveSnake(EAST);
-		assertEquals(EAST, snake.getCurrentDirection());
+		assertTrue(snake.getCurrentDirection() == EAST);
 		
 		snakeHead = snake.getSnake().get(0);
 		assertTrue(snakeHead.getPositionX() == 1);
@@ -110,22 +110,21 @@ public class SnakeTest {
 		SnakeSegment eSegment = new SnakeSegment(0, 0);
 
 		// Test unequal segments
-		assertFalse(aSegment.equals(bSegment));
-		assertFalse(aSegment.equals(cSegment));
-		assertFalse(aSegment.equals(dSegment));
+		assertTrue(aSegment.equals(bSegment) == false);
+		assertTrue(aSegment.equals(cSegment) == false);
+		assertTrue(aSegment.equals(dSegment) == false);
 
 		// Test equal but different segments
-		assertTrue(aSegment.equals(eSegment));
+		assertTrue(aSegment.equals(eSegment) == true);
 
 		// Test same segment
-		assertTrue(aSegment.equals(aSegment));
+		assertTrue(aSegment.equals(aSegment) == true);
 
 	}
 
 	@Test
 	public void collided() {
-		assertFalse(snake.collidedSelf()); // Should not be in collision when brand new
-		
+		assertTrue(snake.collidedSelf() == false); // Should not be in collision when brand new
 		// TODO: Add segments to the snake
 		//       Test for no collision
 		//       Add segment that equals head

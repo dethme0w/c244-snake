@@ -27,19 +27,19 @@ public class SnakeBoardTest {
 				
 		// Try to go south (will run off board)
 		snake.changeDirection(Snake.Direction.SOUTH);
-		assertTrue(board.wentOffBoard());
+		assertTrue(board.wentOffBoard() == true);
 		
 		// Try to go north (will not run off board)
 		snake.changeDirection(Snake.Direction.NORTH);
-		assertFalse(board.wentOffBoard());
+		assertTrue(board.wentOffBoard() == false);
 		
 		// Try to go west (will run off board)
 		snake.changeDirection(Snake.Direction.WEST);
-		assertTrue(board.wentOffBoard());
+		assertTrue(board.wentOffBoard() == true);
 		
 		// Try to go east (will not run off board)
 		snake.changeDirection(Snake.Direction.EAST);
-		assertFalse(board.wentOffBoard());
+		assertTrue(board.wentOffBoard() == false);
 		
 		
 		
