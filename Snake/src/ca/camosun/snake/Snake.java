@@ -51,14 +51,6 @@ public class Snake {
 		currentDirection = startDir;
 	}
 
-	public void changeDirection(Direction newDirection) {
-		if (newDirection.isOpposite(currentDirection)) {
-			return;
-		}
-
-		// OK, direction change is allowed - queue it up
-	}
-
 	public Direction getCurrentDirection() {
 		return currentDirection;
 	}
@@ -67,20 +59,20 @@ public class Snake {
 		SnakeSegment newHead = snake.get(0);
 		int YPosition = newHead.getPositionY();
 		int XPosition = newHead.getPositionX();
+		
+		if (nextDirection.isOpposite(currentDirection)) {
+			return;
+		}
 
 		switch (nextDirection) {
 
 		case NORTH:
+		case SOUTH:
 			newHead.setPositionY(YPosition + nextDirection.distance);
 			break;
 		case EAST:
-			newHead.setPositionX(XPosition + nextDirection.distance);
-			break;
-		case SOUTH:
-			newHead.setPositionY(YPosition - nextDirection.distance);
-			break;
 		case WEST:
-			newHead.setPositionX(XPosition - nextDirection.distance);
+			newHead.setPositionX(XPosition + nextDirection.distance);
 			break;
 		}
 

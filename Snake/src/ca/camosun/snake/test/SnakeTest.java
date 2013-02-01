@@ -28,23 +28,36 @@ public class SnakeTest {
 	}
 
 	@Test
-	public void changeDirectionOnlyAfterMove() {
-
-		snake.changeDirection(EAST);
-		assertTrue(snake.getCurrentDirection() == NORTH);
+	public void changeDirections() {
 
 		snake.moveSnake(EAST);
 		assertTrue(snake.getCurrentDirection() == EAST);
 		
 		snakeHead = snake.getSnake().get(0);
 		assertTrue(snakeHead.getPositionX() == 1);
+		assertTrue(snakeHead.getPositionY() == 0);
+		
+		snake.moveSnake(NORTH);
+		assertTrue(snake.getCurrentDirection() == NORTH);
+		assertTrue(snakeHead.getPositionX() == 1);
+		assertTrue(snakeHead.getPositionY() == 1);
+		
+		snake.moveSnake(WEST);
+		assertTrue(snake.getCurrentDirection() == WEST);
+		assertTrue(snakeHead.getPositionX() == 0);
+		assertTrue(snakeHead.getPositionY() == 1);
+		
+		snake.moveSnake(SOUTH);
+		assertTrue(snake.getCurrentDirection() == SOUTH);
+		assertTrue(snakeHead.getPositionX() == 0);
 		assertTrue(snakeHead.getPositionY() == 0);
 	}
 
 	@Test
 	public void changeDirectionNotOpposite() {
 
-		snake.changeDirection(SOUTH);
+		snake.moveSnake(SOUTH);
+		assertTrue(snake.getCurrentDirection() == NORTH);
 
 		snake.moveSnake(NORTH);
 		assertTrue(snake.getCurrentDirection() == NORTH);
@@ -52,53 +65,6 @@ public class SnakeTest {
 		snakeHead = snake.getSnake().get(0);
 		assertTrue(snakeHead.getPositionX() == 0);
 		assertTrue(snakeHead.getPositionY() == 1);
-	}
-
-	@Test
-	public void changedDirectionTwiddlingOverridesLast() {
-
-		snake.changeDirection(EAST);
-		snake.changeDirection(NORTH);
-
-		snake.moveSnake(NORTH);
-		assertTrue(snake.getCurrentDirection() == NORTH);
-		
-		snakeHead = snake.getSnake().get(0);
-		assertTrue(snakeHead.getPositionX() == 0);
-		assertTrue(snakeHead.getPositionY() == 1);
-	}
-
-	@Test
-	public void changedDirectionOppositeCheckingAppliesToLastMovedDirectionNotNextDirection() {
-
-		snake.changeDirection(EAST);
-		snake.changeDirection(WEST);
-
-		snake.moveSnake(WEST);
-		assertTrue(snake.getCurrentDirection() == WEST);
-		
-		snakeHead = snake.getSnake().get(0);
-		assertTrue(snakeHead.getPositionX() == -1);
-		assertTrue(snakeHead.getPositionY() == 0);
-		
-	}
-
-	@Test
-	public void changeDirectionTwiddlingDirectionsDoesntCircumventNotOpposite() {
-		/*
-		 * consider snake moving north. user presses right then down before
-		 * snake moves. on next move, snake shouldn't move down through itself.
-		 */
-
-		snake.changeDirection(EAST);
-		snake.changeDirection(SOUTH);
-
-		snake.moveSnake(EAST);
-		assertTrue(snake.getCurrentDirection() == EAST);
-		
-		snakeHead = snake.getSnake().get(0);
-		assertTrue(snakeHead.getPositionX() == 1);
-		assertTrue(snakeHead.getPositionY() == 0);
 	}
 
 	@Test
