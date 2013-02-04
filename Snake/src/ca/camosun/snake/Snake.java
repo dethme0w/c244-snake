@@ -13,10 +13,7 @@ public class Snake {
 	private Direction currentDirection;
 
 	public static enum Direction {
-		NORTH(1), 
-		SOUTH(-1), 
-		EAST(1), 
-		WEST(-1);
+		NORTH(1), SOUTH(-1), EAST(1), WEST(-1);
 
 		private final int distance;
 
@@ -59,7 +56,7 @@ public class Snake {
 		SnakeSegment newHead = snake.get(0);
 		int YPosition = newHead.getPositionY();
 		int XPosition = newHead.getPositionX();
-		
+
 		if (nextDirection.isOpposite(currentDirection)) {
 			return;
 		}
@@ -89,8 +86,9 @@ public class Snake {
 
 		SnakeSegment head = snake.get(0);
 
-		if (snake.size() < 2)
+		if (snake.size() < 2) {
 			return false;
+		}
 
 		for (int i = 1; i < snake.size(); i++) {
 			if (snake.get(i).equals(head))

@@ -32,21 +32,21 @@ public class SnakeTest {
 
 		snake.moveSnake(EAST);
 		assertTrue(snake.getCurrentDirection() == EAST);
-		
+
 		snakeHead = snake.getSnake().get(0);
 		assertTrue(snakeHead.getPositionX() == 1);
 		assertTrue(snakeHead.getPositionY() == 0);
-		
+
 		snake.moveSnake(NORTH);
 		assertTrue(snake.getCurrentDirection() == NORTH);
 		assertTrue(snakeHead.getPositionX() == 1);
 		assertTrue(snakeHead.getPositionY() == 1);
-		
+
 		snake.moveSnake(WEST);
 		assertTrue(snake.getCurrentDirection() == WEST);
 		assertTrue(snakeHead.getPositionX() == 0);
 		assertTrue(snakeHead.getPositionY() == 1);
-		
+
 		snake.moveSnake(SOUTH);
 		assertTrue(snake.getCurrentDirection() == SOUTH);
 		assertTrue(snakeHead.getPositionX() == 0);
@@ -61,7 +61,7 @@ public class SnakeTest {
 
 		snake.moveSnake(NORTH);
 		assertTrue(snake.getCurrentDirection() == NORTH);
-		
+
 		snakeHead = snake.getSnake().get(0);
 		assertTrue(snakeHead.getPositionX() == 0);
 		assertTrue(snakeHead.getPositionY() == 1);
@@ -90,42 +90,35 @@ public class SnakeTest {
 
 	@Test
 	public void collided() {
-		assertTrue(snake.collidedSelf() == false); // Should not be in collision when brand new
+		assertTrue(snake.collidedSelf() == false); // Should not be in collision
+													// when brand new
 		// TODO: Add segments to the snake
-		//       Test for no collision
-		//       Add segment that equals head
-		//       Test for collision
-		
-		
+		// Test for no collision
+		// Add segment that equals head
+		// Test for collision
+
 	}
-	
+
 	@Test
-	public void highScoreTest(){
-		
+	public void highScoreTest() {
+
 		HighScores scores;
-		
-		Score [] scoreData = {
-			new Score("i", 1000),
-			new Score("f", 3000),
-			new Score("h", 2000),
-			new Score("e", 4800),
-			new Score("d", 4900),
-			new Score("c", 6000),
-			new Score("b", 7000),
-			new Score("a", 9000),
-			new Score("g", 2600),
-			new Score("j", 900),
-		};
-		
+
+		Score[] scoreData = { new Score("i", 1000), new Score("f", 3000),
+				new Score("h", 2000), new Score("e", 4800),
+				new Score("d", 4900), new Score("c", 6000),
+				new Score("b", 7000), new Score("a", 9000),
+				new Score("g", 2600), new Score("j", 900), };
+
 		scores = new HighScores();
-		
-		for(int i = 0; i < scoreData.length; i++){
+
+		for (int i = 0; i < scoreData.length; i++) {
 			scores.addScore(scoreData[i].getName(), scoreData[i].getScore());
-			
+
 		}
-		
+
 		Iterator<Score> iterator = scores.iterator();
-		
+
 		assertTrue(iterator.hasNext() == true);
 		assertTrue(iterator.next().equals(new Score("a", 9000)));
 		assertTrue(iterator.next().equals(new Score("b", 7000)));
@@ -137,11 +130,7 @@ public class SnakeTest {
 		assertTrue(iterator.next().equals(new Score("h", 2000)));
 		assertTrue(iterator.next().equals(new Score("i", 1000)));
 		assertTrue(iterator.next().equals(new Score("j", 900)));
-		
-		
-	}	
-		
-		
-		
+
 	}
 
+}

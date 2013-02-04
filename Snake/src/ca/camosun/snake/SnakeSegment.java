@@ -27,7 +27,7 @@ public class SnakeSegment {
 
 	@Override
 	public boolean equals(Object other) {
-		
+
 		SnakeSegment that = (SnakeSegment) other;
 
 		if (positionX != that.positionX)

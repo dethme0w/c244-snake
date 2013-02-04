@@ -8,36 +8,34 @@ import java.util.List;
 public class HighScores implements Iterable<Score> {
 	private List<Score> highScores;
 	int scoresToKeep = 10;
-	
-	public HighScores(){
-		highScores = new ArrayList<Score>();	
+
+	public HighScores() {
+		highScores = new ArrayList<Score>();
 	}
 
-	
 	@Override
 	public Iterator<Score> iterator() {
 		Collections.sort(highScores);
 		Collections.reverse(highScores);
-		
+
 		return highScores.iterator();
 	}
-	
-	public void addScore(String inName, int inScore){
-		
+
+	public void addScore(String inName, int inScore) {
+
 		Score newScore = new Score(inName, inScore);
-		
-		if(highScores.size() == scoresToKeep){
+
+		if (highScores.size() == scoresToKeep) {
 			int comparison = newScore.compareTo(Collections.min(highScores));
-			if(comparison > 0){
+			if (comparison > 0) {
 				highScores.remove(Collections.min(highScores));
 			}
-			
+
 		}
-		
+
 		highScores.add(newScore);
 		Collections.sort(highScores);
 		Collections.reverse(highScores);
 	}
-	
-	
+
 }
