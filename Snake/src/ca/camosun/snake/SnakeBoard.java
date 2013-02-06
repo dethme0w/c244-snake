@@ -24,7 +24,7 @@ public class SnakeBoard {
 	// TODO: Method to detect a collision between the snake and the edge
 
 	public boolean wentOffBoard() {
-		SnakeSegment head = snake.getSnake().get(0);
+		SnakeSegment head = snake.getHead();
 		int x = head.getPositionX();
 		int y = head.getPositionY();
 

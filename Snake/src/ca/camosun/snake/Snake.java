@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class Snake {
-	private List<SnakeSegment> snake;
+	private List<SnakeSegment> segments;
 	private Direction currentDirection;
 
 	public static enum Direction {
@@ -42,8 +42,8 @@ public class Snake {
 	}
 
 	public Snake(Direction startDir, int startX, int startY) {
-		snake = new ArrayList<SnakeSegment>();
-		snake.add(new SnakeSegment(startX, startY));
+		segments = new ArrayList<SnakeSegment>();
+		segments.add(new SnakeSegment(startX, startY));
 
 		currentDirection = startDir;
 	}
@@ -53,7 +53,7 @@ public class Snake {
 	}
 
 	public void moveSnake(Direction nextDirection) {
-		SnakeSegment newHead = snake.get(0);
+		SnakeSegment newHead = segments.get(0);
 		int YPosition = newHead.getPositionY();
 		int XPosition = newHead.getPositionX();
 
@@ -75,35 +75,35 @@ public class Snake {
 
 		currentDirection = nextDirection;
 
-		SnakeSegment tail = snake.get(snake.size() - 1);
+		SnakeSegment tail = segments.get(segments.size() - 1);
 		/*
 		 * if (gotFruit(inFruits) == false) { snake.remove(tail); }
 		 */
-		snake.add(0, newHead);
+		segments.add(0, newHead);
 	}
 
 	public boolean collidedSelf() {
 
-		SnakeSegment head = snake.get(0);
+		SnakeSegment head = segments.get(0);
 
-		if (snake.size() < 2) {
+		if (segments.size() < 2) {
 			return false;
 		}
 
-		for (int i = 1; i < snake.size(); i++) {
-			if (snake.get(i).equals(head))
+		for (int i = 1; i < segments.size(); i++) {
+			if (segments.get(i).equals(head))
 				return true;
 		}
 
 		return true;
 	}
 
-	public List<SnakeSegment> getSnake() {
-		return snake;
+	public SnakeSegment getHead() {
+		return segments.get(0);
 	}
 
 	private boolean gotFruit(List<Fruit> inFruits) {
-		SnakeSegment head = snake.get(0);
+		SnakeSegment head = segments.get(0);
 		int headX = head.getPositionX();
 		int headY = head.getPositionY();
 
