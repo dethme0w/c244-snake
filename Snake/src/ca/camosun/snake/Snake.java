@@ -3,10 +3,6 @@ package ca.camosun.snake;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Describes the snake.
- * 
- */
 
 public class Snake {
 	private List<SnakeSegment> segments;
@@ -76,9 +72,6 @@ public class Snake {
 		currentDirection = nextDirection;
 
 		SnakeSegment tail = segments.get(segments.size() - 1);
-		/*
-		 * if (gotFruit(inFruits) == false) { snake.remove(tail); }
-		 */
 		segments.add(0, newHead);
 	}
 
