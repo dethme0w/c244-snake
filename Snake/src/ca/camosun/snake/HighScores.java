@@ -34,8 +34,6 @@ public class HighScores implements Iterable<Score> {
 		}
 
 		highScores.add(newScore);
-		Collections.sort(highScores);
-		Collections.reverse(highScores);
 	}
 
 }
