@@ -7,10 +7,11 @@ import java.util.List;
 
 public class HighScores implements Iterable<Score> {
 	private List<Score> highScores;
-	int scoresToKeep = 10;
+	int scoresToKeep;
 
-	public HighScores() {
+	public HighScores(int inScoresToKeep) {
 		highScores = new ArrayList<Score>();
+		scoresToKeep = inScoresToKeep;
 	}
 
 	@Override

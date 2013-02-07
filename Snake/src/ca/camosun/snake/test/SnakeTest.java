@@ -110,7 +110,7 @@ public class SnakeTest {
 				new Score("b", 7000), new Score("a", 9000),
 				new Score("g", 2600), new Score("j", 900), };
 
-		scores = new HighScores();
+		scores = new HighScores(10);
 
 		for (int i = 0; i < scoreData.length; i++) {
 			scores.addScore(scoreData[i].getName(), scoreData[i].getScore());
