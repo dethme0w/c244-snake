@@ -18,22 +18,6 @@ public class Score implements Comparable<Score> {
 
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		Score other = (Score) o;
-
-		if (other.name != this.name) {
-			return false;
-		}
-
-		if (other.score != this.score) {
-			return false;
-		}
-
-		return true;
-
-	}
-
 	public int getScore() {
 		return score;
 	}
