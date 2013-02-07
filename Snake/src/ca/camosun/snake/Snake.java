@@ -92,20 +92,6 @@ public class Snake {
 		return segments.get(0);
 	}
 
-	private boolean gotFruit(List<Fruit> inFruits) {
-		SnakeSegment head = segments.get(0);
-		int headX = head.getPositionX();
-		int headY = head.getPositionY();
-
-		for (Fruit current : inFruits) {
-			int fruitX = current.getPositionX();
-			int fruitY = current.getPositionY();
-
-			if (headX == fruitX && headY == fruitY) {
-				return true;
-			}
-		}
-		return false;
-	}
+	
 
 }

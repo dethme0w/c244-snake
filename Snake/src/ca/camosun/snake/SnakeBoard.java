@@ -44,8 +44,26 @@ public class SnakeBoard {
 		return false;
 	}
 
-	// TODO: Method to detect fruit collision
+	public boolean ateFruit() {
+		SnakeSegment head = snake.getHead();
+		int headX = head.getPositionX();
+		int headY = head.getPositionY();
 
+		for (Fruit current : fruits) {
+			int fruitX = current.getPositionX();
+			int fruitY = current.getPositionY();
+
+			if (headX == fruitX && headY == fruitY) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void addFruit(Fruit inFruit) {
+		fruits.add(inFruit);
+	}
+	
 	public Snake getSnake() {
 		return snake;
 	}

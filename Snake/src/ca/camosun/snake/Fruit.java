@@ -13,6 +13,11 @@ public class Fruit {
 		points = inPoints;
 		flavour = inFlavour;
 	}
+	
+	public Fruit(int inX, int inY) {
+		positionX = inX;
+		positionY = inY;
+	}
 
 	public int getPositionY() {
 		return positionY;
