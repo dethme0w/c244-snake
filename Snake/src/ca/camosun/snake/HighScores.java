@@ -25,11 +25,12 @@ public class HighScores implements Iterable<Score> {
 	public void addScore(String inName, int inScore) {
 
 		Score newScore = new Score(inName, inScore);
-
+		Score lowestScore = Collections.min(highScores);
+		
 		if (highScores.size() == scoresToKeep) {
-			int comparison = newScore.compareTo(Collections.min(highScores));
+			int comparison = newScore.compareTo(lowestScore);
 			if (comparison > 0) {
-				highScores.remove(Collections.min(highScores));
+				highScores.remove(lowestScore);
 			}
 
 		}
