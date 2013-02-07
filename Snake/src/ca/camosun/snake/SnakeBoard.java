@@ -60,7 +60,7 @@ public class SnakeBoard {
 		return false;
 	}
 	
-	public void addFruit(Fruit inFruit) {
+	public void placeFruit(Fruit inFruit) {
 		fruits.add(inFruit);
 	}
 	

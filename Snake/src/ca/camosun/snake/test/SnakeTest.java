@@ -20,6 +20,7 @@ public class SnakeTest {
 	List<Fruit> noFruit;
 	Snake snake;
 	SnakeSegment snakeHead;
+	boolean ateFruit = false;
 
 	@Before
 	public void setUp() throws Exception {
@@ -30,24 +31,24 @@ public class SnakeTest {
 	@Test
 	public void changeDirections() {
 
-		snake.moveSnake(EAST);
+		snake.moveSnake(EAST, ateFruit);
 		assertTrue(snake.getCurrentDirection() == EAST);
 
 		snakeHead = snake.getHead();
 		assertTrue(snakeHead.getPositionX() == 1);
 		assertTrue(snakeHead.getPositionY() == 0);
 
-		snake.moveSnake(NORTH);
+		snake.moveSnake(NORTH, ateFruit);
 		assertTrue(snake.getCurrentDirection() == NORTH);
 		assertTrue(snakeHead.getPositionX() == 1);
 		assertTrue(snakeHead.getPositionY() == 1);
 
-		snake.moveSnake(WEST);
+		snake.moveSnake(WEST, ateFruit);
 		assertTrue(snake.getCurrentDirection() == WEST);
 		assertTrue(snakeHead.getPositionX() == 0);
 		assertTrue(snakeHead.getPositionY() == 1);
 
-		snake.moveSnake(SOUTH);
+		snake.moveSnake(SOUTH, ateFruit);
 		assertTrue(snake.getCurrentDirection() == SOUTH);
 		assertTrue(snakeHead.getPositionX() == 0);
 		assertTrue(snakeHead.getPositionY() == 0);
@@ -56,10 +57,10 @@ public class SnakeTest {
 	@Test
 	public void changeDirectionNotOpposite() {
 
-		snake.moveSnake(SOUTH);
+		snake.moveSnake(SOUTH, ateFruit);
 		assertTrue(snake.getCurrentDirection() == NORTH);
 
-		snake.moveSnake(NORTH);
+		snake.moveSnake(NORTH, ateFruit);
 		assertTrue(snake.getCurrentDirection() == NORTH);
 
 		snakeHead = snake.getHead();
@@ -97,6 +98,17 @@ public class SnakeTest {
 		// Add segment that equals head
 		// Test for collision
 
+	}
+	
+	@Test
+	public void snakeGrows() {
+		assertTrue(snake.size() == 1);
+		
+		snake.moveSnake(NORTH, false);
+		assertTrue(snake.size() == 1);
+		
+		snake.moveSnake(NORTH, true);
+		assertTrue(snake.size() == 2);
 	}
 
 	

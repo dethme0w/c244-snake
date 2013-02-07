@@ -45,8 +45,8 @@ public class Snake {
 		return currentDirection;
 	}
 
-	public void moveSnake(Direction nextDirection) {
-		SnakeSegment newHead = segments.get(0);
+	public void moveSnake(Direction nextDirection, boolean ateFruit) {
+		SnakeSegment newHead = getHead();
 		int YPosition = newHead.getPositionY();
 		int XPosition = newHead.getPositionX();
 
@@ -67,9 +67,15 @@ public class Snake {
 		}
 
 		currentDirection = nextDirection;
-
 		SnakeSegment tail = segments.get(segments.size() - 1);
+		
+		if (ateFruit == true) {
+			segments.add(0, newHead);
+			return;
+		}
+		
 		segments.add(0, newHead);
+		segments.remove(tail);
 	}
 
 	public boolean collidedSelf() {
@@ -91,7 +97,8 @@ public class Snake {
 	public SnakeSegment getHead() {
 		return segments.get(0);
 	}
-
 	
-
+	public int size() {
+		return segments.size();
+	}
 }
