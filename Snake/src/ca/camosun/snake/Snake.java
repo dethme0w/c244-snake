@@ -25,11 +25,8 @@ public class Snake {
 				return WEST;
 			case SOUTH:
 				return NORTH;
-			case WEST:
-				return EAST;
-			default:
-				throw new IllegalStateException("Direction not implemented");
 			}
+			return EAST;
 		}
 
 		public boolean isOpposite(Direction other) {
