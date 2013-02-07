@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import ca.camosun.snake.Fruit;
 import ca.camosun.snake.HighScores;
-import ca.camosun.snake.Score;
+
 import ca.camosun.snake.Snake;
 import ca.camosun.snake.SnakeSegment;
 
