@@ -83,7 +83,7 @@ public class Snake {
 
 		SnakeSegment head = segments.peek();
 
-		if (segments.size() < 2) {
+		if (segments.size() == 1) {
 			return false;
 		}
 
@@ -108,4 +108,5 @@ public class Snake {
 	public int size() {
 		return segments.size();
 	}
+	
 }
