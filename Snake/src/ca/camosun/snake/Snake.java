@@ -13,6 +13,10 @@ public class Snake {
 		NORTH(1), SOUTH(-1), EAST(1), WEST(-1);
 
 		private final int distance;
+		
+		public int getDistance() {
+			return distance;
+		}
 
 		Direction(int moveDistance) {
 			distance = moveDistance;
@@ -59,11 +63,11 @@ public class Snake {
 
 		case NORTH:
 		case SOUTH:
-			newHead.setPositionY(YPosition + nextDirection.distance);
+			newHead.setPositionY(YPosition + nextDirection.getDistance());
 			break;
 		case EAST:
 		case WEST:
-			newHead.setPositionX(XPosition + nextDirection.distance);
+			newHead.setPositionX(XPosition + nextDirection.getDistance());
 			break;
 		}
 
