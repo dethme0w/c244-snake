@@ -41,7 +41,7 @@ public class Snake {
 
 	public Snake(Direction startDir, int startX, int startY) {
 		segments = new ArrayDeque<SnakeSegment>();
-		segments.add(new SnakeSegment(startX, startY));
+		segments.addFirst(new SnakeSegment(startX, startY));
 
 		currentDirection = startDir;
 	}
@@ -51,7 +51,8 @@ public class Snake {
 	}
 
 	public void moveSnake(Direction nextDirection, boolean ateFruit) {
-		SnakeSegment newHead = getHead();
+		SnakeSegment head = getHead();
+		SnakeSegment newHead = new SnakeSegment(head.getPositionX(), head.getPositionY());
 		int YPosition = newHead.getPositionY();
 		int XPosition = newHead.getPositionX();
 
@@ -85,18 +86,17 @@ public class Snake {
 
 	public boolean collidedSelf() {
 
-		SnakeSegment head = segments.peek();
 
 		if (segments.size() == 1) {
 			return false;
 		}
 
 		Iterator<SnakeSegment> segmentIterator = segments.iterator();
-		segmentIterator.next();
+		SnakeSegment head = segmentIterator.next();
 		
 		while(segmentIterator.hasNext()) {
 			SnakeSegment currentSegment = segmentIterator.next();
-			if (currentSegment == head){
+			if (currentSegment.equals(head)){
 				return true;
 			}
 		}
@@ -113,4 +113,7 @@ public class Snake {
 		return segments.size();
 	}
 	
+	public Deque<SnakeSegment> getSegments() {
+		return segments;
+	}
 }
