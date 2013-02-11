@@ -95,12 +95,8 @@ public class SnakeTest {
 
 	@Test
 	public void collided() {
-		assertTrue(snake.collidedSelf() == false); // Should not be in collision
-													// when brand new
-		// TODO: Add segments to the snake
-		// Test for no collision
-		// Add segment that equals head
-		// Test for collision
+		assertTrue(snake.collidedSelf() == false);
+		
 		ateFruit = true;
 		snake.moveSnake(NORTH, ateFruit);
 		assertTrue(snake.collidedSelf() == false);
