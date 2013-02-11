@@ -24,19 +24,28 @@ public class SnakeBoardTest {
 
 	@Test
 	public void snakeWentOffBoard() {
-
+		
+		board = new SnakeBoard(49, 49);
+		snake = board.getSnake();
 		// Try to go south (will run off board)
+		snake.moveSnake(Snake.Direction.EAST, board.ateFruit());
 		snake.moveSnake(Snake.Direction.SOUTH, board.ateFruit());
 		assertTrue(board.wentOffBoard() == true);
-
+		
+		board = new SnakeBoard(49, 49);
+		snake = board.getSnake();
 		// Try to go north (will not run off board)
 		snake.moveSnake(Snake.Direction.NORTH, board.ateFruit());
 		assertTrue(board.wentOffBoard() == false);
-
+		
+		board = new SnakeBoard(49, 49);
+		snake = board.getSnake();
 		// Try to go west (will run off board)
 		snake.moveSnake(Snake.Direction.WEST, board.ateFruit());
 		assertTrue(board.wentOffBoard() == true);
-
+		
+		board = new SnakeBoard(49, 49);
+		snake = board.getSnake();
 		// Try to go east (will not run off board)
 		snake.moveSnake(Snake.Direction.EAST, board.ateFruit());
 		assertTrue(board.wentOffBoard() == false);
