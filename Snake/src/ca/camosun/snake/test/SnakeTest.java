@@ -4,15 +4,12 @@ import static org.junit.Assert.*;
 import static ca.camosun.snake.Snake.Direction.*;
 
 import java.util.Collections;
-import java.util.Deque;
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import ca.camosun.snake.Fruit;
-import ca.camosun.snake.HighScores;
 
 import ca.camosun.snake.Snake;
 import ca.camosun.snake.SnakeSegment;

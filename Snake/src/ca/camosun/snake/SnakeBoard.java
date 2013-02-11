@@ -67,5 +67,9 @@ public class SnakeBoard {
 	public Snake getSnake() {
 		return snake;
 	}
+	
+	public int getScore() {
+		return score;
+	}
 
 }
