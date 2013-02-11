@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import static ca.camosun.snake.Snake.Direction.*;
 
 import java.util.Collections;
+import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 
@@ -39,16 +40,19 @@ public class SnakeTest {
 		assertTrue(snakeHead.getPositionY() == 0);
 
 		snake.moveSnake(NORTH, ateFruit);
+		snakeHead = snake.getHead();
 		assertTrue(snake.getCurrentDirection() == NORTH);
 		assertTrue(snakeHead.getPositionX() == 1);
 		assertTrue(snakeHead.getPositionY() == 1);
 
 		snake.moveSnake(WEST, ateFruit);
+		snakeHead = snake.getHead();
 		assertTrue(snake.getCurrentDirection() == WEST);
 		assertTrue(snakeHead.getPositionX() == 0);
 		assertTrue(snakeHead.getPositionY() == 1);
 
 		snake.moveSnake(SOUTH, ateFruit);
+		snakeHead = snake.getHead();
 		assertTrue(snake.getCurrentDirection() == SOUTH);
 		assertTrue(snakeHead.getPositionX() == 0);
 		assertTrue(snakeHead.getPositionY() == 0);
@@ -97,7 +101,17 @@ public class SnakeTest {
 		// Test for no collision
 		// Add segment that equals head
 		// Test for collision
-
+		ateFruit = true;
+		snake.moveSnake(NORTH, ateFruit);
+		assertTrue(snake.collidedSelf() == false);
+		snake.moveSnake(EAST, ateFruit);
+		assertTrue(snake.collidedSelf() == false);
+		snake.moveSnake(SOUTH, ateFruit);
+		assertTrue(snake.collidedSelf() == false);
+		
+		snake.moveSnake(WEST, ateFruit);
+		assertTrue(snake.collidedSelf() == true);
+		
 	}
 	
 	@Test
