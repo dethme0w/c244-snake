@@ -113,7 +113,4 @@ public class Snake {
 		return segments.size();
 	}
 	
-	public Deque<SnakeSegment> getSegments() {
-		return segments;
-	}
 }
