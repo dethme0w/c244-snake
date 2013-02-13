@@ -58,6 +58,22 @@ public class SnakeBoard {
 		return false;
 	}
 	
+	public void eatFruit(Snake snake) {
+		SnakeSegment head = snake.getHead();
+		int headX = head.getPositionX();
+		int headY = head.getPositionY();
+
+		for (Fruit current : fruits) {
+			int fruitX = current.getPositionX();
+			int fruitY = current.getPositionY();
+
+			if (headX == fruitX && headY == fruitY) {				
+				fruits.remove(current);				
+				return;
+			}
+		}
+	}
+	
 	public void placeFruit(Fruit inFruit) {
 		fruits.add(inFruit);
 	}
@@ -68,6 +84,10 @@ public class SnakeBoard {
 	
 	public int getScore() {
 		return score;
+	}
+
+	public List<Fruit> getFruits() {
+		return fruits;
 	}
 
 }
