@@ -28,26 +28,26 @@ public class SnakeBoardTest {
 		board = new SnakeBoard(49, 49);
 		snake = board.getSnake();
 		// Try to go south (will run off board)
-		snake.moveSnake(Snake.Direction.EAST, board.ateFruit());
-		snake.moveSnake(Snake.Direction.SOUTH, board.ateFruit());
+		snake.moveSnake(Snake.Direction.EAST, board.foundFruit());
+		snake.moveSnake(Snake.Direction.SOUTH, board.foundFruit());
 		assertTrue(board.wentOffBoard() == true);
 		
 		board = new SnakeBoard(49, 49);
 		snake = board.getSnake();
 		// Try to go north (will not run off board)
-		snake.moveSnake(Snake.Direction.NORTH, board.ateFruit());
+		snake.moveSnake(Snake.Direction.NORTH, board.foundFruit());
 		assertTrue(board.wentOffBoard() == false);
 		
 		board = new SnakeBoard(49, 49);
 		snake = board.getSnake();
 		// Try to go west (will run off board)
-		snake.moveSnake(Snake.Direction.WEST, board.ateFruit());
+		snake.moveSnake(Snake.Direction.WEST, board.foundFruit());
 		assertTrue(board.wentOffBoard() == true);
 		
 		board = new SnakeBoard(49, 49);
 		snake = board.getSnake();
 		// Try to go east (will not run off board)
-		snake.moveSnake(Snake.Direction.EAST, board.ateFruit());
+		snake.moveSnake(Snake.Direction.EAST, board.foundFruit());
 		assertTrue(board.wentOffBoard() == false);
 
 	}
@@ -58,11 +58,11 @@ public class SnakeBoardTest {
 		Fruit a = new Fruit(0, 1);
 		board.placeFruit(a);
 		
-		snake.moveSnake(Snake.Direction.NORTH, board.ateFruit());
-		assertTrue(board.ateFruit() == true);
+		snake.moveSnake(Snake.Direction.NORTH, board.foundFruit());
+		assertTrue(board.foundFruit() == true);
 		
-		snake.moveSnake(Snake.Direction.NORTH, board.ateFruit());
-		assertTrue(board.ateFruit() == false);
+		snake.moveSnake(Snake.Direction.NORTH, board.foundFruit());
+		assertTrue(board.foundFruit() == false);
 		
 	}
 }

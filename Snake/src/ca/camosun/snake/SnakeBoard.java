@@ -42,7 +42,7 @@ public class SnakeBoard {
 		return false;
 	}
 
-	public boolean ateFruit() {
+	public boolean foundFruit() {
 		SnakeSegment head = snake.getHead();
 		int headX = head.getPositionX();
 		int headY = head.getPositionY();
