@@ -1,5 +1,8 @@
-package ca.camosun.snake;
+package ca.camosun.snake.gui;
 
+import ca.camosun.snake.R;
+import ca.camosun.snake.R.layout;
+import ca.camosun.snake.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
