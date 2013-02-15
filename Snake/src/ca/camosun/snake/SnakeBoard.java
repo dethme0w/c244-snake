@@ -41,6 +41,24 @@ public class SnakeBoard {
 
 		return false;
 	}
+	
+	public boolean isLevelComplete() {
+		if (fruits.size() == 0) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean isGameOver() {
+		if (wentOffBoard()) {
+			return true;
+		}
+		if (snake.collidedSelf()) {
+			return true;
+		}
+		return false;
+	}
 
 	public boolean foundFruit() {
 		SnakeSegment head = snake.getHead();
@@ -52,26 +70,11 @@ public class SnakeBoard {
 			int fruitY = current.getPositionY();
 
 			if (headX == fruitX && headY == fruitY) {
+				fruits.remove(current);
 				return true;
 			}
 		}
 		return false;
-	}
-	
-	public void eatFruit(Snake snake) {
-		SnakeSegment head = snake.getHead();
-		int headX = head.getPositionX();
-		int headY = head.getPositionY();
-
-		for (Fruit current : fruits) {
-			int fruitX = current.getPositionX();
-			int fruitY = current.getPositionY();
-
-			if (headX == fruitX && headY == fruitY) {				
-				fruits.remove(current);				
-				return;
-			}
-		}
 	}
 	
 	public void placeFruit(Fruit inFruit) {

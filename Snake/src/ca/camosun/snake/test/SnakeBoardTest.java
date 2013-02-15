@@ -84,8 +84,11 @@ public class SnakeBoardTest {
 		board.placeFruit(b);
 		Fruit c = new Fruit(1, 3);
 		board.placeFruit(c);
+		assertTrue(board.getFruits().size() == 3);
+		
 		snake.moveSnake(Snake.Direction.NORTH, board.foundFruit());
-		board.eatFruit(snake);
+		snake.moveSnake(Snake.Direction.NORTH, board.foundFruit());
+		
 		assertTrue(board.getFruits().size() == 2);
 	}
 }
