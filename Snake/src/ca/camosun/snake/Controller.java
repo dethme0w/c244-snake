@@ -6,19 +6,24 @@ import java.util.Date;
 
 public class Controller {
 	
+	// Acts as API between the GUI / player input and the game logic
+	// Start game button just needs to make a fresh GameController
+	// Player input needs to be translated into a Snkae.Direction (NORTH, SOUTH, EAST, WEST), call setNextDirection to change the snake direction
+	
 	private SnakeBoard theBoard;
 	private Snake.Direction nextDirection;
 	private long gameTick = 1000;
 	
 	public Controller(int inScreenWidth, int inScreenHeight) {
 		theBoard = new SnakeBoard(inScreenWidth, inScreenHeight);
+		gameLoop();
 	}
 	
 	public void setNextDirection(Snake.Direction inDirection) {
 		nextDirection = inDirection;
 	}
 	
-	public void gameLoop() {
+	private void gameLoop() {
 		Snake theSnake = theBoard.getSnake();
 		nextLevel();
 		
