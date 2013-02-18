@@ -13,6 +13,7 @@ public class Controller {
 	private SnakeBoard theBoard;
 	private Snake.Direction nextDirection;
 	private long gameTick = 1000;
+	private int fruitPerLevel = 5;
 	
 	public Controller(int inScreenWidth, int inScreenHeight) {
 		theBoard = new SnakeBoard(inScreenWidth, inScreenHeight);
@@ -39,10 +40,8 @@ public class Controller {
 	}
 	
 	private void nextLevel() {
-		// TODO: Place some fruit on the board for each level
-		// 		 Might be easier to have a function in SnakeBoard that places x amount of fruit randomly on the board.
+		theBoard.placeFruits(fruitPerLevel);
 		gameTick = gameTick - 10;
-		
 	}
 
 	private void waitUntil(long time) {

@@ -2,6 +2,8 @@ package ca.camosun.snake.test;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -90,5 +92,26 @@ public class SnakeBoardTest {
 		snake.moveSnake(Snake.Direction.NORTH, board.foundFruit());
 		
 		assertTrue(board.getFruits().size() == 2);
+	}
+	
+	@Test
+	public void checkFruitWorks() {
+		Fruit a = new Fruit(0,0);
+		Fruit b = new Fruit(1,1);
+		
+		assertTrue(board.checkFruit(a.getPositionX(), a.getPositionY()) == false);
+		assertTrue(board.checkFruit(b.getPositionX(), b.getPositionY()) == true);
+	}
+	
+	@Test
+	public void placeFruitsWorks() {
+		snake.moveSnake(Snake.Direction.EAST, false);
+		snake.moveSnake(Snake.Direction.SOUTH, false);
+		
+		List<Fruit> fruits;
+		board.placeFruits(3);
+		fruits = board.getFruits();
+		assertTrue(fruits.size() == 3);
+		
 	}
 }

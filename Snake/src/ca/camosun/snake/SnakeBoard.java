@@ -3,7 +3,9 @@ package ca.camosun.snake;
 import static ca.camosun.snake.Snake.Direction.NORTH;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 public class SnakeBoard {
 
@@ -77,8 +79,37 @@ public class SnakeBoard {
 		return false;
 	}
 	
-	public void placeFruit(Fruit inFruit) {
-		fruits.add(inFruit);
+	public void placeFruits(int fruitsToAdd) {
+		Random rand = new Random();
+		int minX = 0;
+		int minY = 0;
+		int i = 0;
+		
+		while (i < fruitsToAdd) {
+			int fruitX = rand.nextInt(maxX - minX + 1) + minX;
+			int fruitY = rand.nextInt(maxY - minY + 1) + minY;
+			
+			if (checkFruit(fruitX, fruitY)) {
+				Fruit theFruit = new Fruit(fruitX, fruitY);
+				fruits.add(theFruit);
+				i++;
+			}
+		}
+	}
+	
+	public boolean checkFruit(int inX, int inY) {
+		Iterator<SnakeSegment> segmentIterator = snake.iterator();
+		
+		while(segmentIterator.hasNext()) {
+			SnakeSegment currentSegment = segmentIterator.next();
+			int segmentX = currentSegment.getPositionX();
+			int segmentY = currentSegment.getPositionY();
+			
+			if (inX == segmentX && inY == segmentY) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public Snake getSnake() {
@@ -91,6 +122,12 @@ public class SnakeBoard {
 
 	public List<Fruit> getFruits() {
 		return fruits;
+	}
+
+	
+	public void placeFruit(Fruit inFruit) {
+		fruits.add(inFruit);
+		
 	}
 
 }
