@@ -103,6 +103,10 @@ public class Snake {
 
 		return false;
 	}
+	
+	public Iterator<SnakeSegment> iterator() {
+		return segments.iterator();
+	}
 
 	public SnakeSegment getHead() {
 		return segments.peek();

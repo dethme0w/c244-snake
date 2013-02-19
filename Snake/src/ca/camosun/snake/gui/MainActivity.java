@@ -6,6 +6,7 @@ import ca.camosun.snake.R.layout;
 import ca.camosun.snake.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.SurfaceView;
 import android.view.View;
@@ -15,8 +16,7 @@ import android.widget.GridView;
 
 public class MainActivity extends Activity {
 
-	private View snakeBoard;
-	private Button startGame;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +29,15 @@ public class MainActivity extends Activity {
 	    gridview.setEnabled(false);
 
 	}
-
-	/*
-	 * private OnClickListener runGame = new OnClickListener() { public void
-	 * onClick(View v) { //TODO: Code for the Start Game button needs to be
-	 * linked to the SnakeBoard View // instead of starting when you open the
-	 * app
-	 * 
-	 * } };
-	 */
-
+	
+	/** Called when the user clicks the Send button */
+	public void startGame(View view) {
+	    System.out.println("Start button pressed");
+	    Intent intent = new Intent(this, GameActivity.class);
+	    
+	    startActivity(intent);
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
