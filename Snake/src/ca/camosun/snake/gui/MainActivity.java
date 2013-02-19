@@ -14,8 +14,7 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 
-	private View snakeBoard;
-	private Button startGame;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
