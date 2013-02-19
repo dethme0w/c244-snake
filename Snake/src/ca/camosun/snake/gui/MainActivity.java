@@ -5,6 +5,7 @@ import ca.camosun.snake.R.layout;
 import ca.camosun.snake.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.SurfaceView;
 import android.view.View;
@@ -22,11 +23,13 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 	}
-
 	
 	/** Called when the user clicks the Send button */
 	public void startGame(View view) {
 	    System.out.println("Start button pressed");
+	    Intent intent = new Intent(this, GameActivity.class);
+	    
+	    startActivity(intent);
 	}
 	
 	@Override
