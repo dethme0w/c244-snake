@@ -16,8 +16,6 @@ import android.widget.GridView;
 
 public class MainActivity extends Activity {
 
-	
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,9 +42,4 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
-	
-	public void onClick(View v) {
-        System.out.println("Grid clicked");
-	}
-
 }
