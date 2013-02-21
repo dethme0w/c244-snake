@@ -15,7 +15,8 @@ public class TiltInput extends Activity implements SensorEventListener {
 	private float y;
 
 	public TiltInput() {
-        
+      x = 0.0F;
+      y = 0.0F;
 	}
 	
 	@Override
