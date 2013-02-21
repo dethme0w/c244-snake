@@ -4,6 +4,7 @@ import ca.camosun.snake.ImageAdapter;
 import ca.camosun.snake.R;
 import ca.camosun.snake.R.layout;
 import ca.camosun.snake.R.menu;
+import ca.camosun.snake.TiltTestActivity;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -33,6 +34,12 @@ public class MainActivity extends Activity {
 	    System.out.println("Start button pressed");
 	    Intent intent = new Intent(this, GameActivity.class);
 	    
+	    startActivity(intent);
+	}
+	
+	public void testTiltClicked(View view) {
+	    System.out.println("Test Tilt button pressed");
+	    Intent intent = new Intent(this, TiltTestActivity.class);	    
 	    startActivity(intent);
 	}
 	

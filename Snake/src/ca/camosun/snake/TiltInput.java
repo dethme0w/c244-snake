@@ -6,16 +6,31 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Bundle;
 
 public class TiltInput extends Activity implements SensorEventListener {
 	private SensorManager mSensorManager;
-
+	private Sensor mSensor;
 	private float x;
 	private float y;
 
 	public TiltInput() {
+        
+	}
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		System.out.println("TiltInput.onCreate called");
+		super.onCreate(savedInstanceState);
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		System.out.println("TiltInput.onCreate survived");
+	}
+
+	protected void onResume() {
+		super.onResume();
+		mSensorManager.registerListener(this, mSensor,
+				SensorManager.SENSOR_DELAY_NORMAL);
 	}
 
 	@Override
@@ -31,20 +46,21 @@ public class TiltInput extends Activity implements SensorEventListener {
 	}
 
 	public String getTilt() {
-
+		String d = "";
+		d += x + " / " + y + " ";
 		if (Math.abs(x) > Math.abs(y)) {
 			// tilt is horizontal
 			if (x > 0) {
-				return ("L");
+				return (d + "L");
 			}
-			return ("R");
+			return (d + "R");
 		}
 
 		// tilt is vertical
 		if (y > 0) {
-			return ("U");
+			return (d + "U");
 		}
-		return ("D");
+		return (d + "D");
 
 	}
 
