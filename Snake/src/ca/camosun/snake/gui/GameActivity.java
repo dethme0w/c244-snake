@@ -18,9 +18,9 @@ public class GameActivity extends Activity implements OnClickListener{
                 
                 GridLayout grid = (GridLayout) findViewById(R.layout.activity_game);
 
-                int rowCount = 20;
-                int columnCount = 20;
-                int cellSize = 5;
+                int rowCount = 10;
+                int columnCount = 10;
+                int cellSize = 16;
                 int dpi = 20;
  
                 addGrid(grid, rowCount, columnCount, cellSize, dpi, this);
@@ -46,14 +46,12 @@ public class GameActivity extends Activity implements OnClickListener{
         private void makeGridColumn(int row, int columnSize, GridLayout grid,
                         int buttonSize, OnClickListener listen) {
                 for (int column = 0; column < columnSize; column++) {
-                        GridButton aButton = new GridButton(this, row, column);
-                        aButton.setAdjustViewBounds(true);                                     
-                        aButton.setMinimumHeight(1);
-                        aButton.setMinimumWidth(1);
-                        aButton.setMaxWidth(buttonSize);
-                        aButton.setMaxHeight(buttonSize);
-                        aButton.setOnClickListener(listen);
-                        grid.addView(aButton, row);
+                       
+                	    GridImage aCell = new GridImage(this,row,column);
+                	    
+                	    aCell.setImageResource(R.drawable.boardbackground);
+                	    
+                	    grid.addView(aCell);
                 }
         }
 
@@ -66,11 +64,10 @@ public class GameActivity extends Activity implements OnClickListener{
         }
 
 
-        @Override
-        public void onClick(View theButton) {
-                GridButton aButton = (GridButton) theButton;
-                System.out.println("clicked row " + aButton.getRow() + " column " + aButton.getColumn());
-                
-        }
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			
+		}       
 
 }
