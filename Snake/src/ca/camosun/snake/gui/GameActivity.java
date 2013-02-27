@@ -20,30 +20,30 @@ public class GameActivity extends Activity implements OnClickListener{
 
                 int rowCount = 20;
                 int columnCount = 20;
-                int buttonSize = 5;
+                int cellSize = 5;
                 int dpi = 20;
  
-                addButtonGrid(grid, rowCount, columnCount, buttonSize, dpi, this);
+                addGrid(grid, rowCount, columnCount, cellSize, dpi, this);
                 
         }
         
 
-        private void addButtonGrid(GridLayout grid, int rowCount, int columnCount,
-                        int buttonSize, int dpi, OnClickListener listen) {
+        private void addGrid(GridLayout grid, int rowCount, int columnCount,
+                        int cellSize, int dpi, OnClickListener listen) {
         	
-                int rowPixels = rowCount * (buttonSize * dpi);
-                int columnPixels = columnCount * (buttonSize * dpi);
+                int rowPixels = rowCount * (cellSize * dpi);
+                int columnPixels = columnCount * (cellSize * dpi);
             	grid.setRowCount(rowCount);
             	grid.setColumnCount(columnCount);
             	
                 for (int row = 0; row < rowCount; row++) {
-                        makeButtonColumn(row, columnCount, grid, buttonSize, listen);
+                        makeGridColumn(row, columnCount, grid, cellSize, listen);
                 }
                 
                 
         }
 
-        private void makeButtonColumn(int row, int columnSize, GridLayout grid,
+        private void makeGridColumn(int row, int columnSize, GridLayout grid,
                         int buttonSize, OnClickListener listen) {
                 for (int column = 0; column < columnSize; column++) {
                         GridButton aButton = new GridButton(this, row, column);
