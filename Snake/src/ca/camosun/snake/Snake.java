@@ -1,16 +1,16 @@
 package ca.camosun.snake;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 
 public class Snake {
-	private Deque<SnakeSegment> segments;
+	private List<SnakeSegment> segments;
 	private Direction currentDirection;
 
 	public static enum Direction {
-		NORTH(1), SOUTH(-1), EAST(1), WEST(-1);
+		NORTH(-1), SOUTH(1), EAST(1), WEST(-1);
 
 		private final int distance;
 		
@@ -40,9 +40,10 @@ public class Snake {
 	}
 
 	public Snake(Direction startDir, int startX, int startY) {
-		segments = new ArrayDeque<SnakeSegment>();
-		segments.addFirst(new SnakeSegment(startX, startY));
-
+		
+		
+		segments.add(new SnakeSegment(startX, startY));	
+		
 		currentDirection = startDir;
 	}
 
@@ -73,19 +74,18 @@ public class Snake {
 		}
 
 		currentDirection = nextDirection;
-		SnakeSegment tail = segments.peekLast();
+		SnakeSegment tail = segments.get(segments.size()-1);
 		
 		if (ateFruit == true) {
-			segments.addFirst(newHead);
+			segments.add(newHead);
 			return;
 		}
 		
-		segments.addFirst(newHead);
+		segments.add(newHead);
 		segments.remove(tail);
 	}
 
 	public boolean collidedSelf() {
-
 
 		if (segments.size() == 1) {
 			return false;
@@ -109,10 +109,17 @@ public class Snake {
 	}
 
 	public SnakeSegment getHead() {
-		return segments.peek();
+		return segments.get(0);
 	}
 	
+	public SnakeSegment getTail() {
+		return segments.get(segments.size()-1);
+	}
 	
+	public SnakeSegment get(int index) {
+		return segments.get(index);
+	}
+		
 	public int size() {
 		return segments.size();
 	}

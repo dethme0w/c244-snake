@@ -2,17 +2,12 @@ package ca.camosun.snake.gui;
 
 import ca.camosun.snake.ImageAdapter;
 import ca.camosun.snake.R;
-import ca.camosun.snake.R.layout;
-import ca.camosun.snake.R.menu;
 import ca.camosun.snake.TiltTestActivity;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
-import android.view.SurfaceView;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.GridView;
 
 public class MainActivity extends Activity {

@@ -18,7 +18,7 @@ public class SnakeBoard {
 	public SnakeBoard(int inMaxX, int inMaxY) {
 		maxX = inMaxX;
 		maxY = inMaxY;
-		snake = new Snake(NORTH, 0, 0);
+		snake = new Snake( NORTH, inMaxX/2, inMaxY/2 ); 
 		fruits = new ArrayList<Fruit>();
 		score = 0;
 	}
