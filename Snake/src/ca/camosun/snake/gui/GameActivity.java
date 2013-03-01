@@ -126,9 +126,9 @@ public class GameActivity extends Activity implements SensorEventListener {
 		}
 		// tilt is vertical
 		if (tiltY > 0) {
-			return Direction.NORTH;
+			return Direction.SOUTH; // tilt up = snake gravitates down (south)
 		}
-		return Direction.SOUTH;
+		return Direction.NORTH;
 	}
 
 	private void startTimer(int interval) {
