@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.view.Menu;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
@@ -37,6 +39,11 @@ public class GameActivity extends Activity implements SensorEventListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+							WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
 		setContentView(R.layout.activity_game);
 
 		inPlay = false;
@@ -78,7 +85,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 		for (int row = 0; row < rowCount; row++) {
 			makeGridColumn(row, columnCount, grid, cellSize);
 		}
-
 	}
 
 	private void makeGridColumn(int row, int columnSize, GridLayout grid,
@@ -176,18 +182,14 @@ public class GameActivity extends Activity implements SensorEventListener {
 		// update score?
 		
 		if (board.wentOffBoard()) {
-			
 			return;
 		}
 		
-		
-
 		// Draw the snake
 		GridImage image = imageAt(oldTail.getPositionX(),
 				oldTail.getPositionY());
 		image.setImageResource(R.drawable.boardbackground);
 		drawSnake(snake);
-
 	}
 
 	private void drawSnake(Snake snake) {
@@ -205,5 +207,4 @@ public class GameActivity extends Activity implements SensorEventListener {
 			image.setImageResource(R.drawable.snakebody);
 		}
 	}
-
 }
