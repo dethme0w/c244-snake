@@ -1,12 +1,11 @@
 package ca.camosun.snake;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Iterator;
-import java.util.List;
-
 
 public class Snake {
-	private List<SnakeSegment> segments;
+	private Deque<SnakeSegment> segments;
 	private Direction currentDirection;
 
 	public static enum Direction {
@@ -40,10 +39,8 @@ public class Snake {
 	}
 
 	public Snake(Direction startDir, int startX, int startY) {
-		
-		
-		segments.add(new SnakeSegment(startX, startY));	
-		
+		segments = new ArrayDeque<SnakeSegment>();
+		segments.add(new SnakeSegment(startX, startY));			
 		currentDirection = startDir;
 	}
 
@@ -74,7 +71,7 @@ public class Snake {
 		}
 
 		currentDirection = nextDirection;
-		SnakeSegment tail = segments.get(segments.size()-1);
+		SnakeSegment tail = segments.peekLast();
 		
 		if (ateFruit == true) {
 			segments.add(newHead);
@@ -109,15 +106,16 @@ public class Snake {
 	}
 
 	public SnakeSegment getHead() {
-		return segments.get(0);
+		return segments.peek();
 	}
 	
 	public SnakeSegment getTail() {
-		return segments.get(segments.size()-1);
+		return segments.peekLast();
 	}
 	
 	public SnakeSegment get(int index) {
-		return segments.get(index);
+		Object[] y = segments.toArray();		
+		return (SnakeSegment)y[index];
 	}
 		
 	public int size() {
