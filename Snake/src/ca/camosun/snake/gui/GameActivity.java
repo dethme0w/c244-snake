@@ -174,9 +174,15 @@ public class GameActivity extends Activity implements SensorEventListener {
 		// collisions?
 		// game over?
 		// update score?
+		
+		if (board.wentOffBoard()) {
+			
+			return;
+		}
+		
+		
 
 		// Draw the snake
-
 		GridImage image = imageAt(oldTail.getPositionX(),
 				oldTail.getPositionY());
 		image.setImageResource(R.drawable.boardbackground);

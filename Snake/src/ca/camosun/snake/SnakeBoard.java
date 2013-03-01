@@ -29,15 +29,19 @@ public class SnakeBoard {
 		int y = head.getPositionY();
 
 		if (x < 0) {
+			head.setPositionX(0);
 			return true;
 		}
 		if (y < 0) {
+			head.setPositionY(0);
 			return true;
 		}
 		if (x > maxX) {
+			head.setPositionX(maxX);
 			return true;
 		}
 		if (y > maxY) {
+			head.setPositionY(maxY);
 			return true;
 		}
 
