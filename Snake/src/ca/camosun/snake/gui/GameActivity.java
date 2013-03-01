@@ -3,6 +3,7 @@ package ca.camosun.snake.gui;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import ca.camosun.snake.Fruit;
 import ca.camosun.snake.R;
 import ca.camosun.snake.Snake;
 import ca.camosun.snake.Snake.Direction;
@@ -190,6 +191,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 				oldTail.getPositionY());
 		image.setImageResource(R.drawable.boardbackground);
 		drawSnake(snake);
+		drawFruit();
 	}
 
 	private void drawSnake(Snake snake) {
@@ -206,5 +208,12 @@ public class GameActivity extends Activity implements SensorEventListener {
 			image = imageAt(segment.getPositionX(), segment.getPositionY());
 			image.setImageResource(R.drawable.snakebody);
 		}
+	}
+	
+	private void drawFruit() {
+		GridImage image;
+		
+		image = imageAt(10, 15);
+		image.setImageResource(R.drawable.apple);
 	}
 }
