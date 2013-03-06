@@ -16,7 +16,9 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
@@ -168,8 +170,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		}, 0, interval);
 	}
 
-	private void makeMove() {
-		System.out.println("makeMove called.");
+	private void makeMove() {		
 		Direction whereNext;
 		Snake snake = board.getSnake();
 
@@ -200,7 +201,21 @@ public class GameActivity extends Activity implements SensorEventListener {
 		
 		
 		if (board.wentOffBoard()) {
-			return;
+			inPlay = false; // game over
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setTitle("Game Over");
+			alertDialogBuilder.setMessage("You hit the wall dude!  Never hit the wall.");
+			alertDialogBuilder.setCancelable(true);
+			alertDialogBuilder.setPositiveButton("Ah, sh*t.",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,int id) {
+					// if this button is clicked, close
+					// current activity
+					GameActivity.this.finish();
+				}
+			  });
+			AlertDialog ad = alertDialogBuilder.create();			 
+			ad.show();
+			
 		}
 		
 		// Draw the snake
