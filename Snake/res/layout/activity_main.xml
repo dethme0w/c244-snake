@@ -23,17 +23,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="180dp"
         android:onClick="startGame"
-        android:text="Start Game" />
-
-    <Button
-        android:id="@+id/button1"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:onClick="testTiltClicked"
-        android:text="Test Tilt" />
+        android:text="@string/startgame" />
 
     <Button
         android:id="@+id/button2"
@@ -43,6 +33,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
         android:onClick="quit"
-        android:text="Quit" />
+        android:text="@string/exitbuttoncaption" />
 
 </RelativeLayout>

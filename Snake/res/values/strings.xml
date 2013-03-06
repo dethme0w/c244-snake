@@ -5,6 +5,6 @@
     <string name="menu_settings">Settings</string>
     <string name="startgame">Start Game</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_tilt_test">TiltTestActivity</string>
+    <string name="exitbuttoncaption">Quit</string>
 
 </resources>

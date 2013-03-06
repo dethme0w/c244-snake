@@ -22,11 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name="ca.camosun.snake.gui.GameActivity" >
-        </activity>
-        <activity
-            android:name="ca.camosun.snake.TiltTestActivity"
-            android:label="@string/title_activity_tilt_test" >
-        </activity>        
+        </activity>              
     </application>
 
 </manifest>
