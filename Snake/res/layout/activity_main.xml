@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 	
-    <GridView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <GridView        
         android:id="@+id/gridview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -14,7 +13,7 @@
         android:horizontalSpacing="0dp"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="0dp" />
+        android:verticalSpacing="0dp" />    
     
     <Button
         android:id="@+id/startGame"
@@ -23,8 +22,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="180dp"
-        android:text="@string/startgame" 
-        android:onClick="startGame" />
+        android:onClick="startGame"
+        android:text="Start Game" />
 
     <Button
         android:id="@+id/button1"
@@ -35,5 +34,15 @@
         android:layout_alignParentRight="true"
         android:onClick="testTiltClicked"
         android:text="Test Tilt" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startGame"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:onClick="quit"
+        android:text="Quit" />
 
 </RelativeLayout>
