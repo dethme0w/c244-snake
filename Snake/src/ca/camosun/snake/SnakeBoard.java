@@ -1,6 +1,6 @@
 package ca.camosun.snake;
 
-import static ca.camosun.snake.Snake.Direction.NORTH;
+import static ca.camosun.snake.Snake.Direction.SOUTH;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,10 +15,10 @@ public class SnakeBoard {
 	private int maxX;
 	private int maxY;
 
-	public SnakeBoard(int inMaxX, int inMaxY) {
-		maxX = inMaxX;
-		maxY = inMaxY;
-		snake = new Snake( NORTH, inMaxX/2, inMaxY/2 ); 
+	public SnakeBoard(int inWidth, int inHeight) {
+		maxX = inWidth  - 1;
+		maxY = inHeight - 1;
+		snake = new Snake( SOUTH, inWidth/2, inHeight/2 ); 
 		fruits = new ArrayList<Fruit>();
 		score = 0;
 	}
@@ -28,6 +28,7 @@ public class SnakeBoard {
 		int x = head.getPositionX();
 		int y = head.getPositionY();
 
+		
 		if (x < 0) {
 			head.setPositionX(0);
 			return true;
