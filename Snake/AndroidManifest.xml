@@ -22,7 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ca.camosun.snake.gui.GameActivity" >
+        <activity 
+            android:name="ca.camosun.snake.gui.GameActivity" 
+            android:screenOrientation="portrait">
         </activity>              
     </application>
 
