@@ -78,13 +78,15 @@ public class GameActivity extends Activity implements SensorEventListener {
 		
 		fruitlist = new ArrayList<Fruit>();
 		
-		fruita = new Fruit(6,2);
+		fruita = new Fruit(6,15);
 		fruitb = new Fruit(3,9);
 		fruitc = new Fruit(10,8);
 		
 		fruitlist.add(fruita);
 		fruitlist.add(fruitb);
 		fruitlist.add(fruitc);
+		
+		drawFruit(fruitlist);
 	}
 
 	@Override
@@ -178,7 +180,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		SnakeSegment oldTail = snake.getTail();
 		board.getSnake().moveSnake(whereNext, false);
 
-		// test
+		
 		switch (whereNext) {
 		case EAST:
 			tvDebug.setText("East");
@@ -194,12 +196,10 @@ public class GameActivity extends Activity implements SensorEventListener {
 		}
 
 		// See if the snake has done anything interesting
-		// collisions?
-		// game over?
-		// update score?
+		// collisions? game over? update score?  All that stuff goes here.
 		
 		
-		
+		// Went off board?
 		if (board.wentOffBoard()) {
 			inPlay = false; // game over
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -218,17 +218,17 @@ public class GameActivity extends Activity implements SensorEventListener {
 			
 		}
 		
+		// Ate fruit?
+		if (board.foundFruit()) {
+			drawFruit(fruitlist);
+		}
+
 		// Draw the snake
 		GridImage image = imageAt(oldTail.getPositionX(),
 				oldTail.getPositionY());
 		image.setImageResource(R.drawable.boardbackground);
 		drawSnake(snake);
-		
-		drawFruit(fruitlist);
-		detectFruitCollision(snake, fruitlist);
-		
-		
-		
+						
 	}
 
 	private void drawSnake(Snake snake) {
@@ -248,38 +248,13 @@ public class GameActivity extends Activity implements SensorEventListener {
 	}
 	
 	private void drawFruit(ArrayList<Fruit> fruitlist) {
-		for(Fruit afruit : fruitlist) {
-			
-		GridImage image;
-		image = imageAt(afruit.getPositionX(), afruit.getPositionY());
-		image.setImageResource(R.drawable.fruit);
-		
+		for (Fruit afruit : fruitlist) {
+
+			GridImage image;
+			image = imageAt(afruit.getPositionX(), afruit.getPositionY());
+			image.setImageResource(R.drawable.fruit);
+
 		}
 	}
-	
-	private void detectFruitCollision(Snake snake, ArrayList<Fruit> fruitlist) {
-		int snakeXPosition = snake.getHead().getPositionX();
-		int snakeYPosition = snake.getHead().getPositionY();
-		
-		for(Fruit afruit: fruitlist) {
-			if(snakeXPosition == afruit.getPositionX() && snakeYPosition == afruit.getPositionY()) {
-				tvDebug.setText("Collision");
-				
-				//draw the snake head on top of the fruit
-				GridImage image;
-				image = imageAt(snake.getHead().getPositionX(), snake.getHead().getPositionY());
-				image.setImageResource(R.drawable.snakehead);
-				
-				//move the fruit to another location
-				// Could probably use the controller to call nextLevel() 
-				// nextLevel could keep track of current level
-				afruit.setPositionX(1);
-				afruit.setPositionY(7);
-				break;
-			}
-		
-		}
-	}
-	
 	
 }
