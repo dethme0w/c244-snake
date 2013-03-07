@@ -23,7 +23,6 @@ import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridLayout;
-import android.widget.TextView;
 
 public class GameActivity extends Activity implements SensorEventListener {
 
@@ -38,7 +37,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 	private int columnCount;
 	private boolean inPlay;
 	private SnakeBoard board;
-	private TextView tvDebug;
 	private Fruit fruita;
 	private Fruit fruitb;
 	private Fruit fruitc;
@@ -63,8 +61,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		// Set up the accelerometer service
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
-		tvDebug = (TextView) findViewById(R.id.tvDebug);
+		
 		boardGrid = (GridLayout) findViewById(R.layout.activity_game);
 
 		rowCount = 18;
@@ -179,22 +176,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		whereNext = getTilt();
 		SnakeSegment oldTail = snake.getTail();
 		board.getSnake().moveSnake(whereNext, false);
-
 		
-		switch (whereNext) {
-		case EAST:
-			tvDebug.setText("East");
-			break;
-		case WEST:
-			tvDebug.setText("West");
-			break;
-		case NORTH:
-			tvDebug.setText("North");
-			break;
-		case SOUTH:
-			tvDebug.setText("South");
-		}
-
 		// See if the snake has done anything interesting
 		// collisions? game over? update score?  All that stuff goes here.
 		
@@ -221,6 +203,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 		// Ate fruit?
 		if (board.foundFruit()) {
 			drawFruit(fruitlist);
+			// We probably want to grow the snake here.
+			
 		}
 
 		// Draw the snake
