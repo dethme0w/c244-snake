@@ -1,6 +1,7 @@
 package ca.camosun.snake.gui;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,6 +24,7 @@ import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridLayout;
+import android.widget.Toast;
 
 public class GameActivity extends Activity implements SensorEventListener {
 
@@ -40,8 +42,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 	private Fruit fruita;
 	private Fruit fruitb;
 	private Fruit fruitc;
-	private ArrayList<Fruit> fruitlist;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -73,17 +74,13 @@ public class GameActivity extends Activity implements SensorEventListener {
 		board = new SnakeBoard(columnCount, rowCount);
 		inPlay = true;
 		
-		fruitlist = new ArrayList<Fruit>();
 		
 		fruita = new Fruit(6,15);
 		fruitb = new Fruit(3,9);
 		fruitc = new Fruit(10,8);
 		
-		fruitlist.add(fruita);
-		fruitlist.add(fruitb);
-		fruitlist.add(fruitc);
-		
-		drawFruit(fruitlist);
+		board.placeFruits(10);				
+		drawFruit();
 	}
 
 	@Override
@@ -183,7 +180,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		
 		// Went off board?
 		if (board.wentOffBoard()) {
-			inPlay = false; // game over
+			inPlay = false; // game over			
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			alertDialogBuilder.setTitle("Game Over");
 			alertDialogBuilder.setMessage("You hit the wall dude!  Never hit the wall.");
@@ -201,8 +198,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 		}
 		
 		// Ate fruit?
-		if (board.foundFruit()) {
-			drawFruit(fruitlist);
+		if (board.foundFruit()) {			
+			Toast.makeText(this, "Ate Fruit!", Toast.LENGTH_SHORT).show();			
 			// We probably want to grow the snake here.
 			
 		}
@@ -212,7 +209,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 				oldTail.getPositionY());
 		image.setImageResource(R.drawable.boardbackground);
 		drawSnake(snake);
-						
+		drawFruit();				
 	}
 
 	private void drawSnake(Snake snake) {
@@ -231,7 +228,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 		}
 	}
 	
-	private void drawFruit(ArrayList<Fruit> fruitlist) {
+	private void drawFruit() {
+		List<Fruit> fruitlist = board.getFruits();
 		for (Fruit afruit : fruitlist) {
 
 			GridImage image;

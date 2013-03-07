@@ -22,7 +22,7 @@ public class SnakeBoard {
 		fruits = new ArrayList<Fruit>();
 		score = 0;
 	}
-
+		
 	public boolean wentOffBoard() {
 		SnakeSegment head = snake.getHead();
 		int x = head.getPositionX();
@@ -70,13 +70,11 @@ public class SnakeBoard {
 	public boolean foundFruit() {
 		SnakeSegment head = snake.getHead();
 		int headX = head.getPositionX();
-		int headY = head.getPositionY();
-
+		int headY = head.getPositionY();        
 		for (Fruit current : fruits) {
 			int fruitX = current.getPositionX();
-			int fruitY = current.getPositionY();
-
-			if (headX == fruitX && headY == fruitY) {
+			int fruitY = current.getPositionY();			
+			if (headX == fruitX && headY == fruitY) {				
 				fruits.remove(current);
 				return true;
 			}
