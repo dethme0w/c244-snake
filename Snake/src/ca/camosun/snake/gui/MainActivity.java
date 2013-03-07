@@ -23,10 +23,7 @@ public class MainActivity extends Activity {
 		
 		setContentView(R.layout.activity_main);
 		
-		GridView gridview = (GridView) findViewById(R.id.gridview);
-	    gridview.setAdapter(new ImageAdapter(this));
-	    gridview.setVerticalScrollBarEnabled(false);
-	    gridview.setEnabled(false);
+		
 	}
 	
 	/** Called when the user clicks the Send button */
