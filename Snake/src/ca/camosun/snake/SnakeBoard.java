@@ -56,16 +56,6 @@ public class SnakeBoard {
 		
 		return false;
 	}
-	
-	public boolean isGameOver() {
-		if (wentOffBoard()) {
-			return true;
-		}
-		if (snake.collidedSelf()) {
-			return true;
-		}
-		return false;
-	}
 
 	public boolean foundFruit() {
 		SnakeSegment head = snake.getHead();
@@ -126,11 +116,5 @@ public class SnakeBoard {
 	public List<Fruit> getFruits() {
 		return fruits;
 	}
-
 	
-	public void placeFruit(Fruit inFruit) {
-		fruits.add(inFruit);
-		
-	}
-
 }

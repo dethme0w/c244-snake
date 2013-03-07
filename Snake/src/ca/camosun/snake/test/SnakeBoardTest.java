@@ -53,47 +53,7 @@ public class SnakeBoardTest {
 		assertTrue(board.wentOffBoard() == false);
 
 	}
-	
-	@Test
-	public void snakeAteFruit() {		
-		Fruit a = new Fruit(0, 1);
-		board.placeFruit(a);
 		
-		snake.moveSnake(Snake.Direction.NORTH, board.foundFruit());
-		assertTrue(board.foundFruit() == true);
-		
-		snake.moveSnake(Snake.Direction.NORTH, board.foundFruit());
-		assertTrue(board.foundFruit() == false);
-		
-	}
-	
-	@Test
-	public void placeFruitWorks() {
-		Fruit a = new Fruit(0, 1);
-		board.placeFruit(a);
-		Fruit b = new Fruit(1, 2);
-		board.placeFruit(b);
-		Fruit c = new Fruit(1, 3);
-		board.placeFruit(c);
-		assertTrue(board.getFruits().size() == 3);
-	}
-	
-	@Test
-	public void eatFruit() {
-		Fruit a = new Fruit(0, 1);
-		board.placeFruit(a);
-		Fruit b = new Fruit(1, 2);
-		board.placeFruit(b);
-		Fruit c = new Fruit(1, 3);
-		board.placeFruit(c);
-		assertTrue(board.getFruits().size() == 3);
-		
-		snake.moveSnake(Snake.Direction.NORTH, board.foundFruit());
-		snake.moveSnake(Snake.Direction.NORTH, board.foundFruit());
-		
-		assertTrue(board.getFruits().size() == 2);
-	}
-	
 	@Test
 	public void checkFruitWorks() {
 		Fruit a = new Fruit(0,0);

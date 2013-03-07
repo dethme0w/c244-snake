@@ -1,6 +1,5 @@
 package ca.camosun.snake.gui;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,9 +38,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 	private int columnCount;
 	private boolean inPlay;
 	private SnakeBoard board;
-	private Fruit fruita;
-	private Fruit fruitb;
-	private Fruit fruitc;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +69,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		addGrid(boardGrid, columnCount, rowCount, cellSize, dpi);
 		board = new SnakeBoard(columnCount, rowCount);
 		inPlay = true;
-		
-		
-		fruita = new Fruit(6,15);
-		fruitb = new Fruit(3,9);
-		fruitc = new Fruit(10,8);
-		
+				
 		board.placeFruits(10);				
 		drawFruit();
 	}
@@ -199,7 +190,14 @@ public class GameActivity extends Activity implements SensorEventListener {
 		
 		// Ate fruit?
 		if (board.foundFruit()) {			
-			Toast.makeText(this, "Ate Fruit!", Toast.LENGTH_SHORT).show();			
+			Toast.makeText(this, "Ate Fruit!", Toast.LENGTH_SHORT).show();	
+			
+			// Are all the fruits gone?  Time to level up!
+			if (board.isLevelComplete()) {
+				Toast.makeText(this, "No Fruit Left!", Toast.LENGTH_LONG).show();
+			}
+						
+			
 			// We probably want to grow the snake here.
 			
 		}
