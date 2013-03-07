@@ -29,8 +29,9 @@ public class Snake {
 				return WEST;
 			case SOUTH:
 				return NORTH;
+			default:
+				return EAST;
 			}
-			return EAST;
 		}
 
 		public boolean isOpposite(Direction other) {
