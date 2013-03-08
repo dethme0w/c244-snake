@@ -9,69 +9,90 @@ import org.junit.Test;
 
 import ca.camosun.snake.Fruit;
 import ca.camosun.snake.Snake;
+import ca.camosun.snake.Snake.Direction;
 import ca.camosun.snake.SnakeBoard;
 import ca.camosun.snake.SnakeSegment;
 
 public class SnakeBoardTest {
 
 	Snake snake;
-	SnakeSegment snakeHead;
 	SnakeBoard board;
 
 	@Before
 	public void setUp() throws Exception {
-		board = new SnakeBoard(49, 49);
-		snake = board.getSnake();		
+		reloadBoard(Direction.NORTH);
+	}
+	
+	private void reloadBoard(Direction startDir) {
+		snake = new Snake(startDir, 2, 2);
+		board = new SnakeBoard(5, 5, snake);		
 	}
 
 	@Test
 	public void snakeWentOffBoard() {
-		
-		board = new SnakeBoard(49, 49);
-		snake = board.getSnake();
-		// Try to go south (will run off board)
-		snake.moveSnake(Snake.Direction.EAST, board.foundFruit());
-		snake.moveSnake(Snake.Direction.SOUTH, board.foundFruit());
+		reloadBoard(Direction.NORTH);
+		snake.moveSnake(Direction.NORTH, false);
+		assertTrue(board.wentOffBoard() == false);
+		snake.moveSnake(Direction.NORTH, false);
+		assertTrue(board.wentOffBoard() == false);
+		snake.moveSnake(Direction.NORTH, false);
 		assertTrue(board.wentOffBoard() == true);
 		
-		board = new SnakeBoard(49, 49);
-		snake = board.getSnake();
-		// Try to go north (will not run off board)
-		snake.moveSnake(Snake.Direction.NORTH, board.foundFruit());
+		reloadBoard(Direction.EAST);
+		snake.moveSnake(Direction.EAST, false);
 		assertTrue(board.wentOffBoard() == false);
-		
-		board = new SnakeBoard(49, 49);
-		snake = board.getSnake();
-		// Try to go west (will run off board)
-		snake.moveSnake(Snake.Direction.WEST, board.foundFruit());
+		snake.moveSnake(Direction.EAST, false);
+		assertTrue(board.wentOffBoard() == false);
+		snake.moveSnake(Direction.EAST, false);
 		assertTrue(board.wentOffBoard() == true);
 		
-		board = new SnakeBoard(49, 49);
-		snake = board.getSnake();
-		// Try to go east (will not run off board)
-		snake.moveSnake(Snake.Direction.EAST, board.foundFruit());
+		reloadBoard(Direction.SOUTH);
+		snake.moveSnake(Direction.SOUTH, false);
 		assertTrue(board.wentOffBoard() == false);
-
+		snake.moveSnake(Direction.SOUTH, false);
+		assertTrue(board.wentOffBoard() == false);
+		snake.moveSnake(Direction.SOUTH, false);
+		assertTrue(board.wentOffBoard() == true);
+		
+		reloadBoard(Direction.WEST);
+		snake.moveSnake(Direction.WEST, false);
+		assertTrue(board.wentOffBoard() == false);
+		snake.moveSnake(Direction.WEST, false);
+		assertTrue(board.wentOffBoard() == false);
+		snake.moveSnake(Direction.WEST, false);
+		assertTrue(board.wentOffBoard() == true);
 	}
 		
 	@Test
-	public void checkFruitWorks() {
-		Fruit a = new Fruit(0,0);
-		Fruit b = new Fruit(1,1);
+	public void isCellEmpty() {
+		board.placeFruit(new Fruit(4,4));
 		
-		assertTrue(board.checkFruit(a.getPositionX(), a.getPositionY()) == false);
-		assertTrue(board.checkFruit(b.getPositionX(), b.getPositionY()) == true);
+		assertTrue(board.isEmptyCell(4, 4) == false);
 	}
 	
 	@Test
 	public void placeFruitsWorks() {
-		snake.moveSnake(Snake.Direction.EAST, false);
-		snake.moveSnake(Snake.Direction.SOUTH, false);
+		board.addRandomFruits(3);
 		
-		List<Fruit> fruits;
-		board.placeFruits(3);
-		fruits = board.getFruits();
-		assertTrue(fruits.size() == 3);
+		assertTrue(board.getFruits().size() == 3);
+	}
+	
+	@Test
+	public void placeFruitsFailsAddingTooMany() {
+		// fill every empty space with fruit
+		assertTrue(board.addRandomFruits(5*5-1));
 		
+		// no more spaces!
+		assertTrue(board.addRandomFruits(1) == false);
+	}
+	
+	@Test
+	public void placeFruitTestsCollision() {
+		// place on fruit fails
+		assertTrue(board.placeFruit(new Fruit(4,4)));
+		assertTrue(board.placeFruit(new Fruit(4,4)) == false);
+
+		// place on snake fails
+		assertTrue(board.placeFruit(new Fruit(2,2)) == false);
 	}
 }

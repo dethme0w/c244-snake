@@ -1,11 +1,10 @@
 package ca.camosun.snake;
 
-import static ca.camosun.snake.Snake.Direction.SOUTH;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
+import ca.camosun.snake.Snake.Direction;
 
 public class SnakeBoard {
 
@@ -16,9 +15,13 @@ public class SnakeBoard {
 	private int maxY;
 
 	public SnakeBoard(int inWidth, int inHeight) {
+		this(inWidth, inHeight, new Snake(Direction.NORTH, inWidth/2, inHeight/2));
+	}
+	
+	public SnakeBoard(int inWidth, int inHeight, Snake inSnake) {
 		maxX = inWidth  - 1;
 		maxY = inHeight - 1;
-		snake = new Snake( SOUTH, inWidth/2, inHeight/2 ); 
+		snake = inSnake; 
 		fruits = new ArrayList<Fruit>();
 		score = 0;
 	}
@@ -30,30 +33,18 @@ public class SnakeBoard {
 
 		
 		if (x < 0) {
-			head.setPositionX(0);
 			return true;
 		}
 		if (y < 0) {
-			head.setPositionY(0);
 			return true;
 		}
 		if (x > maxX) {
-			head.setPositionX(maxX);
 			return true;
 		}
 		if (y > maxY) {
-			head.setPositionY(maxY);
 			return true;
 		}
 
-		return false;
-	}
-	
-	public boolean isLevelComplete() {
-		if (fruits.size() == 0) {
-			return true;
-		}
-		
 		return false;
 	}
 
@@ -72,37 +63,64 @@ public class SnakeBoard {
 		return false;
 	}
 	
-	public void placeFruits(int fruitsToAdd) {
+	/**
+	 * @return false if not enough space to add fruitsToAdd count fruits, else true
+	 */
+	public boolean addRandomFruits(int fruitsToAdd) {
 		Random rand = new Random();
-		int minX = 0;
-		int minY = 0;
 		int i = 0;
 		
 		while (i < fruitsToAdd) {
-			int fruitX = rand.nextInt(maxX - minX + 1) + minX;
-			int fruitY = rand.nextInt(maxY - minY + 1) + minY;
+			if (hasEmptyCells() == false) {
+				return false;
+			}
 			
-			if (checkFruit(fruitX, fruitY)) {
-				Fruit theFruit = new Fruit(fruitX, fruitY);
-				fruits.add(theFruit);
+			int fruitX = rand.nextInt(maxX + 1);
+			int fruitY = rand.nextInt(maxY + 1);
+			
+			Fruit theFruit = new Fruit(fruitX, fruitY);
+			if (placeFruit(theFruit)) {
 				i++;
 			}
 		}
+		return true;
 	}
 	
-	public boolean checkFruit(int inX, int inY) {
-		Iterator<SnakeSegment> segmentIterator = snake.iterator();
+	/**
+	 * @return false if position already occupied
+	 */
+	public boolean placeFruit(Fruit addFruit) {
+		if (isEmptyCell(addFruit.getPositionX(), addFruit.getPositionY()) == false) {
+			return false;
+		}
 		
-		while(segmentIterator.hasNext()) {
-			SnakeSegment currentSegment = segmentIterator.next();
-			int segmentX = currentSegment.getPositionX();
-			int segmentY = currentSegment.getPositionY();
-			
-			if (inX == segmentX && inY == segmentY) {
-				return false;
+		fruits.add(addFruit);
+		return true;
+	}
+	
+	private boolean hasEmptyCells() {
+		return (snake.size() + fruits.size()) < ((maxX+1) * (maxY+1));
+	}
+	
+	public boolean isEmptyCell(int inX, int inY) {
+		return get(inX, inY) == null;
+	}
+	
+	public Entity get(int inX, int inY) {
+		SnakeSegment fakeSegment = new SnakeSegment(inX, inY);
+		for (SnakeSegment seg : snake) {
+			if (seg.equals(fakeSegment)) {
+				return seg;
 			}
 		}
-		return true;
+		
+		Fruit fakeFruit = new Fruit(inX, inY);
+		int foundFruitIndex = fruits.indexOf(fakeFruit);
+		if (foundFruitIndex != -1) {
+			return fruits.get(foundFruitIndex);
+		}
+		
+		return null;
 	}
 	
 	public Snake getSnake() {

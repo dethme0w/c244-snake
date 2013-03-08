@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
 
-public class Snake {
+public class Snake implements Iterable<SnakeSegment> {
 	private Deque<SnakeSegment> segments;
 	private Direction currentDirection;
 

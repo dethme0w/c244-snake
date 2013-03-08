@@ -70,7 +70,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		board = new SnakeBoard(columnCount, rowCount);
 		inPlay = true;
 				
-		board.placeFruits(10);				
+		board.addRandomFruits(10);				
 		drawFruit();
 	}
 
@@ -193,7 +193,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 			Toast.makeText(this, "Ate Fruit!", Toast.LENGTH_SHORT).show();	
 			
 			// Are all the fruits gone?  Time to level up!
-			if (board.isLevelComplete()) {
+			if (board.getFruits().size() == 0) {
 				Toast.makeText(this, "No Fruit Left!", Toast.LENGTH_LONG).show();
 			}
 						

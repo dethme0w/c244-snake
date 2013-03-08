@@ -40,13 +40,13 @@ public class SnakeTest {
 		snakeHead = snake.getHead();
 		assertTrue(snake.getCurrentDirection() == NORTH);
 		assertTrue(snakeHead.getPositionX() == 1);
-		assertTrue(snakeHead.getPositionY() == 1);
+		assertTrue(snakeHead.getPositionY() == -1);
 
 		snake.moveSnake(WEST, ateFruit);
 		snakeHead = snake.getHead();
 		assertTrue(snake.getCurrentDirection() == WEST);
 		assertTrue(snakeHead.getPositionX() == 0);
-		assertTrue(snakeHead.getPositionY() == 1);
+		assertTrue(snakeHead.getPositionY() == -1);
 
 		snake.moveSnake(SOUTH, ateFruit);
 		snakeHead = snake.getHead();
@@ -66,7 +66,7 @@ public class SnakeTest {
 
 		snakeHead = snake.getHead();
 		assertTrue(snakeHead.getPositionX() == 0);
-		assertTrue(snakeHead.getPositionY() == 1);
+		assertTrue(snakeHead.getPositionY() == -1);
 	}
 
 	@Test
