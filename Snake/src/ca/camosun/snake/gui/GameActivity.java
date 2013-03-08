@@ -60,6 +60,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		// Set up the timer
 		mTimer = new Timer();
 		startTimer(INITIAL_REFRESH_MS);
+		
 
 		// Set up the accelerometer service
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -148,7 +149,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		return Direction.NORTH;
 	}
 
-	private void startTimer(int interval) {
+	public void startTimer(int interval) {
 		mTimer.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
@@ -190,7 +191,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 			// Are all the fruits gone?  Time to level up!
 			if (board.getFruits().size() == 0) {
 				//Toast.makeText(this, "No Fruit Left!", Toast.LENGTH_LONG).show();
-				
+				inPlay = false;
 				createAlertMessage("Level Complete", "Would you like to continue?", "Ok", GameState.NEXT_LEVEL);
 			}
 						
@@ -252,7 +253,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 					break;
 					
 				case NEXT_LEVEL:
-					GameLevels.nextLevel(board);
+				
+					GameLevels.nextLevel(board, GameActivity.this);
 					break;
 					
 				case CRASHED:
@@ -271,23 +273,29 @@ public class GameActivity extends Activity implements SensorEventListener {
 	private static class GameLevels {
 		static int currentLevel = 1;
 		
-		private static void nextLevel(SnakeBoard board) {
+		private static void nextLevel(SnakeBoard board, GameActivity thisgame) {
 			currentLevel++;
+			
+			thisgame.inPlay = true;
 			
 			//Can add all sorts of obstacles for each level
 			switch(currentLevel) {
 			
-			case 2:
+			case 2:	
+				thisgame.startTimer(1125);
 				board.addRandomFruits(4);
 			
 				break;
 			case 3:
+				thisgame.startTimer(1000);
 				board.addRandomFruits(6);	
 				break;
 			case 4:
+				thisgame.startTimer(900);
 				board.addRandomFruits(8);	
 				break;
 			case 5:
+				thisgame.startTimer(800);
 				board.addRandomFruits(10);	
 				break;
 			default:
