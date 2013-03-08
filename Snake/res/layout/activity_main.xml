@@ -2,15 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >    
-    
+    android:background="#F5E28C"
+    tools:context=".MainActivity" >
+
     <Button
         android:id="@+id/startGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/button2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="180dp"
         android:onClick="startGame"
         android:text="@string/startgame" />
 
@@ -18,10 +18,19 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/startGame"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
+        android:layout_alignLeft="@+id/startGame"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/startGame"
         android:onClick="quit"
         android:text="@string/exitbuttoncaption" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/snakeImage"
+        android:src="@drawable/snake" />
 
 </RelativeLayout>
