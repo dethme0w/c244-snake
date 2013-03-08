@@ -39,6 +39,12 @@ public class GameActivity extends Activity implements SensorEventListener {
 	private boolean inPlay;
 	private SnakeBoard board;
 	
+	private static enum GameState{
+	        GAME_OVER,
+	        NEXT_LEVEL,
+	        CRASHED;
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,7 +76,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		board = new SnakeBoard(columnCount, rowCount);
 		inPlay = true;
 				
-		board.addRandomFruits(10);				
+		board.addRandomFruits(2);				
 		drawFruit();
 	}
 
@@ -172,19 +178,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 		// Went off board?
 		if (board.wentOffBoard()) {
 			inPlay = false; // game over			
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			alertDialogBuilder.setTitle("Game Over");
-			alertDialogBuilder.setMessage("You hit the wall dude!  Never hit the wall.");
-			alertDialogBuilder.setCancelable(true);
-			alertDialogBuilder.setPositiveButton("Ah, sh*t.",new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog,int id) {
-					// if this button is clicked, close
-					// current activity
-					GameActivity.this.finish();
-				}
-			  });
-			AlertDialog ad = alertDialogBuilder.create();			 
-			ad.show();
+			
+			createAlertMessage("Game Over", "You hit the wall dude! Never hit the wall.", "Ah, sh*t.", GameState.GAME_OVER);
 			
 		}
 		
@@ -194,7 +189,9 @@ public class GameActivity extends Activity implements SensorEventListener {
 			
 			// Are all the fruits gone?  Time to level up!
 			if (board.getFruits().size() == 0) {
-				Toast.makeText(this, "No Fruit Left!", Toast.LENGTH_LONG).show();
+				//Toast.makeText(this, "No Fruit Left!", Toast.LENGTH_LONG).show();
+				
+				createAlertMessage("Level Complete", "Would you like to continue?", "Ok", GameState.NEXT_LEVEL);
 			}
 						
 			
@@ -235,6 +232,71 @@ public class GameActivity extends Activity implements SensorEventListener {
 			image.setImageResource(R.drawable.fruit);
 
 		}
+	}
+	
+	private void createAlertMessage(String titleText, String messageText, String buttonText, final GameState state) {
+		
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setTitle(titleText);
+		alertDialogBuilder.setMessage(messageText);
+		alertDialogBuilder.setCancelable(true);
+		
+		alertDialogBuilder.setPositiveButton(buttonText,new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,int id) {
+				
+				switch (state) {
+
+				case GAME_OVER:
+
+					GameActivity.this.finish();
+					break;
+					
+				case NEXT_LEVEL:
+					GameLevels.nextLevel(board);
+					break;
+					
+				case CRASHED:
+					
+					break;
+					
+				default:
+					//Generic message action
+				}
+			}
+		  });
+		AlertDialog ad = alertDialogBuilder.create();			 
+		ad.show();
+	}
+	
+	private static class GameLevels {
+		static int currentLevel = 1;
+		
+		private static void nextLevel(SnakeBoard board) {
+			currentLevel++;
+			
+			//Can add all sorts of obstacles for each level
+			switch(currentLevel) {
+			
+			case 2:
+				board.addRandomFruits(4);
+			
+				break;
+			case 3:
+				board.addRandomFruits(6);	
+				break;
+			case 4:
+				board.addRandomFruits(8);	
+				break;
+			case 5:
+				board.addRandomFruits(10);	
+				break;
+			default:
+				return;		
+			
+			}
+		}
+		
+	
 	}
 	
 }
