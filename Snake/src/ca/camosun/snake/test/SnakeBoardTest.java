@@ -2,8 +2,6 @@ package ca.camosun.snake.test;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +9,6 @@ import ca.camosun.snake.Fruit;
 import ca.camosun.snake.Snake;
 import ca.camosun.snake.Snake.Direction;
 import ca.camosun.snake.SnakeBoard;
-import ca.camosun.snake.SnakeSegment;
 
 public class SnakeBoardTest {
 

@@ -1,6 +1,5 @@
 package ca.camosun.snake.gui;
 
-import ca.camosun.snake.ImageAdapter;
 import ca.camosun.snake.R;
 import android.os.Bundle;
 import android.app.Activity;
@@ -9,7 +8,6 @@ import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.GridView;
 
 public class MainActivity extends Activity {
 
