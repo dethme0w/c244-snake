@@ -23,50 +23,50 @@ public class SnakeTest {
 	@Before
 	public void setUp() throws Exception {
 		noFruit = Collections.emptyList();
-		snake = new Snake(NORTH, 0, 0);
+		snake = new Snake(NORTH, 10, 10);
 	}
 
 	@Test
 	public void changeDirections() {
 
-		snake.moveSnake(EAST, ateFruit);
+		snake.moveSnake(EAST);
 		assertTrue(snake.getCurrentDirection() == EAST);
 
 		snakeHead = snake.getHead();
-		assertTrue(snakeHead.getPositionX() == 1);
-		assertTrue(snakeHead.getPositionY() == 0);
+		assertTrue(snakeHead.getPositionX() == 11);
+		assertTrue(snakeHead.getPositionY() == 10);
 
-		snake.moveSnake(NORTH, ateFruit);
+		snake.moveSnake(NORTH);
 		snakeHead = snake.getHead();
 		assertTrue(snake.getCurrentDirection() == NORTH);
-		assertTrue(snakeHead.getPositionX() == 1);
-		assertTrue(snakeHead.getPositionY() == -1);
+		assertTrue(snakeHead.getPositionX() == 11);
+		assertTrue(snakeHead.getPositionY() == 9);
 
-		snake.moveSnake(WEST, ateFruit);
+		snake.moveSnake(WEST);
 		snakeHead = snake.getHead();
 		assertTrue(snake.getCurrentDirection() == WEST);
-		assertTrue(snakeHead.getPositionX() == 0);
-		assertTrue(snakeHead.getPositionY() == -1);
+		assertTrue(snakeHead.getPositionX() == 10);
+		assertTrue(snakeHead.getPositionY() == 9);
 
-		snake.moveSnake(SOUTH, ateFruit);
+		snake.moveSnake(SOUTH);
 		snakeHead = snake.getHead();
 		assertTrue(snake.getCurrentDirection() == SOUTH);
-		assertTrue(snakeHead.getPositionX() == 0);
-		assertTrue(snakeHead.getPositionY() == 0);
+		assertTrue(snakeHead.getPositionX() == 10);
+		assertTrue(snakeHead.getPositionY() == 10);
 	}
 
 	@Test
 	public void changeDirectionNotOpposite() {
 
-		snake.moveSnake(SOUTH, ateFruit);
+		snake.moveSnake(SOUTH);
 		assertTrue(snake.getCurrentDirection() == NORTH);
 
-		snake.moveSnake(NORTH, ateFruit);
+		snake.moveSnake(NORTH);
 		assertTrue(snake.getCurrentDirection() == NORTH);
 
 		snakeHead = snake.getHead();
-		assertTrue(snakeHead.getPositionX() == 0);
-		assertTrue(snakeHead.getPositionY() == -1);
+		assertTrue(snakeHead.getPositionX() == 10);
+		assertTrue(snakeHead.getPositionY() == 9);
 	}
 
 	@Test
@@ -92,30 +92,52 @@ public class SnakeTest {
 
 	@Test
 	public void collided() {
+		SnakeSegment tail = snake.getTail();	
+		snake.dump();
+		// initial
 		assertTrue(snake.collidedSelf() == false);
 		
-		ateFruit = true;
-		snake.moveSnake(NORTH, ateFruit);
-		assertTrue(snake.collidedSelf() == false);
-		snake.moveSnake(EAST, ateFruit);
-		assertTrue(snake.collidedSelf() == false);
-		snake.moveSnake(SOUTH, ateFruit);
-		assertTrue(snake.collidedSelf() == false);
+		// give the snake some segments
+		snake.moveSnake(NORTH);
+		snake.grow(tail);
+		snake.dump();
+		snake.moveSnake(NORTH);
+		snake.grow(tail);
+		snake.dump();
+		snake.moveSnake(NORTH);
+		snake.grow(tail);
+		snake.dump();
+		snake.moveSnake(NORTH);
+		snake.grow(tail);
+		snake.dump();
+		// Snake should now have enough segments to collide in this test
+		assertTrue(snake.size()==5);		
 		
-		snake.moveSnake(WEST, ateFruit);
+		// Now move the snake in a tight circle
+		snake.moveSnake(NORTH);
+		assertTrue(snake.collidedSelf() == false);
+		snake.moveSnake(EAST);
+		assertTrue(snake.collidedSelf() == false);
+		snake.moveSnake(SOUTH);
+		assertTrue(snake.collidedSelf() == false);		
+		snake.moveSnake(WEST);
 		assertTrue(snake.collidedSelf() == true);
 		
 	}
 	
 	@Test
 	public void snakeGrows() {
+		
+		SnakeSegment tail = snake.getTail();		
 		assertTrue(snake.size() == 1);
 		
-		snake.moveSnake(NORTH, false);
-		assertTrue(snake.size() == 1);
-		
-		snake.moveSnake(NORTH, true);
+		snake.moveSnake(NORTH);
+		snake.grow(tail);
 		assertTrue(snake.size() == 2);
+		
+		snake.moveSnake(EAST);
+		snake.grow(tail);
+		assertTrue(snake.size() == 3);
 	}
 
 	

@@ -49,14 +49,16 @@ public class Snake implements Iterable<SnakeSegment> {
 		return currentDirection;
 	}
 
-	public void moveSnake(Direction nextDirection, boolean ateFruit) {
+	public SnakeSegment moveSnake(Direction nextDirection) {
 		SnakeSegment head = getHead();
 		SnakeSegment newHead = new SnakeSegment(head.getPositionX(), head.getPositionY());
+		SnakeSegment tail = getTail();
+		
 		int YPosition = newHead.getPositionY();
 		int XPosition = newHead.getPositionX();
 
 		if (nextDirection.isOpposite(currentDirection)) {
-			return;
+			return(tail);
 		}
 
 		switch (nextDirection) {
@@ -71,16 +73,11 @@ public class Snake implements Iterable<SnakeSegment> {
 			break;
 		}
 
-		currentDirection = nextDirection;
-		SnakeSegment tail = segments.peekLast();
+		currentDirection = nextDirection;	
+				
+		segments.addFirst(newHead);
+		return(segments.removeLast());
 		
-		if (ateFruit == true) {
-			segments.add(newHead);
-			return;
-		}
-		
-		segments.add(newHead);
-		segments.remove(tail);
 	}
 
 	public boolean collidedSelf() {
@@ -102,6 +99,10 @@ public class Snake implements Iterable<SnakeSegment> {
 		return false;
 	}
 	
+	public void grow(SnakeSegment newTail) {
+		segments.addLast(newTail);
+	}
+	
 	public Iterator<SnakeSegment> iterator() {
 		return segments.iterator();
 	}
@@ -121,6 +122,15 @@ public class Snake implements Iterable<SnakeSegment> {
 		
 	public int size() {
 		return segments.size();
+	}
+	
+	public void dump() {
+		for (int i=0; i<segments.size(); i++) {
+			SnakeSegment s = get(i);
+			System.out.print(i+": "+s.getPositionX()+","+s.getPositionY()+"  ");
+		}
+		System.out.println();
+		
 	}
 	
 }

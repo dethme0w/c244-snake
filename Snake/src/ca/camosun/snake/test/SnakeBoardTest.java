@@ -28,35 +28,35 @@ public class SnakeBoardTest {
 	@Test
 	public void snakeWentOffBoard() {
 		reloadBoard(Direction.NORTH);
-		snake.moveSnake(Direction.NORTH, false);
+		snake.moveSnake(Direction.NORTH);
 		assertTrue(board.wentOffBoard() == false);
-		snake.moveSnake(Direction.NORTH, false);
+		snake.moveSnake(Direction.NORTH);
 		assertTrue(board.wentOffBoard() == false);
-		snake.moveSnake(Direction.NORTH, false);
+		snake.moveSnake(Direction.NORTH);
 		assertTrue(board.wentOffBoard() == true);
 		
 		reloadBoard(Direction.EAST);
-		snake.moveSnake(Direction.EAST, false);
+		snake.moveSnake(Direction.EAST);
 		assertTrue(board.wentOffBoard() == false);
-		snake.moveSnake(Direction.EAST, false);
+		snake.moveSnake(Direction.EAST);
 		assertTrue(board.wentOffBoard() == false);
-		snake.moveSnake(Direction.EAST, false);
+		snake.moveSnake(Direction.EAST);
 		assertTrue(board.wentOffBoard() == true);
 		
 		reloadBoard(Direction.SOUTH);
-		snake.moveSnake(Direction.SOUTH, false);
+		snake.moveSnake(Direction.SOUTH);
 		assertTrue(board.wentOffBoard() == false);
-		snake.moveSnake(Direction.SOUTH, false);
+		snake.moveSnake(Direction.SOUTH);
 		assertTrue(board.wentOffBoard() == false);
-		snake.moveSnake(Direction.SOUTH, false);
+		snake.moveSnake(Direction.SOUTH);
 		assertTrue(board.wentOffBoard() == true);
 		
 		reloadBoard(Direction.WEST);
-		snake.moveSnake(Direction.WEST, false);
+		snake.moveSnake(Direction.WEST);
 		assertTrue(board.wentOffBoard() == false);
-		snake.moveSnake(Direction.WEST, false);
+		snake.moveSnake(Direction.WEST);
 		assertTrue(board.wentOffBoard() == false);
-		snake.moveSnake(Direction.WEST, false);
+		snake.moveSnake(Direction.WEST);
 		assertTrue(board.wentOffBoard() == true);
 	}
 		

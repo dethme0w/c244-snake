@@ -169,10 +169,11 @@ public class GameActivity extends Activity implements SensorEventListener {
 	private void makeMove() {		
 		Direction whereNext;
 		Snake snake = board.getSnake();
+		boolean ateFruit = false;
 
 		whereNext = getTilt();
 		SnakeSegment oldTail = snake.getTail();
-		board.getSnake().moveSnake(whereNext, false);
+		snake.moveSnake(whereNext);	
 		
 		// See if the snake has done anything interesting
 		// collisions? game over? update score?  All that stuff goes here.
@@ -186,7 +187,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 		}
 		
 		// Ate fruit?
-		if (board.foundFruit()) {			
+		if (board.foundFruit()) {	
+			ateFruit = true;
 			Toast.makeText(this, "Ate Fruit!", Toast.LENGTH_SHORT).show();	
 			
 			// Are all the fruits gone?  Time to level up!
@@ -194,17 +196,19 @@ public class GameActivity extends Activity implements SensorEventListener {
 				//Toast.makeText(this, "No Fruit Left!", Toast.LENGTH_LONG).show();
 				inPlay = false;
 				createAlertMessage("Level Complete", "Would you like to continue?", "Ok", GameState.NEXT_LEVEL);
-			}
-						
+			}					
 			
 			// We probably want to grow the snake here.
+			snake.grow(oldTail);
 			
 		}
 
-		// Draw the snake
-		GridImage image = imageAt(oldTail.getPositionX(),
-				oldTail.getPositionY());
-		image.setImageResource(R.drawable.boardbackground);
+		// Draw the snake	
+		if (ateFruit == false) {
+			GridImage image = imageAt(oldTail.getPositionX(),
+					oldTail.getPositionY());
+			image.setImageResource(R.drawable.boardbackground);
+		}
 		drawSnake(snake);
 		drawFruit();				
 	}
