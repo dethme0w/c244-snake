@@ -75,10 +75,12 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 		addGrid(boardGrid, columnCount, rowCount, cellSize, dpi);
 		board = new SnakeBoard(columnCount, rowCount);
-		inPlay = true;
-				
+			
 		board.addRandomFruits(2);				
 		drawFruit();
+		
+		inPlay = true;
+		
 	}
 
 	@Override
@@ -178,8 +180,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		
 		// Went off board?
 		if (board.wentOffBoard()) {
-			inPlay = false; // game over			
-			
+			inPlay = false; // game over				
 			createAlertMessage("Game Over", "You hit the wall dude! Never hit the wall.", "Ah, sh*t.", GameState.GAME_OVER);
 			
 		}
