@@ -110,6 +110,7 @@ public class SnakeTest {
 		snake.moveSnake(NORTH);
 		snake.grow(tail);
 		snake.dump();
+		
 		// Snake should now have enough segments to collide in this test
 		assertTrue(snake.size()==5);		
 		

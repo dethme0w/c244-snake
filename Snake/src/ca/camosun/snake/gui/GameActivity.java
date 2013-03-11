@@ -182,7 +182,13 @@ public class GameActivity extends Activity implements SensorEventListener {
 		// Went off board?
 		if (board.wentOffBoard()) {
 			inPlay = false; // game over				
-			createAlertMessage("Game Over", "You hit the wall dude! Never hit the wall.", "Ah, sh*t.", GameState.GAME_OVER);
+			createAlertMessage("Game Over", "You hit the wall dude! Never hit the wall.", "Ah, sh*t.", GameState.GAME_OVER);			
+		}
+		
+		// Self collision?
+		if (snake.collidedSelf()) {
+			inPlay = false;
+			createAlertMessage("Game Over", "You bit yourself! Cannibalism not allowed.", "Ouch!", GameState.GAME_OVER);	
 			
 		}
 		
