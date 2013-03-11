@@ -57,10 +57,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 		inPlay = false;
 
-		// Set up the timer
-		mTimer = new Timer();
-		startTimer(INITIAL_REFRESH_MS);
-		
+		// Set up the timer		
+		startTimer(INITIAL_REFRESH_MS);		
 
 		// Set up the accelerometer service
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -152,6 +150,9 @@ public class GameActivity extends Activity implements SensorEventListener {
 	}
 
 	public void startTimer(int interval) {
+		mTimer = null; 
+		mTimer = new Timer();		
+		
 		mTimer.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
@@ -286,9 +287,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 		
 		private static void nextLevel(SnakeBoard board, GameActivity thisgame) {
 			currentLevel++;
-			
-			thisgame.inPlay = true;
-			
 			//Can add all sorts of obstacles for each level
 			switch(currentLevel) {
 			
@@ -313,6 +311,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 				return;		
 			
 			}
+			thisgame.inPlay = true;
 		}
 		
 	
