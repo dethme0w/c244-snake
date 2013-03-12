@@ -300,39 +300,23 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 	private static class GameLevels {
 		private static int currentLevel = 1;
+		private static int timerMs = 1200;
+		private static int numFruits = 2;
 
-		private static void nextLevel(SnakeBoard board, GameActivity thisgame) {
+		private static void nextLevel(SnakeBoard board, GameActivity thisGame) {
 			currentLevel++;
+            timerMs = timerMs - 100;
+            if (timerMs < 400) { timerMs = 400; }
+            numFruits = numFruits + 2;
+            if (numFruits > 20) { numFruits = 20; }
+            
+            thisGame.startTimer(timerMs);
+            board.addRandomFruits(numFruits);
 
-			// Can add all sorts of obstacles for each level
-			switch (currentLevel) {
-
-			case 2:
-				thisgame.startTimer(900);
-				board.addRandomFruits(4);
-				break;
-			case 3:
-				thisgame.startTimer(800);
-				board.addRandomFruits(6);
-				break;
-			case 4:
-				thisgame.startTimer(700);
-				board.addRandomFruits(8);
-				break;
-			case 5:
-				thisgame.startTimer(600);
-				board.addRandomFruits(10);
-				break;
-			default:
-				thisgame.startTimer(500);
-				board.addRandomFruits(14);
-				break;
-			}
-
-			TextView tv = (TextView) thisgame.findViewById(R.id.tvLevel);
+			TextView tv = (TextView) thisGame.findViewById(R.id.tvLevel);
 			tv.setText("Level " + currentLevel);
 
-			thisgame.inPlay = true;
+			thisGame.inPlay = true;
 		}
 
 	}
