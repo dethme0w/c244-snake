@@ -23,12 +23,13 @@ import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class GameActivity extends Activity implements SensorEventListener {
 
 	private GridLayout boardGrid;
-	private static final int INITIAL_REFRESH_MS = 1500;
+	private static final int INITIAL_REFRESH_MS = 1000;
 	private Timer mTimer;
 	private SensorManager mSensorManager;
 	private Sensor mSensor;
@@ -38,32 +39,30 @@ public class GameActivity extends Activity implements SensorEventListener {
 	private int columnCount;
 	private boolean inPlay;
 	private SnakeBoard board;
-	
-	private static enum GameState{
-	        GAME_OVER,
-	        NEXT_LEVEL,
-	        CRASHED;
+
+	private static enum GameState {
+		GAME_OVER, NEXT_LEVEL, CRASHED;
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
-							WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 		setContentView(R.layout.activity_game);
 
 		inPlay = false;
 
-		// Set up the timer		
-		startTimer(INITIAL_REFRESH_MS);		
+		// Set up the timer
+		startTimer(INITIAL_REFRESH_MS);
 
 		// Set up the accelerometer service
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		
+
 		boardGrid = (GridLayout) findViewById(R.layout.activity_game);
 
 		rowCount = 18;
@@ -73,12 +72,15 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 		addGrid(boardGrid, columnCount, rowCount, cellSize, dpi);
 		board = new SnakeBoard(columnCount, rowCount);
-			
-		board.addRandomFruits(2);				
+
+		board.addRandomFruits(2);
 		drawFruit();
-		
+
+		TextView tv = (TextView) findViewById(R.id.tvLevel);
+		tv.setText("Level 1");
+
 		inPlay = true;
-		
+
 	}
 
 	@Override
@@ -88,7 +90,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 				SensorManager.SENSOR_DELAY_NORMAL);
 	}
 
-	private void addGrid(GridLayout grid, int columnCount, int rowCount, 
+	private void addGrid(GridLayout grid, int columnCount, int rowCount,
 			int cellSize, int dpi) {
 
 		grid.setRowCount(rowCount);
@@ -129,6 +131,12 @@ public class GameActivity extends Activity implements SensorEventListener {
 	}
 
 	@Override
+	protected void onPause() {
+		super.onPause();
+		mSensorManager.unregisterListener(this, mSensor);
+	}
+
+	@Override
 	public void onSensorChanged(SensorEvent event) {
 		tiltX = event.values[0];
 		tiltY = event.values[1];
@@ -150,9 +158,9 @@ public class GameActivity extends Activity implements SensorEventListener {
 	}
 
 	public void startTimer(int interval) {
-		mTimer = null; 
-		mTimer = new Timer();		
-		
+		mTimer = null;
+		mTimer = new Timer();
+
 		mTimer.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
@@ -167,57 +175,63 @@ public class GameActivity extends Activity implements SensorEventListener {
 		}, 0, interval);
 	}
 
-	private void makeMove() {		
+	private void makeMove() {
 		Direction whereNext;
 		Snake snake = board.getSnake();
 		boolean ateFruit = false;
 
 		whereNext = getTilt();
 		SnakeSegment oldTail = snake.getTail();
-		snake.moveSnake(whereNext);	
-		
+		snake.moveSnake(whereNext);
+
 		// See if the snake has done anything interesting
-		// collisions? game over? update score?  All that stuff goes here.
-		
-		
+		// collisions? game over? update score? All that stuff goes here.
+
 		// Went off board?
 		if (board.wentOffBoard()) {
-			inPlay = false; // game over				
-			createAlertMessage("Game Over", "You hit the wall dude! Never hit the wall.", "Ah, sh*t.", GameState.GAME_OVER);			
+			inPlay = false; // game over
+			createAlertMessage("Game Over",
+					"You hit the wall dude! Never hit the wall.", "Ah, sh*t.",
+					GameState.GAME_OVER);
 		}
-		
+
 		// Self collision?
 		if (snake.collidedSelf()) {
 			inPlay = false;
-			createAlertMessage("Game Over", "You bit yourself! Cannibalism not allowed.", "Ouch!", GameState.GAME_OVER);	
-			
-		}
-		
-		// Ate fruit?
-		if (board.foundFruit()) {	
-			ateFruit = true;
-			Toast.makeText(this, "Ate Fruit!", Toast.LENGTH_SHORT).show();	
-			
-			// Are all the fruits gone?  Time to level up!
-			if (board.getFruits().size() == 0) {
-				//Toast.makeText(this, "No Fruit Left!", Toast.LENGTH_LONG).show();
-				inPlay = false;
-				createAlertMessage("Level Complete", "Would you like to continue?", "Ok", GameState.NEXT_LEVEL);
-			}					
-			
-			// We probably want to grow the snake here.
-			snake.grow(oldTail);
-			
+			createAlertMessage("Game Over",
+					"You bit yourself! Cannibalism not allowed.", "Ouch!",
+					GameState.GAME_OVER);
+
 		}
 
-		// Draw the snake	
+		// Ate fruit?
+		if (board.foundFruit()) {
+			ateFruit = true;
+			Toast.makeText(this, "Ate Fruit!", Toast.LENGTH_SHORT).show();
+
+			// Are all the fruits gone? Time to level up!
+			if (board.getFruits().size() == 0) {
+				// Toast.makeText(this, "No Fruit Left!",
+				// Toast.LENGTH_LONG).show();
+				inPlay = false;
+				createAlertMessage("Level Complete",
+						"Would you like to continue?", "Ok",
+						GameState.NEXT_LEVEL);
+			}
+
+			// We probably want to grow the snake here.
+			snake.grow(oldTail);
+
+		}
+
+		// Draw the snake
 		if (ateFruit == false) {
 			GridImage image = imageAt(oldTail.getPositionX(),
 					oldTail.getPositionY());
 			image.setImageResource(R.drawable.boardbackground);
 		}
 		drawSnake(snake);
-		drawFruit();				
+		drawFruit();
 	}
 
 	private void drawSnake(Snake snake) {
@@ -235,7 +249,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 			image.setImageResource(R.drawable.snakebody);
 		}
 	}
-	
+
 	private void drawFruit() {
 		List<Fruit> fruitlist = board.getFruits();
 		for (Fruit afruit : fruitlist) {
@@ -246,75 +260,81 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 		}
 	}
-	
-	private void createAlertMessage(String titleText, String messageText, String buttonText, final GameState state) {
-		
+
+	private void createAlertMessage(String titleText, String messageText,
+			String buttonText, final GameState state) {
+
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle(titleText);
 		alertDialogBuilder.setMessage(messageText);
 		alertDialogBuilder.setCancelable(true);
-		
-		alertDialogBuilder.setPositiveButton(buttonText,new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog,int id) {
-				
-				switch (state) {
 
-				case GAME_OVER:
+		alertDialogBuilder.setPositiveButton(buttonText,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
 
-					GameActivity.this.finish();
-					break;
-					
-				case NEXT_LEVEL:
-				
-					GameLevels.nextLevel(board, GameActivity.this);
-					break;
-					
-				case CRASHED:
-					
-					break;
-					
-				default:
-					//Generic message action
-				}
-			}
-		  });
-		AlertDialog ad = alertDialogBuilder.create();			 
+						switch (state) {
+
+						case GAME_OVER:
+
+							GameActivity.this.finish();
+							break;
+
+						case NEXT_LEVEL:
+
+							GameLevels.nextLevel(board, GameActivity.this);
+							break;
+
+						case CRASHED:
+
+							break;
+
+						default:
+							// Generic message action
+						}
+					}
+				});
+		AlertDialog ad = alertDialogBuilder.create();
 		ad.show();
 	}
-	
+
 	private static class GameLevels {
-		static int currentLevel = 1;
-		
+		private static int currentLevel = 1;
+
 		private static void nextLevel(SnakeBoard board, GameActivity thisgame) {
 			currentLevel++;
-			//Can add all sorts of obstacles for each level
-			switch(currentLevel) {
-			
-			case 2:	
-				thisgame.startTimer(1125);
+
+			// Can add all sorts of obstacles for each level
+			switch (currentLevel) {
+
+			case 2:
+				thisgame.startTimer(900);
 				board.addRandomFruits(4);
-			
 				break;
 			case 3:
-				thisgame.startTimer(1000);
-				board.addRandomFruits(6);	
+				thisgame.startTimer(800);
+				board.addRandomFruits(6);
 				break;
 			case 4:
-				thisgame.startTimer(900);
-				board.addRandomFruits(8);	
+				thisgame.startTimer(700);
+				board.addRandomFruits(8);
 				break;
 			case 5:
-				thisgame.startTimer(800);
-				board.addRandomFruits(10);	
+				thisgame.startTimer(600);
+				board.addRandomFruits(10);
 				break;
 			default:
-				return;		
-			
+				thisgame.startTimer(500);
+				board.addRandomFruits(14);
+				break;
 			}
+
+			TextView tv = (TextView) thisgame.findViewById(R.id.tvLevel);
+			tv.setText("Level " + currentLevel);
+
 			thisgame.inPlay = true;
 		}
-		
-	
+
 	}
-	
+
 }
