@@ -61,7 +61,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 		// Set up the accelerometer service
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
+        mTimer = null; // init
+        
 		boardGrid = (GridLayout) findViewById(R.layout.activity_game);
 
 		Display display = getWindowManager().getDefaultDisplay();
@@ -159,7 +160,12 @@ public class GameActivity extends Activity implements SensorEventListener {
 	}
 
 	public void startTimer(int interval) {
-		mTimer = null;
+		if (mTimer != null) {
+			mTimer.cancel(); // Stop the timer!! Otherwise we will have more
+								// than one timer ticking,leading to problems.
+			mTimer = null;
+		}
+		
 		mTimer = new Timer();
 
 		mTimer.scheduleAtFixedRate(new TimerTask() {
@@ -313,7 +319,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 	}
 	
 	private static class GameLevels {
-		public static final int INITIAL_REFRESH_MS = 1000;
+		public static final int INITIAL_REFRESH_MS = 500;
 		public static final int INITIAL_FRUITS = 3;
 		private static int currentLevel = 1;
 		private static int timerMs = INITIAL_REFRESH_MS;
