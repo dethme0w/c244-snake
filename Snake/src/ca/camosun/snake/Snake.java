@@ -52,13 +52,15 @@ public class Snake implements Iterable<SnakeSegment> {
 	public SnakeSegment moveSnake(Direction nextDirection) {
 		SnakeSegment head = getHead();
 		SnakeSegment newHead = new SnakeSegment(head.getPositionX(), head.getPositionY());
-		SnakeSegment tail = getTail();
-		
+				
 		int YPosition = newHead.getPositionY();
 		int XPosition = newHead.getPositionX();
 
 		if (nextDirection.isOpposite(currentDirection)) {
-			nextDirection = currentDirection;
+			if (segments.size() != 1) { // allow snake to reverse himself if
+										// he's just a head
+				nextDirection = currentDirection;
+			}
 		}
 
 		switch (nextDirection) {

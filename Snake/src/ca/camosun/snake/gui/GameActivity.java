@@ -76,7 +76,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 		columnCount = width / cellSize;
 
 		addGrid(boardGrid, columnCount, rowCount, cellSize, dpi);
-		board = new SnakeBoard(columnCount, rowCount);
 		
 		newGame();
 		
@@ -302,9 +301,10 @@ public class GameActivity extends Activity implements SensorEventListener {
 		ad.show();
 	}
 
-	private void newGame() {
+	private void newGame() {			
 		GameLevels.reset();
 		startTimer(GameLevels.INITIAL_REFRESH_MS);	
+		board = new SnakeBoard(columnCount, rowCount);	
 		board.addRandomFruits(GameLevels.INITIAL_FRUITS);
 		drawFruit();
 		TextView tv = (TextView) findViewById(R.id.tvLevel);
