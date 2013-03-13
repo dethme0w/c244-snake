@@ -58,7 +58,7 @@ public class Snake implements Iterable<SnakeSegment> {
 		int XPosition = newHead.getPositionX();
 
 		if (nextDirection.isOpposite(currentDirection)) {
-			return(tail);
+			nextDirection = currentDirection;
 		}
 
 		switch (nextDirection) {
