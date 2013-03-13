@@ -10,6 +10,7 @@ import ca.camosun.snake.Snake;
 import ca.camosun.snake.Snake.Direction;
 import ca.camosun.snake.SnakeBoard;
 import ca.camosun.snake.SnakeSegment;
+import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,6 +20,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.Display;
 import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
@@ -65,11 +67,17 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 		boardGrid = (GridLayout) findViewById(R.layout.activity_game);
 
-		rowCount = 18;
-		columnCount = 12;
-		int cellSize = 16;
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int width = size.x;
+		int height = size.y;
+		
+		int cellSize = 32;
 		int dpi = 20;
-
+		rowCount = height / cellSize;
+		columnCount = width / cellSize;
+		
 		addGrid(boardGrid, columnCount, rowCount, cellSize, dpi);
 		board = new SnakeBoard(columnCount, rowCount);
 
@@ -106,6 +114,9 @@ public class GameActivity extends Activity implements SensorEventListener {
 		for (int column = 0; column < columnSize; column++) {
 			GridImage aCell = new GridImage(this, row, column);
 			aCell.setImageResource(R.drawable.boardbackground);
+			aCell.setAdjustViewBounds(true);
+			aCell.setMaxHeight(buttonSize);
+			aCell.setMaxWidth(buttonSize);
 			grid.addView(aCell);
 		}
 	}
@@ -193,6 +204,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 			createAlertMessage("Game Over",
 					"You hit the wall dude! Never hit the wall.", "Ah, sh*t.",
 					GameState.GAME_OVER);
+			return;
 		}
 
 		// Self collision?
@@ -201,6 +213,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 			createAlertMessage("Game Over",
 					"You bit yourself! Cannibalism not allowed.", "Ouch!",
 					GameState.GAME_OVER);
+			return;
 
 		}
 
