@@ -31,7 +31,7 @@ import android.widget.Toast;
 public class GameActivity extends Activity implements SensorEventListener {
 
 	private GridLayout boardGrid;
-	private static final int INITIAL_REFRESH_MS = 1000;
+	
 	private Timer mTimer;
 	private SensorManager mSensorManager;
 	private Sensor mSensor;
@@ -58,9 +58,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 		inPlay = false;
 
-		// Set up the timer
-		startTimer(INITIAL_REFRESH_MS);
-
 		// Set up the accelerometer service
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -72,23 +69,17 @@ public class GameActivity extends Activity implements SensorEventListener {
 		display.getSize(size);
 		int width = size.x;
 		int height = size.y;
-		
+
 		int cellSize = 32;
 		int dpi = 20;
 		rowCount = height / cellSize;
 		columnCount = width / cellSize;
-		
+
 		addGrid(boardGrid, columnCount, rowCount, cellSize, dpi);
 		board = new SnakeBoard(columnCount, rowCount);
-
-		board.addRandomFruits(2);
-		drawFruit();
-
-		TextView tv = (TextView) findViewById(R.id.tvLevel);
-		tv.setText("Level 1");
-
-		inPlay = true;
-
+		
+		newGame();
+		
 	}
 
 	@Override
@@ -311,11 +302,29 @@ public class GameActivity extends Activity implements SensorEventListener {
 		ad.show();
 	}
 
+	private void newGame() {
+		GameLevels.reset();
+		startTimer(GameLevels.INITIAL_REFRESH_MS);	
+		board.addRandomFruits(GameLevels.INITIAL_FRUITS);
+		drawFruit();
+		TextView tv = (TextView) findViewById(R.id.tvLevel);
+		tv.setText("Level 1");
+		inPlay = true;
+	}
+	
 	private static class GameLevels {
+		public static final int INITIAL_REFRESH_MS = 1000;
+		public static final int INITIAL_FRUITS = 3;
 		private static int currentLevel = 1;
-		private static int timerMs = 1200;
-		private static int numFruits = 2;
+		private static int timerMs = INITIAL_REFRESH_MS;
+		private static int numFruits = INITIAL_FRUITS;
 
+		public static void reset() {
+			currentLevel = 1;
+			timerMs = INITIAL_REFRESH_MS;
+			numFruits = INITIAL_FRUITS;
+		}
+		
 		private static void nextLevel(SnakeBoard board, GameActivity thisGame) {
 			currentLevel++;
             timerMs = timerMs - 100;
