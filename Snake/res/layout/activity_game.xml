@@ -23,4 +23,16 @@
         android:text="@string/defaultlevel"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
+    <TextView
+        android:id="@+id/tvScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/defaultScore"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:ems="4" />
+
+        <requestFocus />
+
 </RelativeLayout>
