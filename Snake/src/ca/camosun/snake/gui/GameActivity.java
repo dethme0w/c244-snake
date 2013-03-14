@@ -208,6 +208,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 			createAlertMessage("Game Over",
 					"You hit the wall dude! Never hit the wall.", "Ah, sh*t.",
 					GameState.GAME_OVER);
+			highScore.addScore(score.getScore());
+			tvHighScore.setText(tvHighScore.getText() + Integer.toString(highScore.getFirstOnList()));
 			return;
 		}
 
@@ -228,6 +230,9 @@ public class GameActivity extends Activity implements SensorEventListener {
 			Toast.makeText(this, "Ate Fruit!", Toast.LENGTH_SHORT).show();
 			score.ateFruit();
 			tvScore.setText(tvScore.getText() + Integer.toString(score.getScore()));
+			if (score.getScore() >= highScore.getFirstOnList()) {
+				tvHighScore.setText(tvHighScore.getText() + Integer.toString(score.getScore()));
+			}
 
 			// Are all the fruits gone? Time to level up!
 			if (board.getFruits().size() == 0) {
