@@ -32,6 +32,18 @@
         android:text="@string/defaultScore"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:ems="4" />
+    
+
+    <TextView
+        android:id="@+id/tvHighScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@layout/activity_game"
+        android:layout_marginTop="20dp"
+        android:text="@string/defaultHighScore"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:ems="6" />
 
         <requestFocus />
 
