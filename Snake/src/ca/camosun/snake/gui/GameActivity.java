@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Menu;
 import android.view.Window;
@@ -76,8 +77,26 @@ public class GameActivity extends Activity implements SensorEventListener {
 		display.getSize(size);
 		int width = size.x;
 		int height = size.y;
-
-		int cellSize = 32;
+		
+		DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		int cellSize;
+		
+		switch(metrics.densityDpi) {
+		case DisplayMetrics.DENSITY_LOW:
+			cellSize = 16;
+			break;
+		case DisplayMetrics.DENSITY_MEDIUM:
+			cellSize = 24;
+			break;
+		case DisplayMetrics.DENSITY_HIGH:
+			cellSize = 32;
+			break;
+		default:
+			cellSize = 32;
+			break;
+		}
+		
 		int dpi = 20;
 		rowCount = height / cellSize;
 		columnCount = width / cellSize;
