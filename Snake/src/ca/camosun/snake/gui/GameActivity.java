@@ -220,7 +220,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 					"You bit yourself! Cannibalism not allowed.", "Ouch!",
 					GameState.GAME_OVER);
 			highScore.addScore(score.getScore());
-			tvHighScore.setText(tvHighScore.getText() + Integer.toString(highScore.getFirstOnList()));
+			tvHighScore.setText("High Score: " + highScore.getFirstOnList());
 			return;
 		}
 
@@ -229,9 +229,9 @@ public class GameActivity extends Activity implements SensorEventListener {
 			ateFruit = true;
 			Toast.makeText(this, "Ate Fruit!", Toast.LENGTH_SHORT).show();
 			score.ateFruit();
-			tvScore.setText(tvScore.getText() + Integer.toString(score.getScore()));
+			tvScore.setText("Score: " + score.getScore());
 			if (score.getScore() >= highScore.getFirstOnList()) {
-				tvHighScore.setText(tvHighScore.getText() + Integer.toString(score.getScore()));
+				tvHighScore.setText("High Score: " + highScore.getFirstOnList());
 			}
 
 			// Are all the fruits gone? Time to level up!
