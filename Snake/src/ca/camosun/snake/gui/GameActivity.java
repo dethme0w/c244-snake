@@ -6,6 +6,7 @@ import java.util.TimerTask;
 
 import ca.camosun.snake.Fruit;
 import ca.camosun.snake.R;
+import ca.camosun.snake.SingleScore;
 import ca.camosun.snake.Snake;
 import ca.camosun.snake.Snake.Direction;
 import ca.camosun.snake.SnakeBoard;
@@ -41,6 +42,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 	private int columnCount;
 	private boolean inPlay;
 	private SnakeBoard board;
+	private SingleScore score;
+	private TextView tvScore;
 
 	private static enum GameState {
 		GAME_OVER, NEXT_LEVEL, CRASHED;
@@ -77,6 +80,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		columnCount = width / cellSize;
 
 		addGrid(boardGrid, columnCount, rowCount, cellSize, dpi);
+		score = new SingleScore("Test", 0);
 		
 		newGame();
 		
@@ -217,6 +221,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 		if (board.foundFruit()) {
 			ateFruit = true;
 			Toast.makeText(this, "Ate Fruit!", Toast.LENGTH_SHORT).show();
+			score.ateFruit();
+			tvScore.setText(tvScore.getText() + Integer.toString(score.getScore()));
 
 			// Are all the fruits gone? Time to level up!
 			if (board.getFruits().size() == 0) {
