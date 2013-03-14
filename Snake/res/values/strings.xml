@@ -8,5 +8,6 @@
     <string name="exitbuttoncaption">Quit</string>
     <string name="snakeImage">snake</string>
     <string name="defaultlevel">Level:</string>
+    <string name="defaultScore">Score: </string>
 
 </resources>
