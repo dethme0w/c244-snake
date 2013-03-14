@@ -86,6 +86,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 		score = new SingleScore("Test", 0);
 		highScore = new HighScores<Integer>(0);
 		
+		tvScore = (TextView) findViewById(R.id.tvScore);
+		tvHighScore = (TextView) findViewById(R.id.tvHighScore);
 		newGame();
 		
 	}
@@ -194,6 +196,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		Direction whereNext;
 		Snake snake = board.getSnake();
 		boolean ateFruit = false;
+		String temporary;
 
 		whereNext = getTilt();
 		SnakeSegment oldTail = snake.getTail();
@@ -209,7 +212,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 					"You hit the wall dude! Never hit the wall.", "Ah, sh*t.",
 					GameState.GAME_OVER);
 			highScore.addScore(score.getScore());
-			tvHighScore.setText(tvHighScore.getText() + Integer.toString(highScore.getFirstOnList()));
+			tvHighScore.setText("High Score: " + highScore.get(0));
 			return;
 		}
 
@@ -220,7 +223,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 					"You bit yourself! Cannibalism not allowed.", "Ouch!",
 					GameState.GAME_OVER);
 			highScore.addScore(score.getScore());
-			tvHighScore.setText("High Score: " + highScore.getFirstOnList());
+			temporary = "High Score: " + highScore.get(0).toString();
+			tvHighScore.setText(temporary);
 			return;
 		}
 
@@ -229,9 +233,10 @@ public class GameActivity extends Activity implements SensorEventListener {
 			ateFruit = true;
 			Toast.makeText(this, "Ate Fruit!", Toast.LENGTH_SHORT).show();
 			score.ateFruit();
-			tvScore.setText("Score: " + score.getScore());
-			if (score.getScore() >= highScore.getFirstOnList()) {
-				tvHighScore.setText("High Score: " + highScore.getFirstOnList());
+			temporary = "Score: " + score.getScore();
+			tvScore.setText(temporary);
+			if (score.getScore() >= highScore.get(0)) {
+				tvHighScore.setText("High Score: " + highScore.get(0));
 			}
 
 			// Are all the fruits gone? Time to level up!
