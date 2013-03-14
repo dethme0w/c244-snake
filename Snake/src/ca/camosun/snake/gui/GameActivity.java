@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import ca.camosun.snake.Fruit;
+import ca.camosun.snake.HighScores;
 import ca.camosun.snake.R;
 import ca.camosun.snake.SingleScore;
 import ca.camosun.snake.Snake;
@@ -43,7 +44,9 @@ public class GameActivity extends Activity implements SensorEventListener {
 	private boolean inPlay;
 	private SnakeBoard board;
 	private SingleScore score;
+	private HighScores<Integer> highScore;
 	private TextView tvScore;
+	private TextView tvHighScore;
 
 	private static enum GameState {
 		GAME_OVER, NEXT_LEVEL, CRASHED;
@@ -81,6 +84,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 		addGrid(boardGrid, columnCount, rowCount, cellSize, dpi);
 		score = new SingleScore("Test", 0);
+		highScore = new HighScores<Integer>(0);
 		
 		newGame();
 		
@@ -213,8 +217,9 @@ public class GameActivity extends Activity implements SensorEventListener {
 			createAlertMessage("Game Over",
 					"You bit yourself! Cannibalism not allowed.", "Ouch!",
 					GameState.GAME_OVER);
+			highScore.addScore(score.getScore());
+			tvHighScore.setText(tvHighScore.getText() + Integer.toString(highScore.getFirstOnList()));
 			return;
-
 		}
 
 		// Ate fruit?
