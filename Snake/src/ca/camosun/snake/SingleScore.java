@@ -1,5 +1,6 @@
 package ca.camosun.snake;
 
+
 public class SingleScore implements Comparable<SingleScore> {
 	private String name;
 	private int score;
@@ -21,5 +22,9 @@ public class SingleScore implements Comparable<SingleScore> {
 		SingleScore other = (SingleScore) what;
 		
 		return name.equals(other.name);
-	}	
+	}
+	
+	public void ateFruit() {
+		score++;
+	}
 }
