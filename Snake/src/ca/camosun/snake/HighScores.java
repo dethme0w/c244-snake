@@ -2,9 +2,10 @@ package ca.camosun.snake;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-public class HighScores<E extends Comparable<E>> implements TopNList<E> {
+public class HighScores<E extends Comparable<E>> implements TopNList<E>, Iterable<E> {
 	
 	private List<E> aList;
 	private int scoresToKeep;
@@ -16,16 +17,6 @@ public class HighScores<E extends Comparable<E>> implements TopNList<E> {
 
 	public void addScore(E item) {		
 		if(aList.size() < scoresToKeep) {
-			aList.add(item);
-			
-			Collections.sort(aList);
-			Collections.reverse(aList);
-			return;
-		}
-		
-		int position = aList.indexOf(item);
-		if(position >= 0) {
-			aList.remove(item);
 			aList.add(item);
 			
 			Collections.sort(aList);
@@ -61,5 +52,10 @@ public class HighScores<E extends Comparable<E>> implements TopNList<E> {
 	
 	public E get(int position) {
 		return aList.get(position);
+	}
+
+	@Override
+	public Iterator<E> iterator() {
+		return aList.iterator();
 	}
 }

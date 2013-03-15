@@ -37,6 +37,11 @@ public class MainActivity extends Activity {
 	    startActivity(intent);
 	}
 	
+	public void highScoresOpen(View view) {
+		Intent intent = new Intent(this, HighScoresActivity.class);
+		startActivity(intent);
+	}
+	
 	public void quit(View view) {
 		MainActivity.this.finish();
 	}
