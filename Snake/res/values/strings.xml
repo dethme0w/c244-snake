@@ -11,5 +11,6 @@
     <string name="defaultScore">Score: </string>
     <string name="defaultHighScore">High Score: </string>
     <string name="highScoresButtonLabel">&quot;High Scores&quot;</string>
+    <string name="score_filename">scores</string>
 
 </resources>
