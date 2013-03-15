@@ -26,6 +26,9 @@ import android.content.DialogInterface;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Menu;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -33,7 +36,7 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class GameActivity extends Activity implements SensorEventListener {
+public class GameActivity extends Activity implements SensorEventListener, OnTouchListener {
 
 	private GridLayout boardGrid;
 	
@@ -51,7 +54,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 	private TextView tvHighScore;
 
 	private static enum GameState {
-		GAME_OVER, NEXT_LEVEL, CRASHED;
+		GAME_OVER, NEXT_LEVEL, PAUSED, RESUMED;
 	}
 	
 	public static enum ObstacleType {
@@ -77,6 +80,8 @@ public class GameActivity extends Activity implements SensorEventListener {
         
 		boardGrid = (GridLayout) findViewById(R.layout.activity_game);
 
+		boardGrid.setOnTouchListener(this);
+		
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
 		display.getSize(size);
@@ -295,7 +300,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		if(board.hitBomb()) {
 			inPlay = false;
 			createAlertMessage("Game Over",
-					"You hit an obstacle", "Oops!",
+					"You hit a bomb", "Oops!",
 					GameState.GAME_OVER);
 		}
 		
@@ -407,6 +412,26 @@ public class GameActivity extends Activity implements SensorEventListener {
 		}
 	}
 	
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		
+		pauseGame();
+		
+		createAlertMessage("Game Paused",
+				"", "Resume",
+				GameState.PAUSED);
+		
+		return false;
+	}
+	
+	public void pauseGame() {
+		inPlay = false;
+	}
+	
+	public void resumeGame() {
+		inPlay = true;
+	}
+	
 
 	private void createAlertMessage(String titleText, String messageText,
 			String buttonText, final GameState state) {
@@ -427,8 +452,9 @@ public class GameActivity extends Activity implements SensorEventListener {
 							GameActivity.this.finish();
 							break;
 
-						case CRASHED:
+						case PAUSED:
 
+							resumeGame();
 							break;
 
 						default:
@@ -436,6 +462,16 @@ public class GameActivity extends Activity implements SensorEventListener {
 						}
 					}
 				});
+		
+				if(state == GameState.PAUSED) {
+					alertDialogBuilder.setNegativeButton("Quit",
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int id) {
+									GameActivity.this.finish();
+								}
+					});
+				}
+				
 		AlertDialog ad = alertDialogBuilder.create();
 		ad.show();
 	}

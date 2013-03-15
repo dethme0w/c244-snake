@@ -65,14 +65,14 @@ public class SnakeTest {
 	public void changeDirectionNotOpposite() {
 
         snake.moveSnake(SOUTH);
-        assertTrue(snake.getCurrentDirection() == NORTH);
+        assertTrue(snake.getCurrentDirection() == SOUTH);
 
         snake.moveSnake(NORTH);
         assertTrue(snake.getCurrentDirection() == NORTH);
 
         snakeHead = snake.getHead();
         assertTrue(snakeHead.getPositionX() == 10);
-        assertTrue(snakeHead.getPositionY() == 9);
+        assertTrue(snakeHead.getPositionY() == 10);
 	}
 
 	@Test
