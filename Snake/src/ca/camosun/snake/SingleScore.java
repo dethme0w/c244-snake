@@ -14,6 +14,10 @@ public class SingleScore implements Comparable<SingleScore> {
 		return score;
 	}
 	
+	public String getName(){
+		return name;
+	}
+	
 	public int compareTo(SingleScore other) {
 		return score - other.score;
 	}
@@ -21,7 +25,11 @@ public class SingleScore implements Comparable<SingleScore> {
 	public boolean equals(Object what) {
 		SingleScore other = (SingleScore) what;
 		
-		return name.equals(other.name);
+		return name.equals(other.name) && score == other.score;
+	}
+	
+	public void setName(String inName){
+		name = inName;
 	}
 	
 	public void ateFruit() {

@@ -5,7 +5,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import ca.camosun.snake.Fruit;
-import ca.camosun.snake.HighScores;
 import ca.camosun.snake.R;
 import ca.camosun.snake.SingleScore;
 import ca.camosun.snake.Snake;
@@ -27,6 +26,7 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +45,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 	private boolean inPlay;
 	private SnakeBoard board;
 	private SingleScore score;
-	private HighScores<Integer> highScore;
 	private TextView tvScore;
 	private TextView tvHighScore;
 
@@ -102,15 +101,20 @@ public class GameActivity extends Activity implements SensorEventListener {
 		columnCount = width / cellSize;
 
 		addGrid(boardGrid, columnCount, rowCount, cellSize, dpi);
-		score = new SingleScore("Test", 0);
-		highScore = new HighScores<Integer>(1);
-		highScore.addScore(score.getScore());
+		score = new SingleScore("Player", 0);
 		
 		tvScore = (TextView) findViewById(R.id.tvScore);
-		tvScore.setText("Score: " + score.getScore());
+		tvScore.setText("Score: " + String.valueOf(score.getScore()));
 		
 		tvHighScore = (TextView) findViewById(R.id.tvHighScore);
-		//tvScore.setText("High Score: " + highScore.getFirstOnList());
+		if (MainActivity.highScores.size() > 0) {
+			SingleScore topScore = MainActivity.highScores.getFirstOnList();
+			
+			tvHighScore.setText("High Score: " + String.valueOf(topScore.getScore()));
+		} else {
+			tvHighScore.setText("High Score: 0");
+		}
+		
 		newGame();
 		
 	}
@@ -233,8 +237,9 @@ public class GameActivity extends Activity implements SensorEventListener {
 			createAlertMessage("Game Over",
 					"You hit the wall dude! Never hit the wall.", "Ah, sh*t.",
 					GameState.GAME_OVER);
-			highScore.addScore(score.getScore());
-			//tvHighScore.setText("High Score: " + highScore.getFirstOnList());
+			if(isHighScore() == true){
+				showSaveHighScoreDialog();
+			}
 			return;
 		}
 
@@ -244,8 +249,9 @@ public class GameActivity extends Activity implements SensorEventListener {
 			createAlertMessage("Game Over",
 					"You bit yourself! Cannibalism not allowed.", "Ouch!",
 					GameState.GAME_OVER);
-			highScore.addScore(score.getScore());
-			//tvHighScore.setText("High Score: " + highScore.getFirstOnList());
+			if(isHighScore() == true){
+				showSaveHighScoreDialog();
+			}
 			return;
 		}
 
@@ -254,7 +260,17 @@ public class GameActivity extends Activity implements SensorEventListener {
 			ateFruit = true;
 			Toast.makeText(this, "Ate Fruit!", Toast.LENGTH_SHORT).show();
 			score.ateFruit();
-			tvScore.setText("Score: " + score.getScore());
+			tvScore.setText("Score: " + String.valueOf(score.getScore()));
+			
+			if(MainActivity.highScores.size() > 0) {
+				SingleScore topScore = MainActivity.highScores.getFirstOnList();
+			
+				if(score.getScore() > topScore.getScore()) {
+					tvHighScore.setText("High Score: " + String.valueOf(score.getScore()));
+				}
+			} else {
+				tvHighScore.setText("High Score: " + String.valueOf(score.getScore()));
+			}
 			
 			// Are all the fruits gone? Time to level up!
 			if (board.getFruits().size() == 0) {
@@ -279,6 +295,46 @@ public class GameActivity extends Activity implements SensorEventListener {
 		}
 		drawSnake(snake);
 		drawFruit();
+	}
+	
+	private boolean isHighScore(){
+		if(MainActivity.highScores.size() < MainActivity.MAXIMUM_NUMBER_OF_SCORES){
+			return true;
+		}
+		
+		SingleScore lowestScore = MainActivity.highScores.getLastOnList();
+		
+		if(score.getScore() > lowestScore.getScore()){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private void showSaveHighScoreDialog(){
+		AlertDialog.Builder nameEntryDialog = new AlertDialog.Builder(this);
+		nameEntryDialog.setTitle("You got a high score!");
+		nameEntryDialog.setMessage("Enter your name:");
+		final EditText textEntry = new EditText(this);
+		nameEntryDialog.setView(textEntry);
+		
+		textEntry.setText(score.getName());
+		
+		nameEntryDialog.setPositiveButton("Ok",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						String nameEntered = textEntry.getText().toString();
+
+						score.setName(nameEntered);
+						
+						MainActivity.highScores.addScore(score);
+					}
+				});
+
+		nameEntryDialog.show();
+		
+		
 	}
 
 	private void drawSnake(Snake snake) {

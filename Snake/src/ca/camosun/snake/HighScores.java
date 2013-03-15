@@ -50,6 +50,10 @@ public class HighScores<E extends Comparable<E>> implements TopNList<E> {
 	public E getFirstOnList() {
 		return Collections.max(aList);
 	}
+	
+	public E getLastOnList(){
+		return Collections.min(aList);
+	}
 
 	public int size() {
 		return aList.size();

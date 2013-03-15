@@ -1,6 +1,8 @@
 package ca.camosun.snake.gui;
 
+import ca.camosun.snake.HighScores;
 import ca.camosun.snake.R;
+import ca.camosun.snake.SingleScore;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +12,9 @@ import android.view.Window;
 import android.view.WindowManager;
 
 public class MainActivity extends Activity {
+	
+	public static final int MAXIMUM_NUMBER_OF_SCORES = 10;
+	public static HighScores<SingleScore> highScores;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +26,9 @@ public class MainActivity extends Activity {
 		
 		setContentView(R.layout.activity_main);
 		
-		
+		if (highScores == null) {
+			highScores = new HighScores<SingleScore>(MAXIMUM_NUMBER_OF_SCORES);
+		}
 	}
 	
 	/** Called when the user clicks the Send button */
