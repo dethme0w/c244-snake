@@ -278,9 +278,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 				// Toast.makeText(this, "No Fruit Left!",
 				// Toast.LENGTH_LONG).show();
 				inPlay = false;
-				createAlertMessage("Level Complete",
-						"Would you like to continue?", "Ok",
-						GameState.NEXT_LEVEL);
+				Toast.makeText(this, "Next Level", Toast.LENGTH_SHORT).show();
+				GameLevels.nextLevel(board, GameActivity.this);
 			}
 
 			// We probably want to grow the snake here.
@@ -383,11 +382,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 						case GAME_OVER:
 
 							GameActivity.this.finish();
-							break;
-
-						case NEXT_LEVEL:
-
-							GameLevels.nextLevel(board, GameActivity.this);
 							break;
 
 						case CRASHED:
