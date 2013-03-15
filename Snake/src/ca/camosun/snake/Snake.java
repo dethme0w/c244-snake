@@ -116,20 +116,16 @@ public class Snake implements Iterable<SnakeSegment> {
 	public SnakeSegment getTail() {
 		return segments.peekLast();
 	}
-	
-	public SnakeSegment get(int index) {
-		Object[] y = segments.toArray();		
-		return (SnakeSegment)y[index];
-	}
 		
 	public int size() {
 		return segments.size();
 	}
 	
 	public void dump() {
-		for (int i=0; i<segments.size(); i++) {
-			SnakeSegment s = get(i);
+		int i = 0;
+		for (SnakeSegment s : this) {
 			System.out.print(i+": "+s.getPositionX()+","+s.getPositionY()+"  ");
+			i++;
 		}
 		System.out.println();
 		

@@ -1,5 +1,6 @@
 package ca.camosun.snake.gui;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -338,17 +339,18 @@ public class GameActivity extends Activity implements SensorEventListener {
 	}
 
 	private void drawSnake(Snake snake) {
-		GridImage image;
-
+		Iterator<SnakeSegment> snakeIter = snake.iterator();
+		
 		// draw the head
-		SnakeSegment head = snake.getHead();
-		image = imageAt(head.getPositionX(), head.getPositionY());
+		SnakeSegment currSegment = snakeIter.next();
+		GridImage image = imageAt(currSegment.getPositionX(), currSegment.getPositionY());
 		image.setImageResource(R.drawable.snakehead);
-
+		
 		// draw the segments
-		for (int i = 1; i < snake.size(); i++) {
-			SnakeSegment segment = snake.get(i);
-			image = imageAt(segment.getPositionX(), segment.getPositionY());
+		while (snakeIter.hasNext()) {
+			currSegment = snakeIter.next();
+			
+			image = imageAt(currSegment.getPositionX(), currSegment.getPositionY());
 			image.setImageResource(R.drawable.snakebody);
 		}
 	}
