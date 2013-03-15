@@ -1,6 +1,5 @@
 package ca.camosun.snake.gui;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -288,7 +287,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 			}
 
 			// We probably want to grow the snake here.
-			snake.grow();
+			snake.grow(oldTail);
 
 		}
 		
@@ -350,20 +349,19 @@ public class GameActivity extends Activity implements SensorEventListener {
 	}
 
 	private void drawSnake(Snake snake) {
-		Iterator<SnakeSegment> snakeIter = snake.iterator();
-		
-		// draw the head
-		SnakeSegment currSegment = snakeIter.next();
-		GridImage image = imageAt(currSegment.getPositionX(), currSegment.getPositionY());
-		image.setImageResource(R.drawable.snakehead);
-		
-		// draw the segments
-		while (snakeIter.hasNext()) {
-			currSegment = snakeIter.next();
-			
-			image = imageAt(currSegment.getPositionX(), currSegment.getPositionY());
-			image.setImageResource(R.drawable.snakebody);
-		}
+        GridImage image;
+
+        // draw the head
+        SnakeSegment head = snake.getHead();
+        image = imageAt(head.getPositionX(), head.getPositionY());
+        image.setImageResource(R.drawable.snakehead);
+
+        // draw the segments
+        for (int i = 1; i < snake.size(); i++) {
+                SnakeSegment segment = snake.get(i);
+                image = imageAt(segment.getPositionX(), segment.getPositionY());
+                image.setImageResource(R.drawable.snakebody);
+        }
 	}
 
 	private void drawFruit() {
@@ -458,10 +456,10 @@ public class GameActivity extends Activity implements SensorEventListener {
             thisGame.startTimer(timerMs);
             thisGame.board.addRandomFruits(numFruits);
             
-            if(currentLevel > 2) {
-            	thisGame.board.addObstacle(ObstacleType.BOMB, numBombs);                
-            	numBombs += 2;
-            }
+          //  if(currentLevel > 2) {
+           // 	thisGame.board.addObstacle(ObstacleType.BOMB, numBombs);                
+           // 	numBombs += 2;
+           // }
 
 			TextView tv = (TextView) thisGame.findViewById(R.id.tvLevel);
 			tv.setText("Level " + currentLevel);

@@ -5,126 +5,134 @@ import java.util.Deque;
 import java.util.Iterator;
 
 public class Snake implements Iterable<SnakeSegment> {
-	private Deque<SnakeSegment> segments;
-	private Direction currentDirection;
-	
-	/* num of segments snake is waiting to grow; grows one each move by not 
-	 * deleting its tail */
-	private int queuedGrowth;
+        private Deque<SnakeSegment> segments;
+        private Direction currentDirection;
 
-	public static enum Direction {
-		NORTH(0, -1), SOUTH(0, 1), EAST(1, 0), WEST(-1, 0);
+        public static enum Direction {
+                NORTH(-1), SOUTH(1), EAST(1), WEST(-1);
 
-		public final int x;
-		public final int y;
+                private final int distance;
+                
+                public int getDistance() {
+                        return distance;
+                }
 
-		Direction(int inX, int inY) {
-			this.x = inX;
-			this.y = inY;
-		}
+                Direction(int moveDistance) {
+                        distance = moveDistance;
+                }
 
-		public Direction opposite() {
-			switch (this) {
-			case NORTH:
-				return SOUTH;
-			case EAST:
-				return WEST;
-			case SOUTH:
-				return NORTH;
-			default:
-				return EAST;
-			}
-		}
+                public Direction opposite() {
+                        switch (this) {
+                        case NORTH:
+                                return SOUTH;
+                        case EAST:
+                                return WEST;
+                        case SOUTH:
+                                return NORTH;
+                        default:
+                                return EAST;
+                        }
+                }
 
-		public boolean isOpposite(Direction other) {
-			return opposite() == other;
-		}
-	}
+                public boolean isOpposite(Direction other) {
+                        return opposite() == other;
+                }
+        }
 
-	public Snake(Direction startDir, int startX, int startY) {
-		segments = new ArrayDeque<SnakeSegment>();
-		segments.add(new SnakeSegment(startX, startY));			
-		currentDirection = startDir;
-		queuedGrowth = 0;
-	}
+        public Snake(Direction startDir, int startX, int startY) {
+                segments = new ArrayDeque<SnakeSegment>();
+                segments.add(new SnakeSegment(startX, startY));                 
+                currentDirection = startDir;
+        }
 
-	public Direction getCurrentDirection() {
-		return currentDirection;
-	}
+        public Direction getCurrentDirection() {
+                return currentDirection;
+        }
 
-	public void moveSnake(Direction nextDirection) {
-		SnakeSegment oldHead = getHead();
-				
-		// snake can't reverse unless tiny
-		if (segments.size() > 1 && nextDirection.isOpposite(currentDirection)) {
-				nextDirection = currentDirection; // cancel next direction
-		}
+        public SnakeSegment moveSnake(Direction nextDirection) {
+                SnakeSegment head = getHead();
+                SnakeSegment newHead = new SnakeSegment(head.getPositionX(), head.getPositionY());
+                                
+                int YPosition = newHead.getPositionY();
+                int XPosition = newHead.getPositionX();
 
-		// add new head
-		{
-			SnakeSegment newHead = new SnakeSegment(oldHead.getPositionX() + nextDirection.x,
-													oldHead.getPositionY() + nextDirection.y);
-			segments.addFirst(newHead);
-		}
-		
-		currentDirection = nextDirection;	
-				
-		
-		// remove tail
-		if (queuedGrowth == 0) {
-			segments.removeLast();
-		} else { // grow by not removing tail segment		
-			queuedGrowth--;
-		}
-	}
+                if (nextDirection.isOpposite(currentDirection)) {
+                        if (segments.size() != 1) { // allow snake to reverse himself if
+                                                                                // he's just a head
+                                nextDirection = currentDirection;
+                        }
+                }
 
-	public boolean collidedSelf() {
+                switch (nextDirection) {
 
-		if (segments.size() == 1) {
-			return false;
-		}
+                case NORTH:
+                case SOUTH:
+                        newHead.setPositionY(YPosition + nextDirection.getDistance());
+                        break;
+                case EAST:
+                case WEST:
+                        newHead.setPositionX(XPosition + nextDirection.getDistance());
+                        break;
+                }
 
-		Iterator<SnakeSegment> segmentIterator = segments.iterator();
-		SnakeSegment head = segmentIterator.next();
-		
-		while(segmentIterator.hasNext()) {
-			SnakeSegment currentSegment = segmentIterator.next();
-			if (currentSegment.equals(head)){
-				return true;
-			}
-		}
+                currentDirection = nextDirection;       
+                                
+                segments.addFirst(newHead);
+                return(segments.removeLast());
+                
+        }
 
-		return false;
-	}
-	
-	public void grow() {
-		queuedGrowth++;
-	}
-	
-	public Iterator<SnakeSegment> iterator() {
-		return segments.iterator();
-	}
+        public boolean collidedSelf() {
 
-	public SnakeSegment getHead() {
-		return segments.peek();
-	}
-	
-	public SnakeSegment getTail() {
-		return segments.peekLast();
-	}
-		
-	public int size() {
-		return segments.size();
-	}
-	
-	public void dump() {
-		int i = 0;
-		for (SnakeSegment s : this) {
-			System.out.print(i+": "+s.getPositionX()+","+s.getPositionY()+"  ");
-			i++;
-		}
-		System.out.println();
-		
-	}
-	
+                if (segments.size() == 1) {
+                        return false;
+                }
+
+                Iterator<SnakeSegment> segmentIterator = segments.iterator();
+                SnakeSegment head = segmentIterator.next();
+                
+                while(segmentIterator.hasNext()) {
+                        SnakeSegment currentSegment = segmentIterator.next();
+                        if (currentSegment.equals(head)){
+                                return true;
+                        }
+                }
+
+                return false;
+        }
+        
+        public void grow(SnakeSegment newTail) {
+                segments.addLast(newTail);
+        }
+        
+        public Iterator<SnakeSegment> iterator() {
+                return segments.iterator();
+        }
+
+        public SnakeSegment getHead() {
+                return segments.peek();
+        }
+        
+        public SnakeSegment getTail() {
+                return segments.peekLast();
+        }
+        
+        public SnakeSegment get(int index) {
+                Object[] y = segments.toArray();                
+                return (SnakeSegment)y[index];
+        }
+                
+        public int size() {
+                return segments.size();
+        }
+        
+        public void dump() {
+                for (int i=0; i<segments.size(); i++) {
+                        SnakeSegment s = get(i);
+                        System.out.print(i+": "+s.getPositionX()+","+s.getPositionY()+"  ");
+                }
+                System.out.println();
+                
+        }
+        
 }

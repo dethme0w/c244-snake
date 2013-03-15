@@ -63,13 +63,16 @@ public class SnakeTest {
 	
 	@Test
 	public void changeDirectionNotOpposite() {
-		// grow to larger than 1
-		snake.grow();
-		snake.moveSnake(NORTH);
-		
-		// try to double back, should fail
-		snake.moveSnake(SOUTH);
-		assertTrue(snake.getCurrentDirection() == NORTH);
+
+        snake.moveSnake(SOUTH);
+        assertTrue(snake.getCurrentDirection() == NORTH);
+
+        snake.moveSnake(NORTH);
+        assertTrue(snake.getCurrentDirection() == NORTH);
+
+        snakeHead = snake.getHead();
+        assertTrue(snakeHead.getPositionX() == 10);
+        assertTrue(snakeHead.getPositionY() == 9);
 	}
 
 	@Test
@@ -95,18 +98,25 @@ public class SnakeTest {
 
 	@Test
 	public void collided() {
-		// initial
-		assertTrue(snake.collidedSelf() == false);
 		
-		// give the snake some segments
-		snake.grow();
-		snake.grow();
-		snake.grow();
-		snake.grow();
-		snake.moveSnake(NORTH);
-		snake.moveSnake(NORTH);
-		snake.moveSnake(NORTH);
-		snake.moveSnake(NORTH);
+        SnakeSegment tail = snake.getTail();    
+        snake.dump();
+        // initial
+        assertTrue(snake.collidedSelf() == false);
+        
+        // give the snake some segments
+        snake.moveSnake(NORTH);
+        snake.grow(tail);
+        snake.dump();
+        snake.moveSnake(NORTH);
+        snake.grow(tail);
+        snake.dump();
+        snake.moveSnake(NORTH);
+        snake.grow(tail);
+        snake.dump();
+        snake.moveSnake(NORTH);
+        snake.grow(tail);
+        snake.dump();
 		
 		// Snake should now have enough segments to collide in this test
 		assertTrue(snake.size()==5);		
@@ -124,21 +134,17 @@ public class SnakeTest {
 	}
 	
 	@Test
-	public void snakeGrowsAfterMoving() {
-		assertTrue(snake.size() == 1);
-		
-		snake.moveSnake(NORTH);
-		assertTrue(snake.size() == 1);
-		
-		snake.grow();
-		assertTrue(snake.size() == 1);
-		
-		// grow on move by not deleting tail
-		snake.moveSnake(NORTH);
-		assertTrue(snake.size() == 2);
-		
-		snake.moveSnake(NORTH);
-		assertTrue(snake.size() == 2);
+	public void snakeGrows() {
+        SnakeSegment tail = snake.getTail();            
+        assertTrue(snake.size() == 1);
+        
+        snake.moveSnake(NORTH);
+        snake.grow(tail);
+        assertTrue(snake.size() == 2);
+        
+        snake.moveSnake(EAST);
+        snake.grow(tail);
+        assertTrue(snake.size() == 3);
 	}
 
 	
