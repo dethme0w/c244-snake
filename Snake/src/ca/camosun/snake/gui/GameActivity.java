@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import ca.camosun.snake.Bomb;
 import ca.camosun.snake.Fruit;
 import ca.camosun.snake.R;
 import ca.camosun.snake.SingleScore;
@@ -51,6 +52,10 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 	private static enum GameState {
 		GAME_OVER, NEXT_LEVEL, CRASHED;
+	}
+	
+	public static enum ObstacleType {
+		BOMB, RAKE, TRAP_DOOR;
 	}
 
 	@Override
@@ -278,13 +283,20 @@ public class GameActivity extends Activity implements SensorEventListener {
 				// Toast.makeText(this, "No Fruit Left!",
 				// Toast.LENGTH_LONG).show();
 				inPlay = false;
-				Toast.makeText(this, "Next Level", Toast.LENGTH_SHORT).show();
-				GameLevels.nextLevel(board, GameActivity.this);
+				createAlertMessage("Level Complete",
+						"Would you like to continue?", "Ok",
+						GameState.NEXT_LEVEL);
 			}
 
 			// We probably want to grow the snake here.
 			snake.grow();
 
+		}
+		
+		if(board.hitBomb()) {
+			createAlertMessage("Game Over",
+					"You hit an obstacle", "Ouch!",
+					GameState.GAME_OVER);
 		}
 
 		// Draw the snake
@@ -295,6 +307,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		}
 		drawSnake(snake);
 		drawFruit();
+		drawBombs();
 	}
 	
 	private boolean isHighScore(){
@@ -364,6 +377,18 @@ public class GameActivity extends Activity implements SensorEventListener {
 
 		}
 	}
+	
+	private void drawBombs() {
+		List<Bomb> thebombs = board.getBombs();
+		for (Bomb abomb : thebombs) {
+
+			GridImage image;
+			image = imageAt(abomb.getPositionX(), abomb.getPositionY());
+			image.setImageResource(R.drawable.bomb);
+
+		}
+	}
+	
 
 	private void createAlertMessage(String titleText, String messageText,
 			String buttonText, final GameState state) {
@@ -382,6 +407,11 @@ public class GameActivity extends Activity implements SensorEventListener {
 						case GAME_OVER:
 
 							GameActivity.this.finish();
+							break;
+
+						case NEXT_LEVEL:
+
+							GameLevels.nextLevel(board, GameActivity.this);
 							break;
 
 						case CRASHED:
@@ -414,6 +444,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		private static int currentLevel = 1;
 		private static int timerMs = INITIAL_REFRESH_MS;
 		private static int numFruits = INITIAL_FRUITS;
+		private static int numBombs = 4;
 
 		public static void reset() {
 			currentLevel = 1;
@@ -428,8 +459,14 @@ public class GameActivity extends Activity implements SensorEventListener {
             numFruits = numFruits + 2;
             if (numFruits > 20) { numFruits = 20; }
             
+            
             thisGame.startTimer(timerMs);
             board.addRandomFruits(numFruits);
+            
+            if(currentLevel > 2) {
+            	board.addObstacle(ObstacleType.BOMB, numBombs);                
+            	numBombs += 2;
+            }
 
 			TextView tv = (TextView) thisGame.findViewById(R.id.tvLevel);
 			tv.setText("Level " + currentLevel);

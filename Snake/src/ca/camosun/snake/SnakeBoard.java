@@ -5,14 +5,18 @@ import java.util.List;
 import java.util.Random;
 
 import ca.camosun.snake.Snake.Direction;
+import ca.camosun.snake.gui.GameActivity.ObstacleType;
 
 public class SnakeBoard {
 
 	private Snake snake;
 	private List<Fruit> fruits;
+	private List<Bomb> bombs;
 	private int score;
 	private int maxX;
 	private int maxY;
+	
+	
 
 	public SnakeBoard(int inWidth, int inHeight) {
 		this(inWidth, inHeight, new Snake(Direction.NORTH, inWidth/2, inHeight/2));
@@ -23,6 +27,7 @@ public class SnakeBoard {
 		maxY = inHeight - 1;
 		snake = inSnake; 
 		fruits = new ArrayList<Fruit>();
+		bombs = new ArrayList<Bomb>();
 		score = 0;
 	}
 		
@@ -63,6 +68,21 @@ public class SnakeBoard {
 		return false;
 	}
 	
+	public boolean hitBomb() {
+		SnakeSegment head = snake.getHead();
+		int headX = head.getPositionX();
+		int headY = head.getPositionY();        
+		for (Bomb current : bombs) {
+			int bombX = current.getPositionX();
+			int bombY = current.getPositionY();			
+			if (headX == bombX && headY == bombY) {				
+				bombs.remove(current);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	 * @return false if not enough space to add fruitsToAdd count fruits, else true
 	 */
@@ -86,10 +106,63 @@ public class SnakeBoard {
 		return true;
 	}
 	
+	private boolean addRandomBombs(int bombCount) {
+		Random rand = new Random();
+		int i = 0;
+		
+		while (i < bombCount) {
+			if (hasEmptyCells() == false) {
+				return false;
+			}
+			
+			int bombX = rand.nextInt(maxX + 1);
+			int bombY = rand.nextInt(maxY + 1);
+			
+			Bomb theBomb = new Bomb(bombX, bombY);
+			
+			if (isEmptyCell(theBomb.getPositionX(), theBomb.getPositionY()) == false) {
+				return false;
+			}
+			
+			bombs.add(theBomb);
+			i++;
+			
+			
+		}
+		
+		return true;
+	}
+	
+	public boolean addObstacle(ObstacleType obstacle, int obstacleCount) {
+		
+		
+		switch(obstacle) {
+		
+			case BOMB: 
+				addRandomBombs(obstacleCount);
+				break;
+		
+			case RAKE:
+				break;
+		
+			case TRAP_DOOR:
+				break;
+	
+			default:
+				break;
+				
+				
+		}
+		
+		return true;
+		
+	}
+	
 	/**
 	 * @return false if position already occupied
 	 */
 	public boolean placeFruit(Fruit addFruit) {
+		
 		if (isEmptyCell(addFruit.getPositionX(), addFruit.getPositionY()) == false) {
 			return false;
 		}
@@ -97,6 +170,8 @@ public class SnakeBoard {
 		fruits.add(addFruit);
 		return true;
 	}
+	
+	
 	
 	private boolean hasEmptyCells() {
 		return (snake.size() + fruits.size()) < ((maxX+1) * (maxY+1));
@@ -133,6 +208,10 @@ public class SnakeBoard {
 
 	public List<Fruit> getFruits() {
 		return fruits;
+	}
+	
+	public List<Bomb> getBombs() {
+		return bombs;
 	}
 	
 }
