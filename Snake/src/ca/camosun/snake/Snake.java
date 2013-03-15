@@ -13,16 +13,14 @@ public class Snake implements Iterable<SnakeSegment> {
 	private int queuedGrowth;
 
 	public static enum Direction {
-		NORTH(-1), SOUTH(1), EAST(1), WEST(-1);
+		NORTH(0, -1), SOUTH(0, 1), EAST(1, 0), WEST(-1, 0);
 
-		private final int distance;
-		
-		public int getDistance() {
-			return distance;
-		}
+		public final int x;
+		public final int y;
 
-		Direction(int moveDistance) {
-			distance = moveDistance;
+		Direction(int inX, int inY) {
+			this.x = inX;
+			this.y = inY;
 		}
 
 		public Direction opposite() {
@@ -64,19 +62,8 @@ public class Snake implements Iterable<SnakeSegment> {
 
 		// add new head
 		{
-			SnakeSegment newHead = null;
-			switch (nextDirection) {
-			case NORTH:
-			case SOUTH:
-				newHead = new SnakeSegment(oldHead.getPositionX(), 
-										   oldHead.getPositionY() + nextDirection.getDistance());
-				break;
-			case EAST:
-			case WEST:
-				newHead = new SnakeSegment(oldHead.getPositionX() + nextDirection.getDistance(),
-										   oldHead.getPositionY());
-				break;
-			}
+			SnakeSegment newHead = new SnakeSegment(oldHead.getPositionX() + nextDirection.x,
+													oldHead.getPositionY() + nextDirection.y);
 			segments.addFirst(newHead);
 		}
 		
