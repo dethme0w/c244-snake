@@ -12,6 +12,7 @@ public class SnakeBoard {
 	private Snake snake;
 	private List<Fruit> fruits;
 	private List<Bomb> bombs;
+	private List<Pipe> pipes;
 	private int score;
 	private int maxX;
 	private int maxY;
@@ -28,6 +29,7 @@ public class SnakeBoard {
 		snake = inSnake; 
 		fruits = new ArrayList<Fruit>();
 		bombs = new ArrayList<Bomb>();
+		pipes = new ArrayList<Pipe>();
 		score = 0;
 	}
 		
@@ -77,6 +79,21 @@ public class SnakeBoard {
 			int bombY = current.getPositionY();			
 			if (headX == bombX && headY == bombY) {				
 				bombs.remove(current);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean hitPipe() {
+		SnakeSegment head = snake.getHead();
+		int headX = head.getPositionX();
+		int headY = head.getPositionY();        
+		for (Pipe current : pipes) {
+			int pipeX = current.getPositionX();
+			int pipeY = current.getPositionY();			
+			if (headX == pipeX && headY == pipeY) {				
+				pipes.remove(current);
 				return true;
 			}
 		}
@@ -133,6 +150,47 @@ public class SnakeBoard {
 		return true;
 	}
 	
+	private boolean addVerticalPipe(int pipeLength) {
+		Random rand = new Random();
+		int i = 1;
+		
+		//Place first pipe piece at random position
+		int pipeXfirst = rand.nextInt(maxX + 1);
+		int pipeYfirst = rand.nextInt(maxY + 1);
+		Pipe startPipe = new Pipe(pipeXfirst, pipeYfirst);
+		
+		if (isEmptyCell(startPipe.getPositionX(), startPipe.getPositionY()) == false) {
+			return false;
+		}
+		
+		pipes.add(startPipe);
+				
+		//Place the next pipe pieces beside the other pipe pieces to create a lane
+		while (i < pipeLength) {
+	
+			if (hasEmptyCells() == false) {
+				return false;
+			}
+			
+			int pipeX = startPipe.getPositionX();
+			int pipeY = startPipe.getPositionY() + i;
+			
+			Pipe aPipe = new Pipe(pipeX, pipeY);
+			
+			
+			if (isEmptyCell(aPipe.getPositionX(), aPipe.getPositionY()) == false) {
+				return false;
+			}
+			
+			pipes.add(aPipe);
+			i++;
+			
+			
+		}
+		
+		return true;
+	}
+	
 	public boolean addObstacle(ObstacleType obstacle, int obstacleCount) {
 		
 		
@@ -142,7 +200,8 @@ public class SnakeBoard {
 				addRandomBombs(obstacleCount);
 				break;
 		
-			case RAKE:
+			case PIPE:
+				addVerticalPipe(obstacleCount);
 				break;
 		
 			case TRAP_DOOR:
@@ -212,6 +271,10 @@ public class SnakeBoard {
 	
 	public List<Bomb> getBombs() {
 		return bombs;
+	}
+	
+	public List<Pipe> getPipes() {
+		return pipes;
 	}
 	
 }

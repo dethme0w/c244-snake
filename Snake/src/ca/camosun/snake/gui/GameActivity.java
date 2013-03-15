@@ -6,6 +6,7 @@ import java.util.TimerTask;
 
 import ca.camosun.snake.Bomb;
 import ca.camosun.snake.Fruit;
+import ca.camosun.snake.Pipe;
 import ca.camosun.snake.R;
 import ca.camosun.snake.SingleScore;
 import ca.camosun.snake.Snake;
@@ -54,7 +55,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 	}
 	
 	public static enum ObstacleType {
-		BOMB, RAKE, TRAP_DOOR;
+		BOMB, PIPE, TRAP_DOOR;
 	}
 
 	@Override
@@ -292,8 +293,16 @@ public class GameActivity extends Activity implements SensorEventListener {
 		}
 		
 		if(board.hitBomb()) {
+			inPlay = false;
 			createAlertMessage("Game Over",
-					"You hit an obstacle", "Ouch!",
+					"You hit an obstacle", "Oops!",
+					GameState.GAME_OVER);
+		}
+		
+		if(board.hitPipe()) {
+			inPlay = false;
+			createAlertMessage("Game Over",
+					"You hit a pipe!", "Oops!",
 					GameState.GAME_OVER);
 		}
 
@@ -306,6 +315,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		drawSnake(snake);
 		drawFruit();
 		drawBombs();
+		drawPipe();
 	}
 	
 	private boolean isHighScore(){
@@ -386,6 +396,17 @@ public class GameActivity extends Activity implements SensorEventListener {
 		}
 	}
 	
+	private void drawPipe() {
+		List<Pipe> thepipes = board.getPipes();
+		for (Pipe apipe : thepipes) {
+
+			GridImage image;
+			image = imageAt(apipe.getPositionX(), apipe.getPositionY());
+			image.setImageResource(R.drawable.pipe);
+
+		}
+	}
+	
 
 	private void createAlertMessage(String titleText, String messageText,
 			String buttonText, final GameState state) {
@@ -437,6 +458,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		private static int timerMs = INITIAL_REFRESH_MS;
 		private static int numFruits = INITIAL_FRUITS;
 		private static int numBombs = 4;
+		private static int pipeLength = 3;
 
 		public static void reset() {
 			currentLevel = 1;
@@ -456,10 +478,24 @@ public class GameActivity extends Activity implements SensorEventListener {
             thisGame.startTimer(timerMs);
             thisGame.board.addRandomFruits(numFruits);
             
-          //  if(currentLevel > 2) {
-           // 	thisGame.board.addObstacle(ObstacleType.BOMB, numBombs);                
-           // 	numBombs += 2;
-           // }
+            if(currentLevel > 1) {
+              thisGame.board.addObstacle(ObstacleType.BOMB, numBombs);                
+              numBombs += 2;
+            }
+            
+            //Can make multiple calls to addObstacle to make more than one vertical pipe
+            if(currentLevel == 2) {
+                thisGame.board.addObstacle(ObstacleType.PIPE, pipeLength); 
+                
+              }
+            
+            if(currentLevel == 3) {
+            	pipeLength += 2;
+                thisGame.board.addObstacle(ObstacleType.PIPE, pipeLength); 
+                thisGame.board.addObstacle(ObstacleType.PIPE, pipeLength); 
+                
+              }
+            
 
 			TextView tv = (TextView) thisGame.findViewById(R.id.tvLevel);
 			tv.setText("Level " + currentLevel);
