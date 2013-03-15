@@ -1,10 +1,16 @@
 package ca.camosun.snake.gui;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import ca.camosun.snake.HighScores;
 import ca.camosun.snake.R;
 import ca.camosun.snake.SingleScore;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -28,7 +34,18 @@ public class MainActivity extends Activity {
 		
 		if (highScores == null) {
 			highScores = new HighScores<SingleScore>(MAXIMUM_NUMBER_OF_SCORES);
-		}
+			
+			try {
+				
+				loadScores();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} 
+		
+		
+		
 	}
 	
 	/** Called when the user clicks the Send button */
@@ -51,5 +68,29 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
+	}
+	
+	private void loadScores() throws IOException{
+		
+		FileInputStream in = openFileInput(getString(R.string.score_filename));
+	    InputStreamReader inputStreamReader = new InputStreamReader(in);
+	    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+	    String line;
+	    String[] data;
+	    String name;
+	    int score;
+	    while ((line = bufferedReader.readLine()) != null) {
+	    	
+	    	data = line.split(":");
+	    	name = data[0];
+	    	score = Integer.parseInt(data[1]);
+	    	
+	    	highScores.addScore(new SingleScore(name, score));
+	    	
+	    }
+	    in.close();
+	    inputStreamReader.close();
+	    bufferedReader.close();
+		
 	}
 }
