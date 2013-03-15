@@ -284,7 +284,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 			}
 
 			// We probably want to grow the snake here.
-			snake.grow(oldTail);
+			snake.grow();
 
 		}
 

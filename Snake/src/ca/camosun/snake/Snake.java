@@ -7,6 +7,10 @@ import java.util.Iterator;
 public class Snake implements Iterable<SnakeSegment> {
 	private Deque<SnakeSegment> segments;
 	private Direction currentDirection;
+	
+	/* num of segments snake is waiting to grow; grows one each move by not 
+	 * deleting its tail */
+	private int queuedGrowth;
 
 	public static enum Direction {
 		NORTH(-1), SOUTH(1), EAST(1), WEST(-1);
@@ -43,43 +47,48 @@ public class Snake implements Iterable<SnakeSegment> {
 		segments = new ArrayDeque<SnakeSegment>();
 		segments.add(new SnakeSegment(startX, startY));			
 		currentDirection = startDir;
+		queuedGrowth = 0;
 	}
 
 	public Direction getCurrentDirection() {
 		return currentDirection;
 	}
 
-	public SnakeSegment moveSnake(Direction nextDirection) {
-		SnakeSegment head = getHead();
-		SnakeSegment newHead = new SnakeSegment(head.getPositionX(), head.getPositionY());
+	public void moveSnake(Direction nextDirection) {
+		SnakeSegment oldHead = getHead();
 				
-		int YPosition = newHead.getPositionY();
-		int XPosition = newHead.getPositionX();
+		// snake can't reverse unless tiny
+		if (segments.size() > 1 && nextDirection.isOpposite(currentDirection)) {
+				nextDirection = currentDirection; // cancel next direction
+		}
 
-		if (nextDirection.isOpposite(currentDirection)) {
-			if (segments.size() != 1) { // allow snake to reverse himself if
-										// he's just a head
-				nextDirection = currentDirection;
+		// add new head
+		{
+			SnakeSegment newHead = null;
+			switch (nextDirection) {
+			case NORTH:
+			case SOUTH:
+				newHead = new SnakeSegment(oldHead.getPositionX(), 
+										   oldHead.getPositionY() + nextDirection.getDistance());
+				break;
+			case EAST:
+			case WEST:
+				newHead = new SnakeSegment(oldHead.getPositionX() + nextDirection.getDistance(),
+										   oldHead.getPositionY());
+				break;
 			}
+			segments.addFirst(newHead);
 		}
-
-		switch (nextDirection) {
-
-		case NORTH:
-		case SOUTH:
-			newHead.setPositionY(YPosition + nextDirection.getDistance());
-			break;
-		case EAST:
-		case WEST:
-			newHead.setPositionX(XPosition + nextDirection.getDistance());
-			break;
-		}
-
+		
 		currentDirection = nextDirection;	
 				
-		segments.addFirst(newHead);
-		return(segments.removeLast());
 		
+		// remove tail
+		if (queuedGrowth == 0) {
+			segments.removeLast();
+		} else { // grow by not removing tail segment		
+			queuedGrowth--;
+		}
 	}
 
 	public boolean collidedSelf() {
@@ -101,8 +110,8 @@ public class Snake implements Iterable<SnakeSegment> {
 		return false;
 	}
 	
-	public void grow(SnakeSegment newTail) {
-		segments.addLast(newTail);
+	public void grow() {
+		queuedGrowth++;
 	}
 	
 	public Iterator<SnakeSegment> iterator() {
