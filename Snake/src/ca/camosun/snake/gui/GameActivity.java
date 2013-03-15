@@ -283,9 +283,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 				// Toast.makeText(this, "No Fruit Left!",
 				// Toast.LENGTH_LONG).show();
 				inPlay = false;
-				createAlertMessage("Level Complete",
-						"Would you like to continue?", "Ok",
-						GameState.NEXT_LEVEL);
+				Toast.makeText(this, "Next Level", Toast.LENGTH_SHORT).show();
+				GameLevels.nextLevel(GameActivity.this);
 			}
 
 			// We probably want to grow the snake here.
@@ -409,11 +408,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 							GameActivity.this.finish();
 							break;
 
-						case NEXT_LEVEL:
-
-							GameLevels.nextLevel(board, GameActivity.this);
-							break;
-
 						case CRASHED:
 
 							break;
@@ -452,7 +446,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 			numFruits = INITIAL_FRUITS;
 		}
 		
-		private static void nextLevel(SnakeBoard board, GameActivity thisGame) {
+		private static void nextLevel(GameActivity thisGame) {
+			
 			currentLevel++;
             timerMs = timerMs - 100;
             if (timerMs < 400) { timerMs = 400; }
@@ -461,10 +456,10 @@ public class GameActivity extends Activity implements SensorEventListener {
             
             
             thisGame.startTimer(timerMs);
-            board.addRandomFruits(numFruits);
+            thisGame.board.addRandomFruits(numFruits);
             
             if(currentLevel > 2) {
-            	board.addObstacle(ObstacleType.BOMB, numBombs);                
+            	thisGame.board.addObstacle(ObstacleType.BOMB, numBombs);                
             	numBombs += 2;
             }
 
