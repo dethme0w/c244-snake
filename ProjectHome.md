@@ -1,0 +1,1 @@
+Android snake game. Use the sensors to control movement
